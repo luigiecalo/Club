@@ -6,6 +6,18 @@
     <class>com.Entidades.Permisos</class>
     <class>com.Entidades.Roles</class>
     <class>com.Entidades.Usuarios</class>
+    <class>com.Controladoras.Miembro</class>
+    <class>com.Controladoras.Permisos</class>
+    <class>com.Controladoras.Roles</class>
+    <class>com.Controladoras.UsuariosRoles</class>
+    <class>com.Controladoras.Usuarios</class>
+    <class>com.Controladoras.RolesPermisos</class>
+    <class>com.Entidades.RolesPermisos</class>
+    <class>com.Entidades.UsuariosRoles</class>
+    <class>com.Dao.Usuarios</class>
+    <class>com.Dao.Permisos</class>
+    <class>com.Dao.Roles</class>
+    <class>com.Dao.Miembro</class>
     <exclude-unlisted-classes>false</exclude-unlisted-classes>
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/guias?zeroDateTimeBehavior=convertToNull"/>

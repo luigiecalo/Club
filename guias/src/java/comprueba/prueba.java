@@ -5,14 +5,18 @@
  */
 package comprueba;
 
-import com.Controladoras.PermisosJpaController;
-import com.Controladoras.RolesJpaController;
+import com.Controlador.PermisosJpaController;
+import com.Controlador.RolesJpaController;
 import com.Dao.PermisosDaoimplement;
 import com.Dao.RolesDaoimplement;
 import com.Entidades.Permisos;
 import com.Entidades.Roles;
-import com.Entidades.Usuarios;
+
 import java.io.Serializable;
+import java.util.List;
+import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -22,23 +26,58 @@ public class prueba implements Serializable {
 
     public static void main(String[] args) {
         System.out.println("Hola");
-        PermisosDaoimplement Dao = new PermisosDaoimplement();
-        RolesDaoimplement RDao = new RolesDaoimplement();
-        Roles r = RDao.consultar(Roles.class,6);
-        PermisosJpaController jpa = new PermisosJpaController();
+        // ----<Controladore JPAController>-----
+        //Buscar perimisos 
+        PermisosJpaController Pjpa = new PermisosJpaController();
+
+        //Buscar Roles
         RolesJpaController Rjpa = new RolesJpaController();
-        Permisos p = Dao.consultarC(Permisos.class, 1);
-        System.out.println("permiso 1 es:" + p.toString());
-        
-        Roles rol = new Roles();
+
+        // ----<Controladore JPA>-----
+        //Buscar perimisos 
+        PermisosDaoimplement PDao = new PermisosDaoimplement();
+        Permisos p = PDao.consultarC(Permisos.class, 4);
+       // System.out.println("permiso Encontrado es:" + p.toString());
+
+        //Buscar Roles
+        RolesDaoimplement RDao = new RolesDaoimplement();
+        Roles r = RDao.consultar(Roles.class, 16);
+
+//        System.out.println("Lista de Roles  Encontrado es:" + RDao.Listar());
+        //Crear Roles
+        List<Permisos> permisos = new ArrayList<Permisos>();
+        permisos.add(p);
+       // p = PDao.consultarC(Permisos.class, 3);
+       // permisos.add(p);
+       // p = PDao.consultarC(Permisos.class, 4);
+       // permisos.add(p);
+        Roles rol = r;
+
+        for (Permisos permiso : permisos) {
+
+        }
+
         rol.setDescripcionRol("asd");
-        rol.setNombreRol("NUEVO");
-        rol.setPermisosCollection(Dao.Listar());
-        rol.setUsuariosCollection(null);
-        //RDao.eliminar(rol);
-        RDao.eliminar(r);
-       //Rjpa.create(rol);
-        
-        System.out.println("Registro Exitoso");
+        rol.setNombreRol("JUAN");
+        rol.setPermisosList(permisos);
+        rol.setUsuariosList(null);
+      //  System.out.println("Rol Encontrado es:" + rol.toString());
+        try {
+            Rjpa.edit(rol); //CREAR CON JPA
+            // Rjpa.destroy(rol.getIdroles()); //ELIMINAR CON JPACONTROLLER
+           // Rjpa.create(rol); //CREAR CON JPACONTROLLER
+        } catch (Exception ex) {
+            Logger.getLogger(prueba.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        //Crear Permisos
+        Permisos per = new Permisos();
+        per.setDescripcionPermiso("NUEVA DESCRIPCION");
+        per.setNombrePermiso("OTRO");
+
+        //PDao.crear(per); //CREAR CON JPA
+        //RDao.eliminar(r); //ELIMINAR CON JPA
+        //Rjpa.create(rol); //CREAR CON JPACONTROLLER
+        System.out.println("Elimino Exitoso");
     }
 }

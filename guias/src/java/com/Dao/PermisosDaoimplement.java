@@ -7,11 +7,9 @@ package com.Dao;
 
 import com.DaonInterface.PermisosDao;
 import com.Entidades.Permisos;
-import comprueba.PermisosInterface;
 import java.io.Serializable;
 import java.util.List;
 import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
 
 /**
  *

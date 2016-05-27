@@ -6,7 +6,7 @@
 package com.Entidades;
 
 import java.io.Serializable;
-import java.util.Collection;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -24,7 +24,7 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author usuario
+ * @author LuisGuillermo
  */
 @Entity
 @Table(name = "usuarios")
@@ -51,10 +51,10 @@ public class Usuarios implements Serializable {
     @Basic(optional = false)
     @Column(name = "estado")
     private int estado;
-    @ManyToMany(mappedBy = "usuariosCollection")
-    private Collection<Roles> rolesCollection;
+    @ManyToMany(mappedBy = "usuariosList")
+    private List<Roles> rolesList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "usuarios")
-    private Collection<Miembro> miembroCollection;
+    private List<Miembro> miembroList;
 
     public Usuarios() {
     }
@@ -103,21 +103,21 @@ public class Usuarios implements Serializable {
     }
 
     @XmlTransient
-    public Collection<Roles> getRolesCollection() {
-        return rolesCollection;
+    public List<Roles> getRolesList() {
+        return rolesList;
     }
 
-    public void setRolesCollection(Collection<Roles> rolesCollection) {
-        this.rolesCollection = rolesCollection;
+    public void setRolesList(List<Roles> rolesList) {
+        this.rolesList = rolesList;
     }
 
     @XmlTransient
-    public Collection<Miembro> getMiembroCollection() {
-        return miembroCollection;
+    public List<Miembro> getMiembroList() {
+        return miembroList;
     }
 
-    public void setMiembroCollection(Collection<Miembro> miembroCollection) {
-        this.miembroCollection = miembroCollection;
+    public void setMiembroList(List<Miembro> miembroList) {
+        this.miembroList = miembroList;
     }
 
     @Override

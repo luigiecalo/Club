@@ -6,12 +6,10 @@
 package com.Entidades;
 
 import java.io.Serializable;
-import java.util.Collection;
+import java.util.List;
 import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -27,7 +25,7 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author usuario
+ * @author LuisGuillermo
  */
 @Entity
 @Table(name = "permisos")
@@ -53,10 +51,9 @@ public class Permisos implements Serializable {
     @JoinTable(name = "roles_permisos", joinColumns = {
         @JoinColumn(name = "idpermisos", referencedColumnName = "idpermisos")}, inverseJoinColumns = {
         @JoinColumn(name = "idroles", referencedColumnName = "idroles")})
-    
     @ManyToMany
-    private Collection<Roles> rolesCollection;
-
+    private List<Roles> rolesList;
+    
     public Permisos() {
     }
 
@@ -95,12 +92,12 @@ public class Permisos implements Serializable {
     }
 
     @XmlTransient
-    public Collection<Roles> getRolesCollection() {
-        return rolesCollection;
+    public List<Roles> getRolesList() {
+        return rolesList;
     }
 
-    public void setRolesCollection(Collection<Roles> rolesCollection) {
-        this.rolesCollection = rolesCollection;
+    public void setRolesList(List<Roles> rolesList) {
+        this.rolesList = rolesList;
     }
 
     @Override
@@ -125,12 +122,7 @@ public class Permisos implements Serializable {
 
     @Override
     public String toString() {
-        return "Permisos{" + "idpermisos=" + idpermisos + 
-                ", nombrePermiso=" + nombrePermiso +
-                ", descripcionPermiso=" + descripcionPermiso + 
-                ", rolesCollection=" + rolesCollection + "}\n";
+        return "com.Entidades.Permisos[ idpermisos=" + idpermisos + " ]";
     }
-
-    
     
 }

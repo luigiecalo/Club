@@ -6,10 +6,12 @@
 package com.Entidades;
 
 import java.io.Serializable;
-import java.util.Collection;
+import java.util.List;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -18,13 +20,14 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author usuario
+ * @author LuisGuillermo
  */
 @Entity
 @Table(name = "roles")
@@ -35,6 +38,7 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Roles.findByNombreRol", query = "SELECT r FROM Roles r WHERE r.nombreRol = :nombreRol"),
     @NamedQuery(name = "Roles.findByDescripcionRol", query = "SELECT r FROM Roles r WHERE r.descripcionRol = :descripcionRol")})
 public class Roles implements Serializable {
+
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -47,14 +51,15 @@ public class Roles implements Serializable {
     @Basic(optional = false)
     @Column(name = "descripcion_rol")
     private String descripcionRol;
-    @ManyToMany(mappedBy = "rolesCollection")
-    private Collection<Permisos> permisosCollection;
+    @ManyToMany(mappedBy = "rolesList")
+    private List<Permisos> permisosList;
     @JoinTable(name = "usuarios_roles", joinColumns = {
-        @JoinColumn(name = "idroles", referencedColumnName = "idroles")}, inverseJoinColumns = {
+        @JoinColumn(name = "idroles",  referencedColumnName = "idroles")}, inverseJoinColumns = {
         @JoinColumn(name = "idusuarios", referencedColumnName = "idusuarios")})
     @ManyToMany
-    private Collection<Usuarios> usuariosCollection;
+    private List<Usuarios> usuariosList;
 
+    
     public Roles() {
     }
 
@@ -93,21 +98,21 @@ public class Roles implements Serializable {
     }
 
     @XmlTransient
-    public Collection<Permisos> getPermisosCollection() {
-        return permisosCollection;
+    public List<Permisos> getPermisosList() {
+        return permisosList;
     }
 
-    public void setPermisosCollection(Collection<Permisos> permisosCollection) {
-        this.permisosCollection = permisosCollection;
+    public void setPermisosList(List<Permisos> permisosList) {
+        this.permisosList = permisosList;
     }
 
     @XmlTransient
-    public Collection<Usuarios> getUsuariosCollection() {
-        return usuariosCollection;
+    public List<Usuarios> getUsuariosList() {
+        return usuariosList;
     }
 
-    public void setUsuariosCollection(Collection<Usuarios> usuariosCollection) {
-        this.usuariosCollection = usuariosCollection;
+    public void setUsuariosList(List<Usuarios> usuariosList) {
+        this.usuariosList = usuariosList;
     }
 
     @Override
@@ -132,7 +137,9 @@ public class Roles implements Serializable {
 
     @Override
     public String toString() {
-        return "com.Entidades.Roles[ idroles=" + idroles + " ]";
+        return "Roles{" + "idroles=" + idroles + ", nombreRol=" + nombreRol + ", descripcionRol=" + descripcionRol + ", permisosList=" + permisosList.size() + ", usuariosList=" + usuariosList.size() + "}\n";
     }
+
     
+
 }
