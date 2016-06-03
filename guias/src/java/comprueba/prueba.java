@@ -7,10 +7,14 @@ package comprueba;
 
 import com.Controlador.PermisosJpaController;
 import com.Controlador.RolesJpaController;
+import com.Dao.MiembroDaoimplement;
 import com.Dao.PermisosDaoimplement;
 import com.Dao.RolesDaoimplement;
+import com.Dao.UsuariosDaoimplement;
+import com.Entidades.Miembro;
 import com.Entidades.Permisos;
 import com.Entidades.Roles;
+import com.Entidades.Usuarios;
 
 import java.io.Serializable;
 import java.util.List;
@@ -26,58 +30,44 @@ public class prueba implements Serializable {
 
     public static void main(String[] args) {
         System.out.println("Hola");
-        // ----<Controladore JPAController>-----
-        //Buscar perimisos 
-        PermisosJpaController Pjpa = new PermisosJpaController();
-
-        //Buscar Roles
-        RolesJpaController Rjpa = new RolesJpaController();
-
-        // ----<Controladore JPA>-----
-        //Buscar perimisos 
+        // ----<Controladore JPADAO Controller>-----
         PermisosDaoimplement PDao = new PermisosDaoimplement();
-        Permisos p = PDao.consultarC(Permisos.class, 4);
-       // System.out.println("permiso Encontrado es:" + p.toString());
-
-        //Buscar Roles
         RolesDaoimplement RDao = new RolesDaoimplement();
-        Roles r = RDao.consultar(Roles.class, 16);
+        UsuariosDaoimplement UDao = new UsuariosDaoimplement();
+        MiembroDaoimplement MDao = new MiembroDaoimplement();
+        //OBJETOS
+        Permisos permiso = new Permisos();
+        Roles rol = new Roles();
+        Usuarios usuario = new Usuarios();
+        Miembro miembro = new Miembro();
 
-//        System.out.println("Lista de Roles  Encontrado es:" + RDao.Listar());
-        //Crear Roles
-        List<Permisos> permisos = new ArrayList<Permisos>();
-        permisos.add(p);
-       // p = PDao.consultarC(Permisos.class, 3);
-       // permisos.add(p);
-       // p = PDao.consultarC(Permisos.class, 4);
-       // permisos.add(p);
-        Roles rol = r;
-
-        for (Permisos permiso : permisos) {
-
-        }
-
-        rol.setDescripcionRol("asd");
-        rol.setNombreRol("JUAN");
-        rol.setPermisosList(permisos);
-        rol.setUsuariosList(null);
-      //  System.out.println("Rol Encontrado es:" + rol.toString());
-        try {
-            Rjpa.edit(rol); //CREAR CON JPA
-            // Rjpa.destroy(rol.getIdroles()); //ELIMINAR CON JPACONTROLLER
-           // Rjpa.create(rol); //CREAR CON JPACONTROLLER
-        } catch (Exception ex) {
-            Logger.getLogger(prueba.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
-        //Crear Permisos
-        Permisos per = new Permisos();
-        per.setDescripcionPermiso("NUEVA DESCRIPCION");
-        per.setNombrePermiso("OTRO");
-
-        //PDao.crear(per); //CREAR CON JPA
-        //RDao.eliminar(r); //ELIMINAR CON JPA
-        //Rjpa.create(rol); //CREAR CON JPACONTROLLER
-        System.out.println("Elimino Exitoso");
+        //Lita de OBJETOS
+        List<Permisos> permisoLista=new  ArrayList<Permisos>();
+        List<Roles> rolesLista=new  ArrayList<Roles>();
+        List<Usuarios> usuarioLista=new  ArrayList<Usuarios>();
+        List<Miembro> miembroLista=new  ArrayList<Miembro>();
+        
+        ///CREAR 
+        
+        ///CREAR PERMISO
+        permiso.setNombrePermiso("E");
+        permiso.setDescripcionPermiso("ESCRITURA");
+        permiso.setRolesList(null);
+        PDao.crear(permiso);
+        
+        //Crear Rol
+        permiso=PDao.consultar(Permisos.class,1);
+        rol.setNombreRol("LECTOR");
+        rol.setDescripcionRol("SOLO TINE PERMISO E LECTURA");
+        permisoLista.add(permiso);
+        rol.setPermisosList(permisoLista);
+        //RDao.guardarcompleto(rol);
+        
+        //Buscar Rol
+        permiso=PDao.consultar(Permisos.class,2);
+        permisoLista.add(permiso);
+        rol=RDao.consultar(Roles.class, 2);
+        rol.setNombreRol("NUEVO LECTOR");
+        RDao.modificar(rol);
     }
 }
