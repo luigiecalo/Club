@@ -18,19 +18,20 @@ import javax.persistence.EntityManager;
  *
  * @author LuisGuillermo
  */
-public class RolesDaoimplement extends ImplDao<Roles, Long> implements  RolesDao, Serializable {
-    EntityManager em=getEmf().createEntityManager();
-    
+public class RolesDaoimplement extends ImplDao<Roles, Long> implements RolesDao, Serializable {
+
+    EntityManager em = getEmf().createEntityManager();
+
     public List<Roles> Listar() {
         return em.createNamedQuery("Roles.findAll").getResultList();
     }
-    
-      public EntityManager getEntityManager() {
+
+    public EntityManager getEntityManager() {
         return em;
     }
-    
-    public void guardarcompleto(Roles roles){
-      if (roles.getPermisosList() == null) {
+
+    public void guardarcompleto(Roles roles) {
+        if (roles.getPermisosList() == null) {
             roles.setPermisosList(new ArrayList<Permisos>());
         }
         if (roles.getUsuariosList() == null) {
@@ -67,8 +68,12 @@ public class RolesDaoimplement extends ImplDao<Roles, Long> implements  RolesDao
                 em.close();
             }
         }
-    
-    
+
     }
 
+    public void editarCompleto(Roles roles) {
+        RolesDaoimplement RolesDao = new RolesDaoimplement();
+        RolesDao.eliminar(roles);
+        guardarcompleto(roles);
+    }
 }

@@ -8,10 +8,8 @@ package com.Entidades;
 import java.io.Serializable;
 import java.util.List;
 import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -20,14 +18,13 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author LuisGuillermo
+ * @author usuario
  */
 @Entity
 @Table(name = "roles")
@@ -38,7 +35,6 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Roles.findByNombreRol", query = "SELECT r FROM Roles r WHERE r.nombreRol = :nombreRol"),
     @NamedQuery(name = "Roles.findByDescripcionRol", query = "SELECT r FROM Roles r WHERE r.descripcionRol = :descripcionRol")})
 public class Roles implements Serializable {
-
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -54,12 +50,11 @@ public class Roles implements Serializable {
     @ManyToMany(mappedBy = "rolesList")
     private List<Permisos> permisosList;
     @JoinTable(name = "usuarios_roles", joinColumns = {
-        @JoinColumn(name = "idroles",  referencedColumnName = "idroles")}, inverseJoinColumns = {
+        @JoinColumn(name = "idroles", referencedColumnName = "idroles")}, inverseJoinColumns = {
         @JoinColumn(name = "idusuarios", referencedColumnName = "idusuarios")})
     @ManyToMany
     private List<Usuarios> usuariosList;
 
-    
     public Roles() {
     }
 
@@ -137,9 +132,7 @@ public class Roles implements Serializable {
 
     @Override
     public String toString() {
-        return "Roles{" + "idroles=" + idroles + ", nombreRol=" + nombreRol + ", descripcionRol=" + descripcionRol + ", permisosList=" + permisosList.size() + ", usuariosList=" + usuariosList.size() + "}\n";
+        return "com.Entidades.Roles[ idroles=" + idroles + " ]";
     }
-
     
-
 }

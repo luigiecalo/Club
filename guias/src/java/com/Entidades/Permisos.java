@@ -18,14 +18,13 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author LuisGuillermo
+ * @author usuario
  */
 @Entity
 @Table(name = "permisos")
@@ -53,7 +52,7 @@ public class Permisos implements Serializable {
         @JoinColumn(name = "idroles", referencedColumnName = "idroles")})
     @ManyToMany
     private List<Roles> rolesList;
-    
+
     public Permisos() {
     }
 

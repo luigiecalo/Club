@@ -21,12 +21,12 @@ import javax.persistence.Persistence;
 
 /**
  *
- * @author LuisGuillermo
+ * @author usuario
  */
 public class PermisosJpaController implements Serializable {
 
     public PermisosJpaController() {
-      this.emf = Persistence.createEntityManagerFactory("guiasPU");
+         this.emf = Persistence.createEntityManagerFactory("guiasPU");
     }
     private EntityManagerFactory emf = null;
 
