@@ -8,8 +8,10 @@ package com.Entidades;
 import java.io.Serializable;
 import java.util.List;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -40,37 +42,35 @@ public class Permisos implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "idpermisos")
-    private Integer idpermisos;
+    private Long idpermisos;
     @Basic(optional = false)
     @Column(name = "nombre_permiso")
     private String nombrePermiso;
     @Basic(optional = false)
     @Column(name = "descripcion_permiso")
     private String descripcionPermiso;
-    @JoinTable(name = "roles_permisos", joinColumns = {
-        @JoinColumn(name = "idpermisos", referencedColumnName = "idpermisos")}, inverseJoinColumns = {
-        @JoinColumn(name = "idroles", referencedColumnName = "idroles")})
-    @ManyToMany
-    private List<Roles> rolesList;
+   
+    @ManyToMany(mappedBy = "permisos", fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
+    private List<Rol> roles;
 
     public Permisos() {
     }
 
-    public Permisos(Integer idpermisos) {
+    public Permisos(Long idpermisos) {
         this.idpermisos = idpermisos;
     }
 
-    public Permisos(Integer idpermisos, String nombrePermiso, String descripcionPermiso) {
+    public Permisos(Long idpermisos, String nombrePermiso, String descripcionPermiso) {
         this.idpermisos = idpermisos;
         this.nombrePermiso = nombrePermiso;
         this.descripcionPermiso = descripcionPermiso;
     }
 
-    public Integer getIdpermisos() {
+    public Long getIdpermisos() {
         return idpermisos;
     }
 
-    public void setIdpermisos(Integer idpermisos) {
+    public void setIdpermisos(Long idpermisos) {
         this.idpermisos = idpermisos;
     }
 
@@ -91,12 +91,12 @@ public class Permisos implements Serializable {
     }
 
     @XmlTransient
-    public List<Roles> getRolesList() {
-        return rolesList;
+    public List<Rol> getRoles() {
+        return roles;
     }
 
-    public void setRolesList(List<Roles> rolesList) {
-        this.rolesList = rolesList;
+    public void setRoles(List<Rol> roles) {
+        this.roles = roles;
     }
 
     @Override

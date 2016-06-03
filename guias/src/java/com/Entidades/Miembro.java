@@ -6,37 +6,30 @@
 package com.Entidades;
 
 import java.io.Serializable;
-import javax.persistence.Basic;
-import javax.persistence.Column;
-import javax.persistence.EmbeddedId;
-import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
-import javax.persistence.Table;
+import javax.persistence.*;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
- * @author usuario
+ * @author LuisGuillermo
  */
 @Entity
 @Table(name = "miembro")
-@XmlRootElement
+@SequenceGenerator(name = "USER_SEQUENCE", sequenceName = "USER_SEQUENCE", allocationSize = 1, initialValue = 0)
 @NamedQueries({
     @NamedQuery(name = "Miembro.findAll", query = "SELECT m FROM Miembro m"),
-    @NamedQuery(name = "Miembro.findByIdmiembro", query = "SELECT m FROM Miembro m WHERE m.miembroPK.idmiembro = :idmiembro"),
-    @NamedQuery(name = "Miembro.findByNombre1", query = "SELECT m FROM Miembro m WHERE m.nombre1 = :nombre1"),
-    @NamedQuery(name = "Miembro.findByNombre2", query = "SELECT m FROM Miembro m WHERE m.nombre2 = :nombre2"),
-    @NamedQuery(name = "Miembro.findByApellido1", query = "SELECT m FROM Miembro m WHERE m.apellido1 = :apellido1"),
-    @NamedQuery(name = "Miembro.findByApellido2", query = "SELECT m FROM Miembro m WHERE m.apellido2 = :apellido2"),
-    @NamedQuery(name = "Miembro.findByEstado", query = "SELECT m FROM Miembro m WHERE m.estado = :estado"),
-    @NamedQuery(name = "Miembro.findByIdusuarios", query = "SELECT m FROM Miembro m WHERE m.miembroPK.idusuarios = :idusuarios")})
+    @NamedQuery(name = "Miembro.findByIdmiembro", query = "SELECT m FROM Miembro m WHERE m.idmiembro = :idmiembro"),
+    @NamedQuery(name = "Miembro.findByDocumento", query = "SELECT m FROM Miembro m WHERE m.documento = :documento")})
 public class Miembro implements Serializable {
+
     private static final long serialVersionUID = 1L;
-    @EmbeddedId
-    protected MiembroPK miembroPK;
+    @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "USER_SEQUENCE")
+    @Basic(optional = false)
+    @Column(name = "idmiembro")
+    private Integer idmiembro;
+    @Column(name = "documento")
+    private String documento;
     @Basic(optional = false)
     @Column(name = "nombre1")
     private String nombre1;
@@ -50,34 +43,49 @@ public class Miembro implements Serializable {
     @Basic(optional = false)
     @Column(name = "estado")
     private String estado;
-    @JoinColumn(name = "idusuarios", referencedColumnName = "idusuarios", insertable = false, updatable = false)
-    @ManyToOne(optional = false)
-    private Usuarios usuarios;
+
+    @OneToOne(cascade = CascadeType.ALL, optional = false, fetch = FetchType.EAGER, orphanRemoval = true)
+    @JoinColumn(name = "idusuarios")
+    @PrimaryKeyJoinColumn
+    private Usuario usuario;
 
     public Miembro() {
     }
 
-    public Miembro(MiembroPK miembroPK) {
-        this.miembroPK = miembroPK;
+    public Miembro(Integer idmiembro) {
+        this.idmiembro = idmiembro;
     }
 
-    public Miembro(MiembroPK miembroPK, String nombre1, String apellido1, String estado) {
-        this.miembroPK = miembroPK;
+    public Miembro(Integer idmiembro, String nombre1, String apellido1, String estado, Usuario usuarios) {
+        this.idmiembro = idmiembro;
         this.nombre1 = nombre1;
         this.apellido1 = apellido1;
         this.estado = estado;
+
     }
 
-    public Miembro(int idmiembro, int idusuarios) {
-        this.miembroPK = new MiembroPK(idmiembro, idusuarios);
+    public Usuario getUsuario() {
+        return usuario;
     }
 
-    public MiembroPK getMiembroPK() {
-        return miembroPK;
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
     }
 
-    public void setMiembroPK(MiembroPK miembroPK) {
-        this.miembroPK = miembroPK;
+    public Integer getIdmiembro() {
+        return idmiembro;
+    }
+
+    public void setIdmiembro(Integer idmiembro) {
+        this.idmiembro = idmiembro;
+    }
+
+    public String getDocumento() {
+        return documento;
+    }
+
+    public void setDocumento(String documento) {
+        this.documento = documento;
     }
 
     public String getNombre1() {
@@ -120,18 +128,10 @@ public class Miembro implements Serializable {
         this.estado = estado;
     }
 
-    public Usuarios getUsuarios() {
-        return usuarios;
-    }
-
-    public void setUsuarios(Usuarios usuarios) {
-        this.usuarios = usuarios;
-    }
-
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (miembroPK != null ? miembroPK.hashCode() : 0);
+        hash += (idmiembro != null ? idmiembro.hashCode() : 0);
         return hash;
     }
 
@@ -142,7 +142,7 @@ public class Miembro implements Serializable {
             return false;
         }
         Miembro other = (Miembro) object;
-        if ((this.miembroPK == null && other.miembroPK != null) || (this.miembroPK != null && !this.miembroPK.equals(other.miembroPK))) {
+        if ((this.idmiembro == null && other.idmiembro != null) || (this.idmiembro != null && !this.idmiembro.equals(other.idmiembro))) {
             return false;
         }
         return true;
@@ -150,7 +150,7 @@ public class Miembro implements Serializable {
 
     @Override
     public String toString() {
-        return "com.Entidades.Miembro[ miembroPK=" + miembroPK + " ]";
+        return "com.Entidades.Miembro[ idmiembro=" + idmiembro + " ]";
     }
-    
+
 }
