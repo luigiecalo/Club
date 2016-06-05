@@ -46,7 +46,7 @@ public class Miembro implements Serializable {
 
     @OneToOne(cascade = CascadeType.ALL, optional = false, fetch = FetchType.EAGER, orphanRemoval = true)
     @JoinColumn(name = "idusuarios")
-    @PrimaryKeyJoinColumn
+    
     private Usuario usuario;
 
     public Miembro() {
