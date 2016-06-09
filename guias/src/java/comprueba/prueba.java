@@ -23,7 +23,7 @@ import java.util.ArrayList;
  * @author usuario
  */
 public class prueba implements Serializable {
-
+    
     public static void main(String[] args) {
         System.out.println("Hola");
         // ----<Controladore JPADAO Controller>-----
@@ -42,9 +42,9 @@ public class prueba implements Serializable {
         List<Miembro> miembroLista = new ArrayList<Miembro>();
         List<Rol> rolesLista = new ArrayList<Rol>();
         List<Usuario> usuarioLista = new ArrayList<Usuario>();
-        Long id = Long.parseLong("2");
+        Long id;
 
-//                ///CREAR PERMISO
+//                ///CREAR PERMISOç
 //        permiso.setNombrePermiso("T");
 //        permiso.setDescripcionPermiso("TOTAL");
 //        permiso.setRoles(null);
@@ -61,46 +61,44 @@ public class prueba implements Serializable {
 //        permiso.setDescripcionPermiso("MODIFICACION");
 //        permiso.setRoles(null);
 //        PDao.crear(permiso);
-//        System.out.println("REGISTRO DE PERMISO CON USUARIO EXITOSO");
+//        System.out.println("REGISTRO DE PERMISOS FUE UN EXITO");
 //
         //OPERACION ROL
 //       rol = RDao.consultarC(Rol.class,id);
+//        id = Long.parseLong("11");
 //        permiso = PDao.consultar(Permisos.class, id);
 //        permisoLista.add(permiso);
 ////        // -----------------------
 ////        permisoLista = PDao.consultarTodo(Permisos.class);
 ////        //-----------------------
-//        rol.setNombre("SUPERADMINISTRADOR");
+//        rol.setNombre("ADMINISTRADOR");
 //        rol.setActivo(Boolean.TRUE);
 //        rol.setPermisos(permisoLista);
-//      RDao.crear(rol);//CREAR
+//        RDao.crear(rol);//CREAR
 //     // RDao.modificar(rol);//MODIFICAR
 //        System.out.println("OPERACION DE ROL CON PERMISO EXITOSO");
 //        
         ///OPERACION USUARIO
-        //  usuario = UDao.consultarC(Usuario.class, id);
+//        id = Long.parseLong("4");
 //        rol = RDao.consultar(Rol.class, id);
 //        rolesLista.add(rol);
 //         -----------------------
 //        rolesLista = RDao.consultarTodo(Rol.class);
 ////        -----------------------
-//        usuario.setLogin("LUIGIE");
-//        usuario.setPassword("luigie");
 //        usuario.setEstado(1);
 //        usuario.setRoles(rolesLista);
-//        UDao.crear(usuario); //CREAR
+        //   UDao.crear(usuario); //CREAR
 //        UDao.modificar(usuario); //MODIFICAR
 //        System.out.println("OPERACION DE USUARIO EXITOSO");
 //        
         //CRAER MIEMBRO
-      miembro=  MDao.consultar(Miembro.class, 2);
-//        miembro.setNombre1("Luis");
-//        miembro.setNombre2("NUEVO");
-//        miembro.setApellido1("CAS");
-//        miembro.setApellido2("Lora");
-//        miembro.setEstado("ACTIVO");
-//       miembro.setUsuario(usuario);
-        MDao.eliminar(miembro);
+        id = Long.parseLong("1");
+        miembro = MDao.consultar(Miembro.class, id);
+        usuario = miembro.getUsuario();
+        usuario.setLogin("LUIGIE");
+        usuario.setPassword("LUIGIE");
+        miembro.setUsuario(usuario);
+        MDao.modificar(miembro);
         System.out.println("OPERACION DE MIEMBRO EXITOSA");
 
         //LISTAR USUARIOS

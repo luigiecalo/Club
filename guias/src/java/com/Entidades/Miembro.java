@@ -27,7 +27,7 @@ public class Miembro implements Serializable {
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "USER_SEQUENCE")
     @Basic(optional = false)
     @Column(name = "idmiembro")
-    private Integer idmiembro;
+    private Long idmiembro;
     @Column(name = "documento")
     private String documento;
     @Basic(optional = false)
@@ -52,11 +52,11 @@ public class Miembro implements Serializable {
     public Miembro() {
     }
 
-    public Miembro(Integer idmiembro) {
+    public Miembro(Long idmiembro) {
         this.idmiembro = idmiembro;
     }
 
-    public Miembro(Integer idmiembro, String nombre1, String apellido1, String estado, Usuario usuarios) {
+    public Miembro(Long idmiembro, String nombre1, String apellido1, String estado, Usuario usuarios) {
         this.idmiembro = idmiembro;
         this.nombre1 = nombre1;
         this.apellido1 = apellido1;
@@ -72,11 +72,11 @@ public class Miembro implements Serializable {
         this.usuario = usuario;
     }
 
-    public Integer getIdmiembro() {
+    public Long getIdmiembro() {
         return idmiembro;
     }
 
-    public void setIdmiembro(Integer idmiembro) {
+    public void setIdmiembro(Long idmiembro) {
         this.idmiembro = idmiembro;
     }
 
