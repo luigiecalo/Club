@@ -92,14 +92,14 @@ public class prueba implements Serializable {
 //        System.out.println("OPERACION DE USUARIO EXITOSO");
 //        
         //CRAER MIEMBRO
-        id = Long.parseLong("1");
-        miembro = MDao.consultar(Miembro.class, id);
-        usuario = miembro.getUsuario();
-        usuario.setLogin("LUIGIE");
-        usuario.setPassword("LUIGIE");
-        miembro.setUsuario(usuario);
-        MDao.modificar(miembro);
-        System.out.println("OPERACION DE MIEMBRO EXITOSA");
+//        id = Long.parseLong("1");
+//        miembro = MDao.consultar(Miembro.class, id);
+//        usuario = miembro.getUsuario();
+//        usuario.setLogin("LUIGIE");
+//        usuario.setPassword("LUIGIE");
+//        miembro.setUsuario(usuario);
+//        MDao.modificar(miembro);
+//        System.out.println("OPERACION DE MIEMBRO EXITOSA");
 
         //LISTAR USUARIOS
         usuarioLista = UDao.Listar();

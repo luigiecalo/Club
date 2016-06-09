@@ -1,15 +1,23 @@
 body {
     font-family: 'Roboto', sans-serif;
-/*     background:#ddd url(../imagenes/fondo.jpg) repeat top left;
+/*     background:#ddd  repeat top left;
     -webkit-background-size: cover;
     -moz-background-size: cover;
     -o-background-size: cover;
     background-size: cover; */
     font-size: 16px;
     font-weight: 300;
-    color: red;
+    color: #555;
     line-height: 30px;
     text-align: center;
+      background-image: url(../imagenes/fondo2.jpg);
+
+  -webkit-background-size: 100% 100%;           /* Safari 3.0 */
+     -moz-background-size: 100% 100%;           /* Gecko 1.9.2 (Firefox 3.6) */
+       -o-background-size: 100% 100%;           /* Opera 9.5 */
+          background-size: cover;           /* Gecko 2.0 (Firefox 4.0) and other CSS3-compliant browsers */
+ 
+     /* Gecko 1.9.1 (Firefox 3.5) */
 }
 
 strong { font-weight: 500; }
@@ -115,7 +123,7 @@ img {width: 100%;
 .form-top {
 	overflow: hidden;
 	padding: 0 25px 15px 25px;
-	background: #fff;
+	background:rgba(237, 234, 236, 0.9);
 	-moz-border-radius: 4px 4px 0 0; -webkit-border-radius: 4px 4px 0 0; border-radius: 4px 4px 0 0;
 	text-align: left;
 }
@@ -140,7 +148,7 @@ img {width: 100%;
 
 .form-bottom {
 	padding: 25px 25px 30px 25px;
-	background: #eee;
+	background: rgba(237, 234, 236, 0.7);
 	-moz-border-radius: 0 0 4px 4px; -webkit-border-radius: 0 0 4px 4px; border-radius: 0 0 4px 4px;
 	text-align: left;
 }
