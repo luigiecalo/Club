@@ -24,6 +24,7 @@ import javax.xml.bind.annotation.XmlTransient;
 @SequenceGenerator(name = "USER_SEQUENCE", sequenceName = "USER_SEQUENCE", allocationSize = 1, initialValue = 0)
 @NamedQueries({
     @NamedQuery(name = Usuario.LISTAR, query = "SELECT u FROM Usuario u"),
+    @NamedQuery(name = Usuario.BUSCAR_USUARIO, query = "SELECT u FROM Usuario u WHERE u.login = :usu AND u.password =:pass"),
     @NamedQuery(name = Usuario.BUSCAR_POR_ID, query = "SELECT u FROM Usuario u WHERE u.id = :idusuario")})
 public class Usuario implements Serializable, Comparable<Usuario> {
 
@@ -31,6 +32,7 @@ public class Usuario implements Serializable, Comparable<Usuario> {
     private Integer estado;
 
     public static final String LISTAR = "Usuario.listar";
+    public static final String BUSCAR_USUARIO = "Usuario.usuario";
     public static final String BUSCAR_POR_ID = "Usuario.buscarid";
 
     @Id

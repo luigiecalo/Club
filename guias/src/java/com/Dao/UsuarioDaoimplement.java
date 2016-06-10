@@ -24,6 +24,17 @@ public class UsuarioDaoimplement extends ImplDao<Usuario, Long> implements Usuar
     public List<Usuario> Listar() {
         return em.createNamedQuery(Usuario.LISTAR).getResultList();
     }
+    public Usuario login(String usu,String pass) {
+         Query query = em.createNamedQuery(Usuario.BUSCAR_USUARIO);
+        query.setParameter("usu",usu);
+        query.setParameter("pass",pass);
+        query.setMaxResults(1);
+        List<Usuario> list = query.getResultList();
+        if (list == null || list.isEmpty()) {
+            return null;
+        }
+        return list.get(0);
+    }
     
     public void modificar1(Usuario usuario) {
         em.merge(usuario);

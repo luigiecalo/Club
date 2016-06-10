@@ -106,7 +106,9 @@ public class prueba implements Serializable {
         for (Usuario usuari : usuarioLista) {
             System.out.println(usuari.getLogin());
         }
-
+        id=Long.parseLong("2");
+        usuario= UDao.buscarId1(id);
+        System.out.println(usuario.getRoles().size());
         //BUSCAR USUARIOS
 //        Long id= Long.parseLong("1");
 //        usuario=nUDao.consultar(Usuario.class,id);
