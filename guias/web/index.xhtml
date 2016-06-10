@@ -3,7 +3,9 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
-      xmlns:b="http://bootsfaces.net/ui">
+      xmlns:b="http://bootsfaces.net/ui"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
     <h:head>
 
         <meta charset="UTF-8" />
@@ -21,67 +23,103 @@
     </h:head>
     <body>
         <div class="top-content">
-        	
+
             <div >
                 <div class="container">
                     <div class="row">
                         <div class="col-sm-8 col-sm-offset-2 text">
                             <h1><strong>INICIO DE SECCION</strong></h1>
                             <div class="description">
-                            	<p>
-	                            	Registrate ya y has parte de un nuevo comienzo 
-                            	</p>
+                                <p>
+                                    Registrate ya y has parte de un nuevo comienzo 
+                                </p>
                             </div>
                         </div>
                     </div>
+
                     <div class="row">
                         <div class="col-sm-6 col-sm-offset-3 form-box">
-                        	<div class="form-top">
-                        		<div class="form-top-left">
-                        			<h3>Login</h3>
-                            		<p>Ingrese su Usuario y contraseña</p>
-                        		</div>
-                        		<div class="form-top-right">
-                                            <img src="imagenes/logo.png" class="img-circle"  />
-                        		</div>
+                            <div class="form-top">
+                                <div class="form-top-left">
+                                    <h3>Login</h3>
+                                    <p>Ingrese su Usuario y contraseña</p>
+                                </div>
+                                <div class="form-top-right">
+                                    <img src="imagenes/logo.png" class="img-circle"  />
+                                </div>
+
                             </div>
                             <div class="form-bottom">
-			                    <form role="form" action="" method="post" class="login-form">
-			                    	<div class="form-group">
-			                    		<label class="sr-only" for="form-username">Username</label>
-			                        	<input type="text" name="form-username" placeholder="Username..." class="form-username form-control" id="form-username"/>
-			                        </div>
-			                        <div class="form-group">
-			                        	<label class="sr-only" for="form-password">Password</label>
-			                        	<input type="password" name="form-password" placeholder="Password..." class="form-password form-control" id="form-password"/>
-			                        </div>
-			                        <button type="submit" class="btn">Sign in!</button>
-			                    </form>
-                                  <div class="row">
-                        <div class="col-sm-6 col-sm-offset-3 social-login">
-                        	
-                        	<div class="social-login-buttons">
-	                        	<a class="btn btn-link-1 btn-link-1-facebook" href="#">
-	                        		<i class="fa fa-facebook"></i> 
-	                        	</a>
-	                        	<a class="btn btn-link-1 btn-link-1-twitter" href="#">
-	                        		<i class="fa fa-twitter"></i> 
-	                        	</a>
-	                        	<a class="btn btn-link-1 btn-link-1-google-plus" href="#">
-	                        		<i class="fa fa-google-plus"></i>  
-	                        	</a>
-                        	</div>
+                                <h:form id="form"  class="login-form">
+
+
+                                    <p:panel header="Growl">  
+                                        <h:panelGrid columns="2" cellpadding="5">  
+                                            <p:outputLabel for="msg" value="Message:" />   
+                                            <p:inputText id="msg" value="#{controlSeccion.usu}" required="true" />  
+                                        </h:panelGrid>  
+                                        <p:growl id="growl" showDetail="true" sticky="true" /> 
+                                        <b:commandButton value="click me!" ajax="true"  actionListener="#{controlSeccion.iniciar}" update="growl"  />
+                                        <p:commandButton value="Save" />
+                                        <p:commandButton value="Info" actionListener="#{controlSeccion.iniciar}" update="@form"/>
+                                        <p:commandButton value="Warn" actionListener="#{controlSeccion.iniciar}" update="@form"/>
+                                        <p:commandButton value="Error" actionListener="#{controlSeccion.iniciar}" update="@form"/>
+                                        <p:commandButton value="Fatal" actionListener="#{controlSeccion.iniciar}" update="@form"/>
+
+                                        <p:commandButton id="ref" value="Specific" actionListener="#{controlSeccion.iniciar}" update="@form" />
+                                        
+                                        <b:growl id="growlMsg" globalOnly="true" placementFrom="bottom"
+                                                 show-detail="true" show-summary="false" allowDismiss="true"
+                                                 delay="10000" escape="true" /> 
+
+                                        <b:growl for="ref" id="growlSpecific" placementFrom="top" show-detail="true"
+                                                 global-only="false"
+                                                 show-summary="true" allow-dismiss="true"
+                                                 animation-enter="animated bounceInDown"
+                                                 animation-exit="animated flipOutX"
+                                                 escape="true" />
+                                    </p:panel> 
+                                    <div class="form-group">
+                                        <label class="sr-only" for="form-username">Username</label>
+                                        <input type="text" name="form-username" placeholder="Username..." class="form-username form-control" id="form-username"/>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="sr-only" for="form-password">Password</label>
+                                        <input type="password" name="form-password" placeholder="Password..." class="form-password form-control" id="form-password"/>
+                                    </div>
+                                    <button type="submit" class="btn">Sign in!</button>
+
+                                </h:form>
+                                <div class="row">
+                                    <h:form id="form2">
+                                         <p:growl id="msgs" showDetail="true" />
+  
+                                    </h:form>
+   
+                                    <div class="col-sm-6 col-sm-offset-3 social-login">
+
+                                        <div class="social-login-buttons">
+                                            <a class="btn btn-link-1 btn-link-1-facebook" href="#">
+                                                <i class="fa fa-facebook"></i> 
+                                            </a>
+                                            <a class="btn btn-link-1 btn-link-1-twitter" href="#">
+                                                <i class="fa fa-twitter"></i> 
+                                            </a>
+                                            <a class="btn btn-link-1 btn-link-1-google-plus" href="#">
+                                                <i class="fa fa-google-plus"></i>  
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
-		                    </div>
-                        </div>
-                    </div>
-                  
+
                 </div>
             </div>
-            
+
         </div>
-        
+
         <script src="js/jquery-1.11.1.min.js"></script>
         <script src="bootstrap/js/bootstrap.min.js"></script>
         <script src="js/jquery.backstretch.min.js"></script>

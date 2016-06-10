@@ -9,8 +9,10 @@ import com.Entidades.Miembro;
 import java.util.List;
 import java.util.ArrayList;
 import com.Entidades.Usuario;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import javax.faces.context.FacesContext;
 
 /**
  *
@@ -32,7 +34,11 @@ public class ControlSeccion {
     }
 
     //METODOS
-    public void iniciar(){}
+    public void iniciar(){
+         FacesContext context = FacesContext.getCurrentInstance();
+      
+        context.addMessage(null, new FacesMessage("Primer Mensage", "Additional Message Detail"+usu+""));
+    }
     
     
     
