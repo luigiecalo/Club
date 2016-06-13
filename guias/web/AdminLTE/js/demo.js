@@ -51,13 +51,13 @@
   //Layout options
   demo_settings.append(
       "<h4 class='control-sidebar-heading'>"
-      + "Layout Options"
+      + "Opciones"
       + "</h4>"
         //Fixed layout
       + "<div class='form-group'>"
       + "<label class='control-sidebar-subheading'>"
       + "<input type='checkbox' data-layout='fixed' class='pull-right'/> "
-      + "Fixed layout"
+      + "estoy cambiando a ver si hay cambios"
       + "</label>"
       + "<p>Activate the fixed layout. You can't use fixed and boxed layouts together</p>"
       + "</div>"

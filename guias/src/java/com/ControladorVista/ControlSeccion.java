@@ -35,6 +35,7 @@ public class ControlSeccion {
     private List<Usuario> usuarios = new ArrayList<Usuario>();
     private String usu;
     private String pass;
+    private String skins = "blue";
     private Long rolselect;
     private UsuarioDaoimplement usuarioDao = new UsuarioDaoimplement();
     private RolDaoimplement rolDao = new RolDaoimplement();
@@ -105,6 +106,10 @@ public class ControlSeccion {
     public static long toLong(Number number) {
         return number.longValue();
     }
+    
+    public void cambiarsikin(String skin){
+    skins=skin;
+    }
 
     //GET & SET
     public String getUsu() {
@@ -169,6 +174,14 @@ public class ControlSeccion {
 
     public void setRolselect(Long rolselect) {
         this.rolselect = rolselect;
+    }
+
+    public String getSkins() {
+        return skins;
+    }
+
+    public void setSkins(String skins) {
+        this.skins = skins;
     }
 
 }
