@@ -40,7 +40,7 @@ public class Usuario implements Serializable, Comparable<Usuario> {
     @Column(name = "idusuario")
     private Long id;
 
-    @Column(name = "login", length = 150, nullable = false)
+    @Column(name = "login", length = 150, nullable = false,unique=true)
     private String login;
 
     @Basic(optional = false)

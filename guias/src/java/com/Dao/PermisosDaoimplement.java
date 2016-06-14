@@ -17,8 +17,8 @@ import javax.persistence.EntityManager;
  */
 public class PermisosDaoimplement extends ImplDao<Permisos, Long> implements PermisosDao, Serializable {
     EntityManager em=getEmf().createEntityManager();
-    public List<Permisos> Listar() {
-        return em.createNamedQuery("Permisos.findAll").getResultList();
-    }
+//    public List<Permisos> Listar() {
+//        return em.createNamedQuery("Permisos.findAll").getResultList();
+//    }
 
 }

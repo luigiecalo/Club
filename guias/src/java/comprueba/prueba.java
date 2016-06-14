@@ -6,12 +6,16 @@
 package comprueba;
 
 import com.Dao.MiembroDaoimplement;
+import com.Dao.ModuloDaoimplement;
 import com.Dao.PermisosDaoimplement;
 import com.Dao.RolDaoimplement;
+import com.Dao.RolModuloPermisoDaoimplement;
 import com.Dao.UsuarioDaoimplement;
 import com.Entidades.Miembro;
+import com.Entidades.Modulo;
 import com.Entidades.Permisos;
 import com.Entidades.Rol;
+import com.Entidades.RolModuloPermiso;
 import com.Entidades.Usuario;
 
 import java.io.Serializable;
@@ -23,7 +27,7 @@ import java.util.ArrayList;
  * @author usuario
  */
 public class prueba implements Serializable {
-    
+
     public static void main(String[] args) {
         System.out.println("Hola");
         // ----<Controladore JPADAO Controller>-----
@@ -31,9 +35,15 @@ public class prueba implements Serializable {
         MiembroDaoimplement MDao = new MiembroDaoimplement();
         RolDaoimplement RDao = new RolDaoimplement();
         UsuarioDaoimplement UDao = new UsuarioDaoimplement();
+        ModuloDaoimplement MoDao = new ModuloDaoimplement();
+        RolModuloPermisoDaoimplement RMPDao = new RolModuloPermisoDaoimplement();
+        
+
         //OBJETOS
         Permisos permiso = new Permisos();
         Miembro miembro = new Miembro();
+        Modulo modulo = new Modulo();
+   
         Rol rol = new Rol();
         Usuario usuario = new Usuario();
 
@@ -42,29 +52,29 @@ public class prueba implements Serializable {
         List<Miembro> miembroLista = new ArrayList<Miembro>();
         List<Rol> rolesLista = new ArrayList<Rol>();
         List<Usuario> usuarioLista = new ArrayList<Usuario>();
+       
+        List<RolModuloPermiso> rolmodulospermisos = new ArrayList<RolModuloPermiso>();
         Long id;
 
-//                ///CREAR PERMISOç
+//                ///CREAR PERMISO
+//        id = Long.parseLong("1");
+//        permiso = PDao.consultar(Permisos.class, id);
 //        permiso.setNombrePermiso("T");
 //        permiso.setDescripcionPermiso("TOTAL");
-//        permiso.setRoles(null);
 //        PDao.crear(permiso);
 //        permiso.setNombrePermiso("L");
 //        permiso.setDescripcionPermiso("LECTURA");
-//        permiso.setRoles(null);
 //        PDao.crear(permiso);
 //        permiso.setNombrePermiso("E");
 //        permiso.setDescripcionPermiso("ESCRITURA");
-//        permiso.setRoles(null);
 //        PDao.crear(permiso);
 //        permiso.setNombrePermiso("M");
 //        permiso.setDescripcionPermiso("MODIFICACION");
-//        permiso.setRoles(null);
 //        PDao.crear(permiso);
 //        System.out.println("REGISTRO DE PERMISOS FUE UN EXITO");
 //
         //OPERACION ROL
-//       rol = RDao.consultarC(Rol.class,id);
+//        rol = RDao.consultarC(Rol.class, id);
 //        id = Long.parseLong("11");
 //        permiso = PDao.consultar(Permisos.class, id);
 //        permisoLista.add(permiso);
@@ -73,11 +83,22 @@ public class prueba implements Serializable {
 ////        //-----------------------
 //        rol.setNombre("ADMINISTRADOR");
 //        rol.setActivo(Boolean.TRUE);
-//        rol.setPermisos(permisoLista);
 //        RDao.crear(rol);//CREAR
 //     // RDao.modificar(rol);//MODIFICAR
 //        System.out.println("OPERACION DE ROL CON PERMISO EXITOSO");
 //        
+        ///OPERACION MODULO
+//        modulo = MoDao.consultarC(Modulo.class, id);
+//          modulo.setDescripcion("Aca");
+//        modulo.setIcono("spiner");
+//        MoDao.crear(modulo);
+//        System.out.println("OPERACION DE MODULO PERMISOS EXITOSA");
+
+//        RMP.setRol(rol);
+//        RMP.setModulo(modulo);
+//        RMPDao.crear(RMP);
+        System.out.println("OPERACION DE MODULO PERMISOS EXITOSA");
+
         ///OPERACION USUARIO
 //        id = Long.parseLong("4");
 //        rol = RDao.consultar(Rol.class, id);
@@ -100,15 +121,14 @@ public class prueba implements Serializable {
 //        miembro.setUsuario(usuario);
 //        MDao.modificar(miembro);
 //        System.out.println("OPERACION DE MIEMBRO EXITOSA");
-
         //LISTAR USUARIOS
-        usuarioLista = UDao.Listar();
-        for (Usuario usuari : usuarioLista) {
-            System.out.println(usuari.getLogin());
-        }
-        id=Long.parseLong("2");
-        usuario= UDao.buscarId1(id);
-        System.out.println(usuario.getRoles().size());
+//        usuarioLista = UDao.Listar();
+//        for (Usuario usuari : usuarioLista) {
+//            System.out.println(usuari.getLogin());
+//        }
+//        id=Long.parseLong("2");
+//        usuario= UDao.buscarId1(id);
+//        System.out.println(usuario.getRoles().size());
         //BUSCAR USUARIOS
 //        Long id= Long.parseLong("1");
 //        usuario=nUDao.consultar(Usuario.class,id);

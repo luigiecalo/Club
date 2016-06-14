@@ -57,7 +57,7 @@ public class ControlSeccion {
             context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Primer Mensage", "USUARIO NO ENCONTRADO REGISTRADO"));
         } else {
             if(usuario.getRoles().size()==1){
-                rolselect=usuario.getRoles().get(0).getId();
+                rolselect=usuario.getRoles().get(0).getIdrol();
                 selecionRol();
             }else{
             requestContext.getCurrentInstance().execute("$('.modalPseudoClass').modal();");
@@ -79,7 +79,7 @@ public class ControlSeccion {
                 context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Primer Mensage", "BIENBENIDO " + usuario.getLogin()));
                 context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Primer Mensage", "Como :" + rol.getNombre()));
                 requestContext.getCurrentInstance().execute("$('.modalPseudoClass').modal('hide');");
-                if (rol.getId().equals(toLong(1))) {
+                if (rol.getIdrol().equals(toLong(1))) {
                     context.getExternalContext().redirect("superAdministrador.xhtml");
                 } else {
                     context.getExternalContext().redirect("AdminLTE-master/index.html");

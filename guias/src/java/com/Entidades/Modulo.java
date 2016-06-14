@@ -26,56 +26,43 @@ import javax.xml.bind.annotation.XmlTransient;
  * @author usuario
  */
 @Entity
-@Table(name = "rol")
+@Table(name = "modulo")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Rol.findAll", query = "SELECT r FROM Rol r"),
-    @NamedQuery(name = "Rol.findByIdrol", query = "SELECT r FROM Rol r WHERE r.idrol = :idrol"),
-    @NamedQuery(name = "Rol.findByActivo", query = "SELECT r FROM Rol r WHERE r.activo = :activo"),
-    @NamedQuery(name = "Rol.findByNombre", query = "SELECT r FROM Rol r WHERE r.nombre = :nombre")})
-public class Rol implements Serializable {
+    @NamedQuery(name = "Modulo.findAll", query = "SELECT m FROM Modulo m"),
+    @NamedQuery(name = "Modulo.findByIdmodulo", query = "SELECT m FROM Modulo m WHERE m.idmodulo = :idmodulo"),
+    @NamedQuery(name = "Modulo.findByNombre", query = "SELECT m FROM Modulo m WHERE m.nombre = :nombre"),
+    @NamedQuery(name = "Modulo.findByDescripcion", query = "SELECT m FROM Modulo m WHERE m.descripcion = :descripcion"),
+    @NamedQuery(name = "Modulo.findByIcono", query = "SELECT m FROM Modulo m WHERE m.icono = :icono")})
+public class Modulo implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @Column(name = "idrol")
-    private Long idrol;
-    @Basic(optional = false)
-    @Column(name = "activo")
-    private boolean activo;
-    @Basic(optional = false)
+    @Column(name = "idmodulo")
+    private Long idmodulo;
     @Column(name = "nombre")
     private String nombre;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "rol")
+    @Column(name = "descripcion")
+    private String descripcion;
+    @Column(name = "icono")
+    private String icono;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "modulo")
     private List<RolModuloPermiso> rolModuloPermisoList;
 
-    public Rol() {
+    public Modulo() {
     }
 
-    public Rol(Long idrol) {
-        this.idrol = idrol;
+    public Modulo(Long idmodulo) {
+        this.idmodulo = idmodulo;
     }
 
-    public Rol(Long idrol, boolean activo, String nombre) {
-        this.idrol = idrol;
-        this.activo = activo;
-        this.nombre = nombre;
+    public Long getIdmodulo() {
+        return idmodulo;
     }
 
-    public Long getIdrol() {
-        return idrol;
-    }
-
-    public void setIdrol(Long idrol) {
-        this.idrol = idrol;
-    }
-
-    public boolean getActivo() {
-        return activo;
-    }
-
-    public void setActivo(boolean activo) {
-        this.activo = activo;
+    public void setIdmodulo(Long idmodulo) {
+        this.idmodulo = idmodulo;
     }
 
     public String getNombre() {
@@ -84,6 +71,22 @@ public class Rol implements Serializable {
 
     public void setNombre(String nombre) {
         this.nombre = nombre;
+    }
+
+    public String getDescripcion() {
+        return descripcion;
+    }
+
+    public void setDescripcion(String descripcion) {
+        this.descripcion = descripcion;
+    }
+
+    public String getIcono() {
+        return icono;
+    }
+
+    public void setIcono(String icono) {
+        this.icono = icono;
     }
 
     @XmlTransient
@@ -98,18 +101,18 @@ public class Rol implements Serializable {
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (idrol != null ? idrol.hashCode() : 0);
+        hash += (idmodulo != null ? idmodulo.hashCode() : 0);
         return hash;
     }
 
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Rol)) {
+        if (!(object instanceof Modulo)) {
             return false;
         }
-        Rol other = (Rol) object;
-        if ((this.idrol == null && other.idrol != null) || (this.idrol != null && !this.idrol.equals(other.idrol))) {
+        Modulo other = (Modulo) object;
+        if ((this.idmodulo == null && other.idmodulo != null) || (this.idmodulo != null && !this.idmodulo.equals(other.idmodulo))) {
             return false;
         }
         return true;
@@ -117,7 +120,7 @@ public class Rol implements Serializable {
 
     @Override
     public String toString() {
-        return "com.Entidades.Rol[ idrol=" + idrol + " ]";
+        return "com.Entidades.Modulo[ idmodulo=" + idmodulo + " ]";
     }
     
 }
