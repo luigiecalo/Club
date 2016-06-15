@@ -60,10 +60,9 @@ public class prueba implements Serializable {
         miembro= MDao.BuscarMiembroUsuario(usuario);
         System.out.println("Mienbro:"+miembro.getNombre1());
         
-        List<Long>modulos=RMPDao.buscarModulos(usuario.getRoles().get(0).getIdrol());
-        for (Long modulo1 : modulos) {
-            modulo=MoDao.consultar(Modulo.class, modulo1);
-            System.out.println("Los modulos son:"+modulo.getNombre()+" Con direcion: "+modulo.getSrc());
+        List<Modulo>modulos=RMPDao.buscarModulos(usuario.getRoles().get(0).getIdrol());
+        for (Modulo modulo1 : modulos) {
+            System.out.println("Los modulos son:"+modulo1.getNombre()+" Con direcion: "+modulo1.getSrc());
         }
     }
 }

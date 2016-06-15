@@ -12,6 +12,7 @@ import com.Entidades.Permisos;
 import com.Entidades.Rol;
 import com.Entidades.RolModuloPermiso;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
@@ -24,6 +25,7 @@ public class RolModuloPermisoDaoimplement extends ImplDao<RolModuloPermiso, Long
 
     EntityManager em = getEmf().createEntityManager();
     private static RolModuloPermisoDaoimplement RMPDao = new RolModuloPermisoDaoimplement();
+    private static ModuloDaoimplement MoDao = new ModuloDaoimplement();
 
     public void registrarRolModuloPermisos(Rol rol, Modulo mod, List<Permisos> permisos) {
         List<RolModuloPermiso> rolmoduloPermisos = buscarPermisos(rol.getIdrol(), mod.getIdmodulo());
@@ -59,13 +61,18 @@ public class RolModuloPermisoDaoimplement extends ImplDao<RolModuloPermiso, Long
         }
         return list;
     }
-     public List<Long> buscarModulos(Long idrol) {
+     public List<Modulo> buscarModulos(Long idrol) {
+         List<Modulo>modulos=new ArrayList<Modulo>();
         Query query = em.createNativeQuery("SELECT DISTINCT r.idmodulo FROM rol_modulo_permiso r WHERE r.idrol='"+idrol+"'" );
         List<Long> list = query.getResultList();
         if (list == null || list.isEmpty()) {
             return null;
         }
-        return list;
+         for (Long modulo1 : list) {
+           Modulo modulo=MoDao.consultar(Modulo.class, modulo1);
+           modulos.add(modulo);
+         }
+        return modulos;
     }
      
      

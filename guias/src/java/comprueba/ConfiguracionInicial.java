@@ -58,102 +58,102 @@ public class ConfiguracionInicial implements Serializable {
         Long id;
         try{
         
-//
-////                ///CREAR PERMISOS
-//        System.out.println("---CREANDO PERMISOS----");
-//        //1
-//        id = Long.parseLong("1");
-//        permiso.setIdpermisos(id);
-//        permiso.setNombrePermiso("T");
-//        permiso.setDescripcionPermiso("TOTAL");
-//        PDao.crear(permiso);
+
+//                ///CREAR PERMISOS
+        System.out.println("---CREANDO PERMISOS----");
+        //1
+        id = Long.parseLong("1");
+        permiso.setIdpermisos(id);
+        permiso.setNombrePermiso("T");
+        permiso.setDescripcionPermiso("TOTAL");
+        PDao.crear(permiso);
+        
+        //2
+        id = Long.parseLong("2");
+        permiso.setIdpermisos(id);
+        permiso.setNombrePermiso("L");
+        permiso.setDescripcionPermiso("LECTURA");
+        PDao.crear(permiso);
+
+        //3
+        id = Long.parseLong("3");
+        permiso.setIdpermisos(id);
+        permiso.setNombrePermiso("E");
+        permiso.setDescripcionPermiso("ESCRITURA");
+        PDao.crear(permiso);
+        //4
+        id = Long.parseLong("4");
+        permiso.setIdpermisos(id);
+        permiso.setNombrePermiso("M");
+        permiso.setDescripcionPermiso("MODIFICACION");
+        PDao.crear(permiso);
+        //5
+        id = Long.parseLong("5");
+        permiso.setIdpermisos(id);
+        permiso.setNombrePermiso("I");
+        permiso.setDescripcionPermiso("IMPRIMIR");
+        PDao.crear(permiso);
+        System.out.println("REGISTRO DE PERMISOS CREADOS CON EXITO");
+
+        //CREAR ROL
+        System.out.println("---CREANDO ROLE POR DEFECTO----");
+        id = Long.parseLong("1");
+        rol.setIdrol(id);
+        rol.setNombre("ADMINISTRADOR");
+        rol.setActivo(Boolean.TRUE);
+        RDao.crear(rol);//CREAR
+        rolesLista.add(rol);
+        System.out.println("ROL REGISTRADO CON EXITO ");
 //        
-//        //2
-//        id = Long.parseLong("2");
-//        permiso.setIdpermisos(id);
-//        permiso.setNombrePermiso("L");
-//        permiso.setDescripcionPermiso("LECTURA");
-//        PDao.crear(permiso);
-//
-//        //3
-//        id = Long.parseLong("3");
-//        permiso.setIdpermisos(id);
-//        permiso.setNombrePermiso("E");
-//        permiso.setDescripcionPermiso("ESCRITURA");
-//        PDao.crear(permiso);
-//        //4
-//        id = Long.parseLong("4");
-//        permiso.setIdpermisos(id);
-//        permiso.setNombrePermiso("M");
-//        permiso.setDescripcionPermiso("MODIFICACION");
-//        PDao.crear(permiso);
-//        //5
-//        id = Long.parseLong("5");
-//        permiso.setIdpermisos(id);
-//        permiso.setNombrePermiso("I");
-//        permiso.setDescripcionPermiso("IMPRIMIR");
-//        PDao.crear(permiso);
-//        System.out.println("REGISTRO DE PERMISOS CREADOS CON EXITO");
-//
-//        //CREAR ROL
-//        System.out.println("---CREANDO ROLE POR DEFECTO----");
-//        id = Long.parseLong("1");
-//        rol.setIdrol(id);
-//        rol.setNombre("ADMINISTRADOR");
-//        rol.setActivo(Boolean.TRUE);
-//        RDao.crear(rol);//CREAR
-//        rolesLista.add(rol);
-//        System.out.println("ROL REGISTRADO CON EXITO ");
-////        
-//        ///CREAR MODULOS
-//        System.out.println("---CREANDO MODULO USUARIO POR DEFECTO----");
-//        id = Long.parseLong("1");
-//        modulo.setIdmodulo(id);
-//        modulo.setNombre("Usuario");
-//        modulo.setSrc("usuario.xhtm");
-//        modulo.setIcono("fa-user");
-//        MoDao.crear(modulo);
-//        System.out.println("MODULO CREADO CON EXITO ");
-//        //
-//        System.out.println("---CREANDO MODULO CONFIGURACION POR DEFECTO----");
-//        id = Long.parseLong("2");
-//        modulo.setIdmodulo(id);
-//        modulo.setNombre("Configuracion");
-//        modulo.setSrc("configuracion.xhtm");
-//        modulo.setIcono("fa-newspaper-o");
-//        MoDao.crear(modulo);
-//        System.out.println("MODULO CREADO CON EXITO ");
-//
-//        //REGISTRAR RELACION ROL MODULO PERMISOS 
-//        System.out.println("---ESTABLECIENDO RELACION ROL MODULO PERMISOS----");
-//        id = Long.parseLong("1");
-//        permisoLista.clear();
-//        permiso=PDao.consultarC(Permisos.class, id);
-//        permisoLista.add(permiso);
-//        RMPDao.registrarRolModuloPermisos(rol, modulo, permisoLista);
-//        id = Long.parseLong("1");
-//        modulo=MoDao.consultar(Modulo.class, id);
-//        RMPDao.registrarRolModuloPermisos(rol, modulo, permisoLista);
-//        System.out.println("RELACION ROL MODULO PERMISOS EXITOSA");
-//
-//        
-//        //CRAER MIEMBRO CON USUARIO
-//        System.out.println("---CREANDO MIEMBRO CON USUARIO POR DEFECTO----");
-//        id = Long.parseLong("1");
-//        miembro.setIdmiembro(id);
-//        miembro.setNombre1("SUPERADMINISTRADOR");
-//        miembro.setApellido1("SISTEMA");
-//        miembro.setEstado("ACTIVO");
-//        miembro.setDocumento("123456");
-//        usuario.setId(id);
-//        usuario.setRoles(rolesLista);
-//        usuario.setLogin("ADMIN");
-//        usuario.setPassword("ADMIN");
-//        usuario.setEstado(1);
-//        miembro.setUsuario(usuario);
-//        MDao.crear(miembro);
-//        System.out.println("MIEMBRO CON USUARIO CREADOS EXITOSAMENTE");
-//        
+        ///CREAR MODULOS
+        System.out.println("---CREANDO MODULO USUARIO POR DEFECTO----");
+        id = Long.parseLong("1");
+        modulo.setIdmodulo(id);
+        modulo.setNombre("Usuario");
+        modulo.setSrc("usuario.xhtm");
+        modulo.setIcono("fa-user");
+        MoDao.crear(modulo);
+        System.out.println("MODULO CREADO CON EXITO ");
+        //
+        System.out.println("---CREANDO MODULO CONFIGURACION POR DEFECTO----");
+        id = Long.parseLong("2");
+        modulo.setIdmodulo(id);
+        modulo.setNombre("Configuracion");
+        modulo.setSrc("configuracion.xhtm");
+        modulo.setIcono("fa-newspaper-o");
+        MoDao.crear(modulo);
+        System.out.println("MODULO CREADO CON EXITO ");
+
+        //REGISTRAR RELACION ROL MODULO PERMISOS 
+        System.out.println("---ESTABLECIENDO RELACION ROL MODULO PERMISOS----");
+        id = Long.parseLong("1");
+        permisoLista.clear();
+        permiso=PDao.consultarC(Permisos.class, id);
+        permisoLista.add(permiso);
+        RMPDao.registrarRolModuloPermisos(rol, modulo, permisoLista);
+        id = Long.parseLong("1");
+        modulo=MoDao.consultar(Modulo.class, id);
+        RMPDao.registrarRolModuloPermisos(rol, modulo, permisoLista);
+        System.out.println("RELACION ROL MODULO PERMISOS EXITOSA");
+
+        
+        //CRAER MIEMBRO CON USUARIO
+        System.out.println("---CREANDO MIEMBRO CON USUARIO POR DEFECTO----");
+        id = Long.parseLong("1");
+        miembro.setIdmiembro(id);
+        miembro.setNombre1("SUPERADMINISTRADOR");
+        miembro.setApellido1("SISTEMA");
+        miembro.setEstado("ACTIVO");
+        miembro.setDocumento("123456");
+        usuario.setId(id);
+        usuario.setRoles(rolesLista);
+        usuario.setLogin("ADMIN");
+        usuario.setPassword("ADMIN");
+        usuario.setEstado(1);
+        miembro.setUsuario(usuario);
+        MDao.crear(miembro);
+        System.out.println("MIEMBRO CON USUARIO CREADOS EXITOSAMENTE");
+        
 //        
 //        
 //        LISTAR USUARIOS

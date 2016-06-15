@@ -10,6 +10,7 @@ import com.Dao.RolDaoimplement;
 import com.Dao.RolModuloPermisoDaoimplement;
 import com.Dao.UsuarioDaoimplement;
 import com.Entidades.Miembro;
+import com.Entidades.Modulo;
 import com.Entidades.Permisos;
 import com.Entidades.Rol;
 import com.Entidades.RolModuloPermiso;
@@ -17,6 +18,8 @@ import java.util.List;
 import java.util.ArrayList;
 import com.Entidades.Usuario;
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.faces.application.FacesMessage;
@@ -35,12 +38,12 @@ import org.primefaces.context.RequestContext;
 @SessionScoped
 public class ControlSeccion {
 
-    private Usuario usuario = null;
-    private Miembro miembro = new Miembro();
-    private List<RolModuloPermiso> rolModuloPermisoList= new ArrayList<RolModuloPermiso>();
-    private Rol rol = new Rol();
-    private List<Permisos> permisos = new ArrayList<Permisos>();
-    private List<Rol> roles = new ArrayList<Rol>();
+    private Miembro miembro = null;
+    private Rol rolSeccion = new Rol();
+    private List<Modulo> ModulosSeccion = new ArrayList<Modulo>();
+    
+    private Map<String,Long> rolesSeccion;
+
     private String usu;
     private String pass;
     private String skins = "blue";
@@ -49,6 +52,7 @@ public class ControlSeccion {
     private MiembroDaoimplement miembroDao = new MiembroDaoimplement();
     private RolModuloPermisoDaoimplement rolMPDao = new RolModuloPermisoDaoimplement();
     private RolDaoimplement rolDao = new RolDaoimplement();
+
     private boolean seccion = false;
 
     /**
@@ -62,14 +66,17 @@ public class ControlSeccion {
     public void iniciar() {
         FacesContext context = FacesContext.getCurrentInstance();
         RequestContext requestContext = RequestContext.getCurrentInstance();
-        usuario = usuarioDao.login(usu, pass);
+        Usuario usuario = usuarioDao.login(usu, pass);
         if (usuario == null) {
             context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Primer Mensage", "USUARIO NO ENCONTRADO REGISTRADO"));
         } else {
+            
             if (usuario.getRoles().size() == 1) {
                 rolselect = usuario.getRoles().get(0).getIdrol();
+                miembro = miembroDao.BuscarMiembroUsuario(usuario);
                 selecionRol();
             } else {
+                 miembro = miembroDao.BuscarMiembroUsuario(usuario);
                 requestContext.getCurrentInstance().execute("$('.modalPseudoClass').modal();");
             }
         }
@@ -83,17 +90,17 @@ public class ControlSeccion {
             context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Primer Mensage", "SELECIONE UN ROL"));
             requestContext.getCurrentInstance().execute("$('.modalPseudoClass').modal('hide');");
         } else {
-            rol = rolDao.consultarC(Rol.class, rolselect);
-            if (rol != null) {
+            rolSeccion = rolDao.consultarC(Rol.class, rolselect);
+            if (rolSeccion != null) {
                 try {
-                   
+
                     secccion();
-                    miembro = miembroDao.BuscarMiembroUsuario(usuario);
+                    
                     requestContext.getCurrentInstance().execute("$('.modalPseudoClass').modal('hide');");
-                    if (rol.getIdrol().equals(toLong(1))) {
+                    if (rolSeccion.getIdrol().equals(toLong(1))) {
                         context.getExternalContext().redirect("superAdministrador.xhtml");
                     } else {
-                        context.getExternalContext().redirect("AdminLTE-master/index.html");
+                        context.getExternalContext().redirect("superAdministrador.xhtml");
                     }
                     usu = "";
                     pass = "";
@@ -106,11 +113,12 @@ public class ControlSeccion {
     }
 
     public void secccion() {
-        if (usuario==null) {
+        if (miembro == null) {
             this.seccion = false;
             salir();
         } else {
             this.seccion = true;
+            cargarModulos();
 
         }
     }
@@ -128,16 +136,26 @@ public class ControlSeccion {
             httpSession.invalidate();
 
             context.getExternalContext().redirect("index.xhtml");
-            this.usuario=null;
-            this.miembro=null;
-            this.seccion=false;
-            this.rol=null;
+           
+            this.miembro = null;
+            this.seccion = false;
+            this.rolSeccion = null;
             this.rolselect = toLong(0);
         } catch (IOException ex) {
             Logger.getLogger(ControlSeccion.class.getName()).log(Level.SEVERE, null, ex);
         }
 
     }
+
+    private void cargarModulos() {
+        ModulosSeccion = rolMPDao.buscarModulos(miembro.getUsuario().getId());
+        rolesSeccion= new HashMap<String, Long>();
+        for (Rol rol : miembro.getUsuario().getRoles()) {
+            rolesSeccion.put(rol.getNombre(),rol.getIdrol());
+        }
+    }
+
+   
 
     public static long toLong(Number number) {
         return number.longValue();
@@ -164,17 +182,7 @@ public class ControlSeccion {
         this.pass = pass;
     }
 
-    public Usuario getUsuario() {
-        return usuario;
-    }
 
-    public void setUsuario(Usuario usuario) {
-        this.usuario = usuario;
-    }
-
-    public List<Rol> getRoles() {
-        return roles;
-    }
 
     public boolean isSeccion() {
         return seccion;
@@ -185,17 +193,12 @@ public class ControlSeccion {
     }
 
     public Rol getRol() {
-        return rol;
+        return rolSeccion;
     }
 
     public void setRol(Rol rol) {
-        this.rol = rol;
+        this.rolSeccion = rol;
     }
-
-    public List<Permisos> getPermisos() {
-        return permisos;
-    }
-
 
     public Long getRolselect() {
         return rolselect;
@@ -217,14 +220,17 @@ public class ControlSeccion {
         return miembro;
     }
 
-   
-    public List<RolModuloPermiso> getRolModuloPermisoList() {
-       
-        return rolModuloPermisoList;
+    public Rol getRolSeccion() {
+        return rolSeccion;
     }
 
-   
+    public List<Modulo> getModulosSeccion() {
+        return ModulosSeccion;
+    }
 
-    
-    
+    public Map<String,Long> getRolesSeccion() {
+        return rolesSeccion;
+    }
+
+
 }
