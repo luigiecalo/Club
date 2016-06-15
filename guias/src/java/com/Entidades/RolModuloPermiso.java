@@ -24,10 +24,15 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "RolModuloPermiso.findAll", query = "SELECT r FROM RolModuloPermiso r"),
-    @NamedQuery(name = "RolModuloPermiso.findByIdrol", query = "SELECT r FROM RolModuloPermiso r WHERE r.rolModuloPermisoPK.idrol = :idrol"),
+    @NamedQuery(name = RolModuloPermiso.BUSCAR_MODULOS_ROL, query = "SELECT r FROM RolModuloPermiso r WHERE r.rolModuloPermisoPK.idrol = :idrol"),
     @NamedQuery(name = "RolModuloPermiso.findByIdpermiso", query = "SELECT r FROM RolModuloPermiso r WHERE r.rolModuloPermisoPK.idpermiso = :idpermiso"),
-    @NamedQuery(name = "RolModuloPermiso.findByIdmodulo", query = "SELECT r FROM RolModuloPermiso r WHERE r.rolModuloPermisoPK.idmodulo = :idmodulo")})
+    @NamedQuery(name = "RolModuloPermiso.findByIdmodulo", query = "SELECT r FROM RolModuloPermiso r WHERE r.rolModuloPermisoPK.idmodulo = :idmodulo"),
+    @NamedQuery(name = RolModuloPermiso.BUSCAR_PERMISOS_MODULO_ROL, query = "SELECT r FROM RolModuloPermiso r WHERE r.rolModuloPermisoPK.idmodulo = :idmodulo "
+            + "AND r.rolModuloPermisoPK.idrol = :idrol")})
 public class RolModuloPermiso implements Serializable {
+
+    public static final String BUSCAR_PERMISOS_MODULO_ROL = "RolModuloPermiso.buscarpermisos";
+     public static final String BUSCAR_MODULOS_ROL = "RolModuloPermiso.buscarmodulos";
     private static final long serialVersionUID = 1L;
     @EmbeddedId
     protected RolModuloPermisoPK rolModuloPermisoPK;
@@ -42,6 +47,16 @@ public class RolModuloPermiso implements Serializable {
     private Rol rol;
 
     public RolModuloPermiso() {
+    }
+
+    public RolModuloPermiso(Rol rol, Modulo mod, Permisos per) {
+        this.rolModuloPermisoPK = new RolModuloPermisoPK();
+        this.rolModuloPermisoPK.setIdmodulo(mod.getIdmodulo());
+        this.rolModuloPermisoPK.setIdpermiso(per.getIdpermisos());
+        this.rolModuloPermisoPK.setIdrol(rol.getIdrol());
+        this.modulo = mod;
+        this.rol = rol;
+        this.permisos = per;
     }
 
     public RolModuloPermiso(RolModuloPermisoPK rolModuloPermisoPK) {
@@ -108,5 +123,5 @@ public class RolModuloPermiso implements Serializable {
     public String toString() {
         return "com.Entidades.RolModuloPermiso[ rolModuloPermisoPK=" + rolModuloPermisoPK + " ]";
     }
-    
+
 }

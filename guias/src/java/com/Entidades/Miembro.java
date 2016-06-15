@@ -19,9 +19,11 @@ import javax.xml.bind.annotation.XmlRootElement;
 @NamedQueries({
     @NamedQuery(name = "Miembro.findAll", query = "SELECT m FROM Miembro m"),
     @NamedQuery(name = "Miembro.findByIdmiembro", query = "SELECT m FROM Miembro m WHERE m.idmiembro = :idmiembro"),
-    @NamedQuery(name = "Miembro.findByDocumento", query = "SELECT m FROM Miembro m WHERE m.documento = :documento")})
+    @NamedQuery(name = Miembro.BUSCAR_USUARIO, query = "SELECT m FROM Miembro m WHERE m.usuario = :usuario")})
 public class Miembro implements Serializable {
 
+    
+    public static final String BUSCAR_USUARIO = "Miembro.buscarDocumento";
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "USER_SEQUENCE")

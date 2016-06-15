@@ -5,10 +5,14 @@
  */
 package com.ControladorVista;
 
+import com.Dao.MiembroDaoimplement;
 import com.Dao.RolDaoimplement;
+import com.Dao.RolModuloPermisoDaoimplement;
 import com.Dao.UsuarioDaoimplement;
+import com.Entidades.Miembro;
 import com.Entidades.Permisos;
 import com.Entidades.Rol;
+import com.Entidades.RolModuloPermiso;
 import java.util.List;
 import java.util.ArrayList;
 import com.Entidades.Usuario;
@@ -18,7 +22,9 @@ import java.util.logging.Logger;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
+import javax.servlet.http.HttpSession;
 import org.primefaces.context.RequestContext;
 
 /**
@@ -29,23 +35,27 @@ import org.primefaces.context.RequestContext;
 @SessionScoped
 public class ControlSeccion {
 
-    private Usuario usuario = new Usuario();
+    private Usuario usuario = null;
+    private Miembro miembro = new Miembro();
+    private List<RolModuloPermiso> rolModuloPermisoList= new ArrayList<RolModuloPermiso>();
     private Rol rol = new Rol();
     private List<Permisos> permisos = new ArrayList<Permisos>();
-    private List<Usuario> usuarios = new ArrayList<Usuario>();
+    private List<Rol> roles = new ArrayList<Rol>();
     private String usu;
     private String pass;
     private String skins = "blue";
     private Long rolselect;
     private UsuarioDaoimplement usuarioDao = new UsuarioDaoimplement();
+    private MiembroDaoimplement miembroDao = new MiembroDaoimplement();
+    private RolModuloPermisoDaoimplement rolMPDao = new RolModuloPermisoDaoimplement();
     private RolDaoimplement rolDao = new RolDaoimplement();
-    private boolean seccion = true;
+    private boolean seccion = false;
 
     /**
      * Creates a new instance of ControlSeccion
      */
     public ControlSeccion() {
-        seccion = true;
+        rolselect = toLong(0);
     }
 
     //METODOS
@@ -56,12 +66,12 @@ public class ControlSeccion {
         if (usuario == null) {
             context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Primer Mensage", "USUARIO NO ENCONTRADO REGISTRADO"));
         } else {
-            if(usuario.getRoles().size()==1){
-                rolselect=usuario.getRoles().get(0).getIdrol();
+            if (usuario.getRoles().size() == 1) {
+                rolselect = usuario.getRoles().get(0).getIdrol();
                 selecionRol();
-            }else{
-            requestContext.getCurrentInstance().execute("$('.modalPseudoClass').modal();");
-            } 
+            } else {
+                requestContext.getCurrentInstance().execute("$('.modalPseudoClass').modal();");
+            }
         }
 
     }
@@ -69,46 +79,72 @@ public class ControlSeccion {
     public void selecionRol() {
         FacesContext context = FacesContext.getCurrentInstance();
         RequestContext requestContext = RequestContext.getCurrentInstance();
-        rol = rolDao.consultarC(Rol.class, rolselect);
-        if (rol == null) {
+        if (rolselect.equals(toLong(0))) {
             context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Primer Mensage", "SELECIONE UN ROL"));
+            requestContext.getCurrentInstance().execute("$('.modalPseudoClass').modal('hide');");
         } else {
-            try {
-                seccion = false;
-                secccion();
-                context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Primer Mensage", "BIENBENIDO " + usuario.getLogin()));
-                context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Primer Mensage", "Como :" + rol.getNombre()));
-                requestContext.getCurrentInstance().execute("$('.modalPseudoClass').modal('hide');");
-                if (rol.getIdrol().equals(toLong(1))) {
-                    context.getExternalContext().redirect("superAdministrador.xhtml");
-                } else {
-                    context.getExternalContext().redirect("AdminLTE-master/index.html");
+            rol = rolDao.consultarC(Rol.class, rolselect);
+            if (rol != null) {
+                try {
+                   
+                    secccion();
+                    miembro = miembroDao.BuscarMiembroUsuario(usuario);
+                    requestContext.getCurrentInstance().execute("$('.modalPseudoClass').modal('hide');");
+                    if (rol.getIdrol().equals(toLong(1))) {
+                        context.getExternalContext().redirect("superAdministrador.xhtml");
+                    } else {
+                        context.getExternalContext().redirect("AdminLTE-master/index.html");
+                    }
+                    usu = "";
+                    pass = "";
+                } catch (IOException ex) {
+                    context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "ERROR", ex.getLocalizedMessage()));
                 }
-
-            } catch (IOException ex) {
-                context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "ERROR", ex.getLocalizedMessage()));
             }
         }
+
     }
 
     public void secccion() {
-        FacesContext context = FacesContext.getCurrentInstance();
-        System.out.println(usu);
-        if (usu == null) {
-            seccion = true;
-            //  context.addMessage(null, new FacesMessage("Error de Autenticacion"));
+        if (usuario==null) {
+            this.seccion = false;
+            salir();
         } else {
-            seccion = false;
+            this.seccion = true;
 
         }
+    }
+
+    public void salir() {
+        try {
+            FacesContext context = FacesContext.getCurrentInstance();
+
+            ExternalContext externalContext = context.getExternalContext();
+
+            Object session = externalContext.getSession(false);
+
+            HttpSession httpSession = (HttpSession) session;
+
+            httpSession.invalidate();
+
+            context.getExternalContext().redirect("index.xhtml");
+            this.usuario=null;
+            this.miembro=null;
+            this.seccion=false;
+            this.rol=null;
+            this.rolselect = toLong(0);
+        } catch (IOException ex) {
+            Logger.getLogger(ControlSeccion.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
     }
 
     public static long toLong(Number number) {
         return number.longValue();
     }
-    
-    public void cambiarsikin(String skin){
-    skins=skin;
+
+    public void cambiarsikin(String skin) {
+        skins = skin;
     }
 
     //GET & SET
@@ -136,12 +172,8 @@ public class ControlSeccion {
         this.usuario = usuario;
     }
 
-    public List<Usuario> getUsuarios() {
-        return usuarios;
-    }
-
-    public void setUsuarios(List<Usuario> usuarios) {
-        this.usuarios = usuarios;
+    public List<Rol> getRoles() {
+        return roles;
     }
 
     public boolean isSeccion() {
@@ -164,9 +196,6 @@ public class ControlSeccion {
         return permisos;
     }
 
-    public void setPermisos(List<Permisos> permisos) {
-        this.permisos = permisos;
-    }
 
     public Long getRolselect() {
         return rolselect;
@@ -184,4 +213,18 @@ public class ControlSeccion {
         this.skins = skins;
     }
 
+    public Miembro getMiembro() {
+        return miembro;
+    }
+
+   
+    public List<RolModuloPermiso> getRolModuloPermisoList() {
+       
+        return rolModuloPermisoList;
+    }
+
+   
+
+    
+    
 }

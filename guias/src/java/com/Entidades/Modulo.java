@@ -32,7 +32,7 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Modulo.findAll", query = "SELECT m FROM Modulo m"),
     @NamedQuery(name = "Modulo.findByIdmodulo", query = "SELECT m FROM Modulo m WHERE m.idmodulo = :idmodulo"),
     @NamedQuery(name = "Modulo.findByNombre", query = "SELECT m FROM Modulo m WHERE m.nombre = :nombre"),
-    @NamedQuery(name = "Modulo.findByDescripcion", query = "SELECT m FROM Modulo m WHERE m.descripcion = :descripcion"),
+    @NamedQuery(name = "Modulo.findByDescripcion", query = "SELECT m FROM Modulo m WHERE m.src = :src"),
     @NamedQuery(name = "Modulo.findByIcono", query = "SELECT m FROM Modulo m WHERE m.icono = :icono")})
 public class Modulo implements Serializable {
     private static final long serialVersionUID = 1L;
@@ -43,8 +43,8 @@ public class Modulo implements Serializable {
     private Long idmodulo;
     @Column(name = "nombre")
     private String nombre;
-    @Column(name = "descripcion")
-    private String descripcion;
+    @Column(name = "src")
+    private String src;
     @Column(name = "icono")
     private String icono;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "modulo")
@@ -73,12 +73,12 @@ public class Modulo implements Serializable {
         this.nombre = nombre;
     }
 
-    public String getDescripcion() {
-        return descripcion;
+    public String getSrc() {
+        return src;
     }
 
-    public void setDescripcion(String descripcion) {
-        this.descripcion = descripcion;
+    public void setSrc(String src) {
+        this.src = src;
     }
 
     public String getIcono() {

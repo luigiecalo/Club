@@ -77,7 +77,7 @@
                                              closable="false" close-on-escape="false" backdrop="false">
                                         <h:panelGrid columns="2" style="margin-bottom:10px" cellpadding="5">
                                             <p:selectOneRadio id="city" value="#{controlSeccion.rolselect}"  layout="grid" columns="1">
-                                                <f:selectItems value="#{controlSeccion.usuario.roles}" var="rol" itemLabel="#{rol.nombre}" itemValue="#{rol.id}"/>
+                                                <f:selectItems value="#{controlSeccion.usuario.roles}" var="rol" itemLabel="#{rol.nombre}" itemValue="#{rol.idrol}"/>
                                             </p:selectOneRadio>
                                         </h:panelGrid>
                                         <f:facet name="footer">
