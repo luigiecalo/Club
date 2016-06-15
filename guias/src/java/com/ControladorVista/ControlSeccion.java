@@ -98,7 +98,7 @@ public class ControlSeccion {
                     if (rolSeccion.getIdrol().equals(toLong(1))) {
                         context.getExternalContext().redirect("superAdministrador.xhtml");
                     } else {
-                        context.getExternalContext().redirect("superAdministrador.xhtml");
+                        context.getExternalContext().redirect("index.xhtml");
                     }
                     usu = "";
                     pass = "";

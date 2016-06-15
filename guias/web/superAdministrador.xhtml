@@ -432,6 +432,12 @@
                                     <p:commandButton  class="btn btn-primary" value="cambiar A Color azul el skin" actionListener="#{controlSeccion.cambiarsikin('blue')}"/>
                                     <p:commandButton  class="btn btn-warning" value="cambiar A Color amarillo el skin" actionListener="#{controlSeccion.cambiarsikin('yellow')}"/>
                                     <p:commandButton  class="btn btn-success" value="cambiar A Color verde el skin" actionListener="#{controlSeccion.cambiarsikin('green')}"/>
+
+                                    <b:selectOneMenu value="#{controlSeccion.rolselect}" >
+                                        
+                                        <f:selectItems value="#{controlSeccion.rolesSeccion}" />
+                                    </b:selectOneMenu>
+                                    <p:commandButton  class="btn btn-success" value="cambiar de ROL" actionListener="#{controlSeccion.selecionRol}"/>
                                 </h:form>
                             </div>
 
