@@ -41,8 +41,8 @@ public class ControlSeccion {
     private Miembro miembro = null;
     private Rol rolSeccion = new Rol();
     private List<Modulo> ModulosSeccion = new ArrayList<Modulo>();
-    
-    private Map<String,Long> rolesSeccion;
+
+    private Map<String, Long> rolesSeccion;
 
     private String usu;
     private String pass;
@@ -70,13 +70,11 @@ public class ControlSeccion {
         if (usuario == null) {
             context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Primer Mensage", "USUARIO NO ENCONTRADO REGISTRADO"));
         } else {
-            
+            miembro = miembroDao.BuscarMiembroUsuario(usuario);
             if (usuario.getRoles().size() == 1) {
                 rolselect = usuario.getRoles().get(0).getIdrol();
-                miembro = miembroDao.BuscarMiembroUsuario(usuario);
                 selecionRol();
             } else {
-                 miembro = miembroDao.BuscarMiembroUsuario(usuario);
                 requestContext.getCurrentInstance().execute("$('.modalPseudoClass').modal();");
             }
         }
@@ -95,7 +93,7 @@ public class ControlSeccion {
                 try {
 
                     secccion();
-                    
+
                     requestContext.getCurrentInstance().execute("$('.modalPseudoClass').modal('hide');");
                     if (rolSeccion.getIdrol().equals(toLong(1))) {
                         context.getExternalContext().redirect("superAdministrador.xhtml");
@@ -114,10 +112,10 @@ public class ControlSeccion {
 
     public void secccion() {
         if (miembro == null) {
-            this.seccion = false;
+            seccion = false;
             salir();
         } else {
-            this.seccion = true;
+            seccion = true;
             cargarModulos();
 
         }
@@ -136,11 +134,11 @@ public class ControlSeccion {
             httpSession.invalidate();
 
             context.getExternalContext().redirect("index.xhtml");
-           
-            this.miembro = null;
-            this.seccion = false;
-            this.rolSeccion = null;
-            this.rolselect = toLong(0);
+
+            miembro = null;
+            seccion = false;
+            rolSeccion = null;
+            rolselect = toLong(0);
         } catch (IOException ex) {
             Logger.getLogger(ControlSeccion.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -148,14 +146,12 @@ public class ControlSeccion {
     }
 
     private void cargarModulos() {
-        ModulosSeccion = rolMPDao.buscarModulos(miembro.getUsuario().getId());
-        rolesSeccion= new HashMap<String, Long>();
+        ModulosSeccion = rolMPDao.buscarModulos(rolSeccion.getIdrol());
+        rolesSeccion = new HashMap<String, Long>();
         for (Rol rol : miembro.getUsuario().getRoles()) {
-            rolesSeccion.put(rol.getNombre(),rol.getIdrol());
+            this.rolesSeccion.put(rol.getNombre(), rol.getIdrol());
         }
     }
-
-   
 
     public static long toLong(Number number) {
         return number.longValue();
@@ -181,8 +177,6 @@ public class ControlSeccion {
     public void setPass(String pass) {
         this.pass = pass;
     }
-
-
 
     public boolean isSeccion() {
         return seccion;
@@ -228,9 +222,8 @@ public class ControlSeccion {
         return ModulosSeccion;
     }
 
-    public Map<String,Long> getRolesSeccion() {
+    public Map<String, Long> getRolesSeccion() {
         return rolesSeccion;
     }
-
 
 }
