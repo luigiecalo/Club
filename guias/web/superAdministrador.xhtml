@@ -5,7 +5,7 @@
       xmlns:p="http://primefaces.org/ui"
       xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
-    <head>
+    <h:head >
         <meta charset="utf-8"/>
         <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
         <title>AdminLTE 2 | Dashboard</title>
@@ -14,14 +14,15 @@
         <!-- Bootstrap 3.3.6 -->
         <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css"/>
         <link rel="stylesheet" type="text/css" href="font-awesome/css/font-awesome.min.css"/>
+        <link rel="stylesheet/less" type="text/css" href="styles.less" />
         <!-- Theme style -->
         <link rel="stylesheet" href="AdminLTE-master/dist/css/AdminLTE.min.css"/>
         <!-- AdminLTE Skins. Choose a skin from the css/skins
              folder instead of downloading all of them to reduce the load. -->
         <link rel="stylesheet" href="AdminLTE/css/skins/skin-#{controlSeccion.skins}.css"/>
 
-    </head>
-    <h:body onload="#{controlSeccion.secccion()}" class="hold-transition skin-#{controlSeccion.skins} sidebar-mini">
+    </h:head>
+    <h:body  onload="#{controlSeccion.validaSeccion()}" class="hold-transition skin-#{controlSeccion.skins} sidebar-mini">
         <div class="wrapper">
 
             <header class="main-header">
@@ -247,7 +248,13 @@
 
                                         <p>
                                             #{controlSeccion.miembro.nombre1}-#{controlSeccion.miembro.apellido1}
-                                            <small>#{controlSeccion.rolSeccion.nombre}</small>
+                                            <small style="position: relative"><h:form>
+                                                    <h:selectOneMenu class="form-control select2" id="country" value="#{controlSeccion.rolselect}" title="ROL SELECIONADO" style="width:150px">
+                                                        <p:ajax  listener="#{controlSeccion.selecionRol}" update="@form" />
+                                                        <f:selectItems value="#{controlSeccion.rolesSeccion}" />
+                                                    </h:selectOneMenu> 
+                                                </h:form>
+                                            </small>
                                         </p>
                                     </li>
                                     <!-- Menu Body -->
@@ -272,7 +279,7 @@
                                         <div class="pull-left">
                                             <a href="#" class="btn btn-default btn-flat">Profile</a>
                                         </div>
-                                        <div class="pull-right">
+                                        <div class="pull-right ">
                                             <h:form>
                                                 <b:commandButton  class="btn btn-default btn-flat" value="Cerrar Seccion" actionListener="#{controlSeccion.salir()}" update="@form"/>
                                             </h:form>
@@ -301,8 +308,12 @@
                         </div>
                         <div class="pull-left info">
                             <p>#{controlSeccion.miembro.nombre1}</p>
-                            <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
-
+                            <h:form>
+                                <h:selectOneMenu class="form-control select2" id="country" value="#{controlSeccion.rolselect}" title="ROL SELECIONADO" style="width:150px">
+                                    <p:ajax    listener="#{controlSeccion.selecionRol}" />
+                                    <f:selectItems value="#{controlSeccion.rolesSeccion}" />
+                                </h:selectOneMenu> 
+                            </h:form>
                         </div>
                         <div>
 
@@ -315,11 +326,7 @@
                     <h:form >
                         <ul class="sidebar-menu">
                             <li class="header">
-                                ROL ACTUAL:
-                                <b:selectOneMenu value="#{controlSeccion.rolselect}" >
-                                    <p:ajax listener="#{controlSeccion.selecionRol()}" update="@form" />
-                                    <f:selectItems value="#{controlSeccion.rolesSeccion}" />
-                                </b:selectOneMenu>
+                                MENÚ PRINCIPAL
 
                             </li>
                             <ui:repeat value="#{controlSeccion.modulosSeccion}" var="Mod">
@@ -339,89 +346,79 @@
 
             <!-- Content Wrapper. Contains page content -->
             <div class="content-wrapper">
-                <!-- Content Header (Page header) -->
-                <section class="content-header">
-                    <h1>
-                        Dashboard
-                        <small>Control panel</small>
-                    </h1>
-                    <ol class="breadcrumb">
-                        <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-                        <li class="active">Dashboard</li>
-                    </ol>
-                </section>
+                <h:form>
+              
 
-                <!-- Main content -->
-                <section class="content">
-                    <!-- Small boxes (Stat box) -->
-                    <div class="row">
-                        <div class="col-lg-3 col-xs-6">
-                            <!-- small box -->
-                            <div class="small-box bg-aqua">
-                                <div class="inner">
-                                    <h3>150</h3>
+                    <!-- Main content -->
+                    <section class="content">
+                        <!-- Small boxes (Stat box) -->
+                        <div class="row">
+                            <div class="col-lg-3 col-xs-6">
+                                <!-- small box -->
+                                <div class="small-box bg-aqua">
+                                    <div class="inner">
+                                        <h3>150</h3>
 
-                                    <p>New Orders</p>
+                                        <p>New Orders</p>
+                                    </div>
+                                    <div class="icon">
+                                        <i class="ion ion-bag"></i>
+                                    </div>
+                                    <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
                                 </div>
-                                <div class="icon">
-                                    <i class="ion ion-bag"></i>
-                                </div>
-                                <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
                             </div>
-                        </div>
-                        <!-- ./col -->
-                        <div class="col-lg-3 col-xs-6">
-                            <!-- small box -->
-                            <div class="small-box bg-green">
-                                <div class="inner">
-                                    <h3>53<sup style="font-size: 20px">%</sup></h3>
+                            <!-- ./col -->
+                            <div class="col-lg-3 col-xs-6">
+                                <!-- small box -->
+                                <div class="small-box bg-green">
+                                    <div class="inner">
+                                        <h3>53<sup style="font-size: 20px">%</sup></h3>
 
-                                    <p>Bounce Rate</p>
+                                        <p>Bounce Rate</p>
+                                    </div>
+                                    <div class="icon">
+                                        <i class="ion ion-stats-bars"></i>
+                                    </div>
+                                    <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
                                 </div>
-                                <div class="icon">
-                                    <i class="ion ion-stats-bars"></i>
-                                </div>
-                                <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
                             </div>
-                        </div>
-                        <!-- ./col -->
-                        <div class="col-lg-3 col-xs-6">
-                            <!-- small box -->
-                            <div class="small-box bg-yellow">
-                                <div class="inner">
-                                    <h3>44</h3>
+                            <!-- ./col -->
+                            <div class="col-lg-3 col-xs-6">
+                                <!-- small box -->
+                                <div class="small-box bg-yellow">
+                                    <div class="inner">
+                                        <h3>44</h3>
 
-                                    <p>User Registrations</p>
+                                        <p>User Registrations</p>
+                                    </div>
+                                    <div class="icon">
+                                        <i class="ion ion-person-add"></i>
+                                    </div>
+                                    <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
                                 </div>
-                                <div class="icon">
-                                    <i class="ion ion-person-add"></i>
-                                </div>
-                                <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
                             </div>
-                        </div>
-                        <!-- ./col -->
-                        <div class="col-lg-3 col-xs-6">
-                            <!-- small box -->
-                            <div class="small-box bg-red">
-                                <div class="inner">
-                                    <h3>65</h3>
+                            <!-- ./col -->
+                            <div class="col-lg-3 col-xs-6">
+                                <!-- small box -->
+                                <div class="small-box bg-red">
+                                    <div class="inner">
+                                        <h3>65</h3>
 
-                                    <p>Unique Visitors</p>
+                                        <p>Unique Visitors</p>
+                                    </div>
+                                    <div class="icon">
+                                        <i class="ion ion-pie-graph"></i>
+                                    </div>
+                                    <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
                                 </div>
-                                <div class="icon">
-                                    <i class="ion ion-pie-graph"></i>
-                                </div>
-                                <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
                             </div>
+                            <!-- ./col -->
                         </div>
-                        <!-- ./col -->
-                    </div>
-                    <!-- /.row -->
-                    <!-- Main row -->
-                    <div class="row">
-                        <div class="col-lg-3 col-xs-6">
-                            <div class="small-box bg-aqua">
-                                <h:form>
+                        <!-- /.row -->
+                        <!-- Main row -->
+                        <div class="row">
+                            <div class="col-lg-3 col-xs-6">
+                                <div class="small-box bg-aqua">
 
 
                                     #{controlSeccion.skins}
@@ -433,49 +430,99 @@
                                     <p:commandButton  class="btn btn-warning" value="cambiar A Color amarillo el skin" actionListener="#{controlSeccion.cambiarsikin('yellow')}"/>
                                     <p:commandButton  class="btn btn-success" value="cambiar A Color verde el skin" actionListener="#{controlSeccion.cambiarsikin('green')}"/>
 
-                                    <b:selectOneMenu value="#{controlSeccion.rolselect}" >
-                                        
-                                        <f:selectItems value="#{controlSeccion.rolesSeccion}" />
-                                    </b:selectOneMenu>
-                                    <p:commandButton  class="btn btn-success" value="cambiar de ROL" actionListener="#{controlSeccion.selecionRol}"/>
-                                </h:form>
+
+                                    <p:commandButton value="Basic" type="button" onclick="PF('dlg1').show();" />
+                                    <p:dialog header="Modal Dialog" class="main-header" styleClass="skin-#{controlSeccion.skins}" widgetVar="dlg1" modal="true">
+                                        <header class="main-header">
+                                            <nav class="navbar navbar-static-top">
+
+
+                                                <div class="navbar-custom-menu">
+                                                    <ul class="nav navbar-nav">
+
+                                                    </ul>
+                                                </div>
+                                            </nav>
+                                        </header>
+                                        <h:outputText value="This is a Modal Dialog." />
+                                    </p:dialog> 
+
+                                </div>
+
+                            </div>
+                            <div >
+                                <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">
+                                    Launch demo modal
+                                </button>
+
+                                <!-- Modal -->
+                                <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                                    <div class="modal-dialog" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">cerrar</span></button>
+                                                <h4 class="modal-title" id="myModalLabel">Modal title</h4>
+                                            </div>
+                                            <div class="modal-body">
+                                                ...
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                                <button type="button" class="btn btn-primary">Save changes</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+
+                                <b:modal id="amodal" title="Modal Example" backdrop="false" style="main-header navbar navbar-static-top" styleClass="modalPseudoClass">
+                                    <p>Modal body</p>
+                                    <f:facet name="footer">
+                                        <b:button value="close" dismiss="modal" onclick="return false;"/>
+                                        <b:button value="Ok" look="primary" dismiss="modal" onclick="return false;"/>
+                                    </f:facet>
+                                </b:modal>
+                                <b:row>
+                                    <b:column span="3">
+                                        <a id="atrigger" class="btn btn-primary btn-lg" href="#amodal" data-toggle="modal">Trigger (HTML A tag)</a>
+                                    </b:column>
+                                    <b:column span="3">
+                                        <button id="btrigger" class="btn btn-info btn-lg" data-target="#amodal" data-toggle="modal">Trigger (HTML Button)</button>
+                                    </b:column>
+                                    <b:column span="3">
+                                        <b:button value="Trigger (JSF passthrough)" look="warning" p:data-target="#amodal" p:data-toggle="modal" onclick="return false;" size="lg"/>
+                                    </b:column>
+                                    <b:column span="3">
+                                        <b:button value="Trigger (JavaScript)" look="success" onclick="$('.modalPseudoClass').modal();
+                                                return false;" size="lg"/>
+                                    </b:column>
+                                </b:row>
                             </div>
 
+                            <!-- right col -->
+                        </div>
+                        <!-- /.row (main row) -->
+                        <div class="row">
+
+
                         </div>
 
+                    </section>
+                    <h3>DataModel</h3>
+                </h:form>
 
-                        <!-- right col -->
-                    </div>
-                    <!-- /.row (main row) -->
-                    <div class="row">
-                        <div class="col-lg-6 col-lg-6">
-                            <ul>
-                                <!-- Messages: style can be found in dropdown.less-->
-                                <li style="float:left; width: 50%; padding: 5px;">
-                                    <p:commandLink actionListener="#{controlSeccion.cambiarsikin('purple')}"  style='display: block; box-shadow: 0 0 3px rgba(0,0,0,0.4)' class='clearfix full-opacity-hover'>
-                                        <div>
-                                            <span style='display:block; width: 20%; float: left; height: 7px;' class='bg-purple-active'></span>
-                                            <span class='bg-purple' style='display:block; width: 80%; float: left; height: 7px;'></span>
-                                            <div>
-                                                <span style='display:block; width: 20%; float: left; height: 20px; background: #f9fafc;'></span>
-                                                <span style='display:block; width: 80%; float: left; height: 20px; background: #f4f5f7;'></span>
-                                            </div>
-                                        </div> 
-                                    </p:commandLink>
-                                    <p class='text-center no-margin' style='font-size: 12px'>Purple Light</p>
-                                </li> 
-                            </ul>
-                        </div>
 
-                    </div>
 
-                </section>
                 <!-- /.content -->
+
             </div>
             <!-- /.content-wrapper -->
             <footer class="main-footer">
                 <div class="pull-right hidden-xs">
                     <b>Version</b> 2.3.3
+                    <button class="btn btn-default" data-toggle="control-sidebar">Toggle Right Sidebar</button>
+
                 </div>
                 <strong>Copyright ; 2014-2015 <a href="http://almsaeedstudio.com">Almsaeed Studio</a>.</strong> All rights
                 reserved.
@@ -485,33 +532,36 @@
             <aside class="control-sidebar control-sidebar-dark">
                 <!-- Create the tabs -->
                 <ul class="nav nav-tabs nav-justified control-sidebar-tabs">
-                    <li><a href="#control-sidebar-home-tab" data-toggle="tab"><i class="fa fa-home"></i></a></li>
+                    <li class="active"><a href="#control-sidebar-home-tab"  data-toggle="tab" ><i class="fa fa-home"></i></a></li>
                     <li><a href="#control-sidebar-settings-tab" data-toggle="tab"><i class="fa fa-gears"></i></a></li>
                 </ul>
                 <!-- Tab panes -->
                 <div class="tab-content">
                     <!-- Home tab content -->
-                    <div class="tab-pane" id="control-sidebar-home-tab">
-                        <h3 class="control-sidebar-heading">Recent Activity</h3>
-
-
+                    <div class="tab-pane active" id="control-sidebar-home-tab">
+                        <h3 class="control-sidebar-heading">Aplicar Tema</h3>
+                        <ui:include id="temas" src="temas.xhtml" />
                     </div>
-
+                    <div class="tab-pane" id="control-sidebar-settings-tab">
+                        <h3 class="control-sidebar-heading">Más Configuraciones</h3>
+                        En construcion
+                    </div>
                 </div>
             </aside>
             <!-- /.control-sidebar -->
             <!-- Add the sidebar's background. This div must be placed
                  immediately after the control sidebar -->
             <div class="control-sidebar-bg"></div>
+
         </div>
         <!-- jQuery 2.2.0 -->
-        <script src="AdminLTE/plugins/jQuery/jQuery-2.2.0.min.js"></script>
+        <!--<script src="AdminLTE/plugins/jQuery/jQuery-2.2.0.min.js"></script>-->
         <!-- AdminLTE App -->
         <script src="AdminLTE/js/app.min.js"></script>
         <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
         <script src="AdminLTE/js/pages/dashboard.js"></script>
         <!-- AdminLTE for demo purposes -->
-        <script src="AdminLTE/js/demo.js"></script>
+        <!--<script src="AdminLTE/js/demo.js"></script>-->
         <script src="bootstrap/js/bootstrap.min.js"></script>
         <script src="js/scripts.js"></script>
     </h:body>

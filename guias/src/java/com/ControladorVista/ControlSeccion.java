@@ -14,6 +14,7 @@ import com.Entidades.Modulo;
 import com.Entidades.Permisos;
 import com.Entidades.Rol;
 import com.Entidades.RolModuloPermiso;
+import java.io.Serializable;
 import java.util.List;
 import java.util.ArrayList;
 import com.Entidades.Usuario;
@@ -36,7 +37,7 @@ import org.primefaces.context.RequestContext;
  */
 @ManagedBean
 @SessionScoped
-public class ControlSeccion {
+public class ControlSeccion  implements  Serializable{
 
     private Miembro miembro = null;
     private Rol rolSeccion = new Rol();
@@ -76,6 +77,7 @@ public class ControlSeccion {
                 selecionRol();
             } else {
                 requestContext.getCurrentInstance().execute("$('.modalPseudoClass').modal();");
+
             }
         }
 
@@ -95,11 +97,11 @@ public class ControlSeccion {
                     secccion();
 
                     requestContext.getCurrentInstance().execute("$('.modalPseudoClass').modal('hide');");
-                    if (rolSeccion.getIdrol().equals(toLong(1))) {
-                        context.getExternalContext().redirect("superAdministrador.xhtml");
-                    } else {
-                        context.getExternalContext().redirect("index.xhtml");
-                    }
+//                    if (rolSeccion.getIdrol().equals(toLong(1))) {
+//                        context.getExternalContext().redirect("superAdministrador.xhtml");
+//                    } else {
+                    context.getExternalContext().redirect("inicio.xhtml");
+//                    }
                     usu = "";
                     pass = "";
                 } catch (IOException ex) {
@@ -116,9 +118,32 @@ public class ControlSeccion {
             salir();
         } else {
             seccion = true;
+
             cargarModulos();
 
         }
+    }
+
+    public void validaSeccion() {
+        if (miembro == null) {
+            seccion = false;
+            salir();
+        } else {
+            seccion = true;
+            cargarModulos();
+        }
+    }
+
+    public void update(String id) {
+        RequestContext context = RequestContext.getCurrentInstance();
+        context.getCurrentInstance().update(id);
+//      context.getCurrentInstance().execute("$('#myModal').modal('show');");
+    }
+
+    public void modalCambiarRol() {
+        RequestContext context = RequestContext.getCurrentInstance();
+//      context.getCurrentInstance().update(id);
+        context.getCurrentInstance().execute("$('#mdCambiarRol').modal('show');");
     }
 
     public void salir() {
@@ -128,7 +153,7 @@ public class ControlSeccion {
             ExternalContext externalContext = context.getExternalContext();
 
             Object session = externalContext.getSession(false);
-
+//            context.getCurrentInstance().getExternalContext().invalidateSession();
             HttpSession httpSession = (HttpSession) session;
 
             httpSession.invalidate();
@@ -159,6 +184,7 @@ public class ControlSeccion {
 
     public void cambiarsikin(String skin) {
         skins = skin;
+        selecionRol();
     }
 
     //GET & SET
