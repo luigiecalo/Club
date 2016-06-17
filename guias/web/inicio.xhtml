@@ -254,7 +254,7 @@
                                             <small> 
                                                 <h:form>
                                                     <h:selectOneMenu class="form-control select2" id="country" value="#{controlSeccion.rolTemp}" title="ROL SELECIONADO" style="width:150px">
-                                                        <p:ajax  listener="#{controlSeccion.modalCambiarRol}"  />
+                                                        <p:ajax  listener="#{controlSeccion.modalRol('mdCambiarRol','sohw')}"  />
                                                         <f:selectItems value="#{controlSeccion.rolesSeccion}" />
                                                     </h:selectOneMenu> 
                                                 </h:form>
@@ -313,7 +313,7 @@
                             <p>#{controlSeccion.miembro.nombre1}</p>
                             <h:form>
                                 <h:selectOneMenu class="form-control select2" id="country" value="#{controlSeccion.rolTemp}" title="ROL SELECIONADO" style="width:150px">
-                                    <p:ajax  listener="#{controlSeccion.modalCambiarRol}"  />
+                                    <p:ajax  listener="#{controlSeccion.modalRol('mdCambiarRol','sohw')}"  />
                                     <f:selectItems value="#{controlSeccion.rolesSeccion}" />
                                 </h:selectOneMenu> 
                             </h:form>
@@ -375,8 +375,9 @@
                                         <p style="color:black">Esta seguro que desa Cambiar de Rol?</p>
                                     </div>
                                     <div class="modal-footer bg-#{controlSeccion.skins}-gradient">
-                                        <b:button value="close" style="width: 20%" look="danger" size="sm"  dismiss="modal" onclick="return false;"/>
+                                        <b:commandButton value="Cancelar" style="width: 20%" look="danger" actionListener="#{controlSeccion.modalRol('mdCambiarRol','hide')}"   size="sm" />
                                         <b:commandButton value="Ok" style="width: 20%" look="primary" actionListener="#{controlSeccion.selecionarrolseccion}"   size="sm" />
+                                        
                                     </div>
                                 </div>
                                 <!-- /.modal-content -->

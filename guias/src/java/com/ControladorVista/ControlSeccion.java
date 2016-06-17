@@ -141,12 +141,12 @@ public class ControlSeccion implements Serializable {
 //      context.getCurrentInstance().execute("$('#myModal').modal('show');");
     }
 
-    public void modalCambiarRol() {
+    public void modalRol(String id,String estado) {
         RequestContext context = RequestContext.getCurrentInstance();
 //      context.getCurrentInstance().update(id);
-        context.getCurrentInstance().execute("$('#mdCambiarRol').modal('show');");
+        context.getCurrentInstance().execute("$('#"+id+"').modal('"+estado+"');");
     }
-
+ 
     public void salir() {
         try {
             FacesContext context = FacesContext.getCurrentInstance();
