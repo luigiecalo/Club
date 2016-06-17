@@ -6,6 +6,7 @@
 package com.ControladorVista;
 
 import static com.ControladorVista.ControlSeccion.toLong;
+import com.Entidades.Modulo;
 import com.Entidades.Rol;
 import java.io.Serializable;
 import java.util.HashMap;
@@ -24,62 +25,62 @@ import org.primefaces.context.RequestContext;
 @ViewScoped
 public class Controlplantillas implements Serializable {
 
-    String INGRESOS = "ingresos.xhtml";
-    String INICIO = "inicio.html";
-    String GASTOS = "gastos.xhtml";
-    String ESTADISTICAS = "estadisticas.xhtml";
-    String REGISTROS = "RegistrarUsuario.xhtml";
-   
+    String INICIO = "usuarios.xhtml";
+
     @ManagedProperty("#{controlSeccion}")
     private ControlSeccion cs = new ControlSeccion();
-   
+    private String modulo = "usuarios.xhtml";
+    private String active = "";
     RequestContext context = RequestContext.getCurrentInstance();
     private String contenido = INICIO;
     private String hader = "INICIO";
-
-   
-
-   
 
     /**
      * Creates a new instance of controlplantillas
      */
     public Controlplantillas() {
-       
+
     }
 
     public static long toLong(Number number) {
         return number.longValue();
     }
+//metodos
 
-    public void ingresos() {
-        contenido = INGRESOS;
-        hader = "INGRESOS";
-
-    }
-
-    public void gastos() {
-        contenido = GASTOS;
-        hader = "GASTOS";
+    public void selecionarmenu(Modulo modu) {
+        contenido = modu.getSrc();
+        hader = modu.getNombre();
+        modulo = modu.getSrc();
 
     }
 
-    public void inicio() {
-        contenido = INICIO;
-        hader = "INICIO";
-
+    public String cargarmodulo(Modulo modu) {
+        RequestContext context = RequestContext.getCurrentInstance();
+        modulo = modu.getSrc();
+        context.getCurrentInstance().execute(""
+                + "$('#tab-list').append($('<li><a href=#tab' "+ modu.getIdmodulo() +" '\" role=\"tab\" data-toggle=\"tab\">Tab ' "+ modu.getIdmodulo() +" '<button class=\"close\" type=\"button\" title=\"Remove this page\">×</button></a></li>'));"
+                + "");
+        return modulo;
     }
 
-    public void estadiscas() {
-        contenido = ESTADISTICAS;
-        hader = "ESTADISTICAS";
-
+    public String getModulo() {
+        return modulo;
     }
 
-    public void registro() {
-        contenido = REGISTROS;
-        hader = "REGISTROS";
+    public String getActive(Modulo mod) {
+        String active1 = null;
+        if (mod.getSrc().equals(modulo)) {
+            active1 = "active";
+        } else {
+            if (mod == null) {
+                active1 = "active";
+            }
+        }
+        return active1;
+    }
 
+    public void setActive(String active) {
+        this.active = active;
     }
 
     public String getContenido() {
@@ -98,8 +99,6 @@ public class Controlplantillas implements Serializable {
         this.hader = hader;
     }
 
-   
-
     public ControlSeccion getCs() {
         return cs;
     }
@@ -108,6 +107,4 @@ public class Controlplantillas implements Serializable {
         this.cs = cs;
     }
 
-    
-  
 }
