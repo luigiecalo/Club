@@ -253,9 +253,9 @@
                                             #{controlSeccion.miembro.nombre1}-#{controlSeccion.miembro.apellido1}
                                             <small> 
                                                 <h:form>
-                                                    <h:selectOneMenu class="form-control select2" id="country" value="#{controlplantillas.rolTemp}" title="ROL SELECIONADO" style="width:150px">
-                                                        <p:ajax  listener="#{controlplantillas.modalCambiarRol}" update="@form" />
-                                                        <f:selectItems value="#{controlplantillas.rolesSeccion}" />
+                                                    <h:selectOneMenu class="form-control select2" id="country" value="#{controlSeccion.rolTemp}" title="ROL SELECIONADO" style="width:150px">
+                                                        <p:ajax  listener="#{controlSeccion.modalCambiarRol}"  />
+                                                        <f:selectItems value="#{controlSeccion.rolesSeccion}" />
                                                     </h:selectOneMenu> 
                                                 </h:form>
                                             </small>
@@ -312,9 +312,9 @@
                         <div class="pull-left info">
                             <p>#{controlSeccion.miembro.nombre1}</p>
                             <h:form>
-                                <h:selectOneMenu class="form-control select2" id="country" value="#{controlplantillas.rolTemp}" title="ROL SELECIONADO" style="width:150px">
-                                    <p:ajax  listener="#{controlplantillas.modalCambiarRol}" update="@form" />
-                                    <f:selectItems value="#{controlplantillas.rolesSeccion}" />
+                                <h:selectOneMenu class="form-control select2" id="country" value="#{controlSeccion.rolTemp}" title="ROL SELECIONADO" style="width:150px">
+                                    <p:ajax  listener="#{controlSeccion.modalCambiarRol}"  />
+                                    <f:selectItems value="#{controlSeccion.rolesSeccion}" />
                                 </h:selectOneMenu> 
                             </h:form>
                             <a href="#"><i class="fa fa-circle text-success"></i></a>
@@ -376,7 +376,7 @@
                                     </div>
                                     <div class="modal-footer bg-#{controlSeccion.skins}-gradient">
                                         <b:button value="close" style="width: 20%" look="danger" size="sm"  dismiss="modal" onclick="return false;"/>
-                                        <b:commandButton value="Ok" style="width: 20%" look="primary" actionListener="#{controlplantillas.rolseccion}"   size="sm" />
+                                        <b:commandButton value="Ok" style="width: 20%" look="primary" actionListener="#{controlSeccion.selecionarrolseccion}"   size="sm" />
                                     </div>
                                 </div>
                                 <!-- /.modal-content -->

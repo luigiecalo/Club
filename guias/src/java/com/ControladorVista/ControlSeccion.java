@@ -37,13 +37,14 @@ import org.primefaces.context.RequestContext;
  */
 @ManagedBean
 @SessionScoped
-public class ControlSeccion  implements  Serializable{
+public class ControlSeccion implements Serializable {
 
     private Miembro miembro = null;
     private Rol rolSeccion = new Rol();
     private List<Modulo> ModulosSeccion = new ArrayList<Modulo>();
 
     private Map<String, Long> rolesSeccion;
+    private Long rolTemp;
 
     private String usu;
     private String pass;
@@ -178,6 +179,12 @@ public class ControlSeccion  implements  Serializable{
         }
     }
 
+    public void selecionarrolseccion() {
+        rolselect = rolTemp;
+        setRolselect(getRolTemp());
+        selecionRol();
+    }
+
     public static long toLong(Number number) {
         return number.longValue();
     }
@@ -249,7 +256,16 @@ public class ControlSeccion  implements  Serializable{
     }
 
     public Map<String, Long> getRolesSeccion() {
+
         return rolesSeccion;
     }
 
+    public Long getRolTemp() {
+        rolTemp = getRolselect();
+        return rolTemp;
+    }
+
+    public void setRolTemp(Long rolTemp) {
+        this.rolTemp = rolTemp;
+    }
 }

@@ -13,6 +13,7 @@ import java.util.Map;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.RequestScoped;
+import javax.faces.bean.ViewScoped;
 import org.primefaces.context.RequestContext;
 
 /**
@@ -20,7 +21,7 @@ import org.primefaces.context.RequestContext;
  * @author luigi
  */
 @ManagedBean
-@RequestScoped
+@ViewScoped
 public class Controlplantillas implements Serializable {
 
     String INGRESOS = "ingresos.xhtml";
@@ -28,34 +29,23 @@ public class Controlplantillas implements Serializable {
     String GASTOS = "gastos.xhtml";
     String ESTADISTICAS = "estadisticas.xhtml";
     String REGISTROS = "RegistrarUsuario.xhtml";
-    private Long rolTemp;
+   
     @ManagedProperty("#{controlSeccion}")
     private ControlSeccion cs = new ControlSeccion();
-    private Map<String, Long> rolesSeccion;
+   
     RequestContext context = RequestContext.getCurrentInstance();
     private String contenido = INICIO;
     private String hader = "INICIO";
 
-    public void rolseccion() {
-        this.cs.setRolselect(getRolTemp());
-        this.cs.selecionRol();
-    }
+   
 
-    public void modalCambiarRol() {
-        RequestContext context = RequestContext.getCurrentInstance();
-//      context.getCurrentInstance().update(id);
-        context.getCurrentInstance().execute("$('#mdCambiarRol').modal('show');");
-    }
+   
 
     /**
      * Creates a new instance of controlplantillas
      */
     public Controlplantillas() {
-        rolTemp = toLong(0);
-        rolesSeccion = new HashMap<String, Long>();
-        for (Rol rol : cs.getMiembro().getUsuario().getRoles()) {
-            this.rolesSeccion.put(rol.getNombre(), rol.getIdrol());
-        }
+       
     }
 
     public static long toLong(Number number) {
@@ -108,13 +98,7 @@ public class Controlplantillas implements Serializable {
         this.hader = hader;
     }
 
-    public Long getRolTemp() {
-        return rolTemp;
-    }
-
-    public void setRolTemp(Long rolTemp) {
-        this.rolTemp = rolTemp;
-    }
+   
 
     public ControlSeccion getCs() {
         return cs;
@@ -125,8 +109,5 @@ public class Controlplantillas implements Serializable {
     }
 
     
-    public Map<String, Long> getRolesSeccion() {
-        
-        return rolesSeccion;
-    }
+  
 }
