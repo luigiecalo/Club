@@ -254,7 +254,7 @@
                                             <small> 
                                                 <h:form>
                                                     <h:selectOneMenu class="form-control select2" id="country" value="#{controlSeccion.rolTemp}" title="ROL SELECIONADO" style="width:150px">
-                                                        <p:ajax  listener="#{controlSeccion.modalRol('mdCambiarRol','sohw')}"  />
+                                                        <p:ajax  listener="#{controlSeccion.modalRol('mdCambiarRol','show')}"  />
                                                         <f:selectItems value="#{controlSeccion.rolesSeccion}" />
                                                     </h:selectOneMenu> 
                                                 </h:form>
@@ -313,7 +313,8 @@
                             <p>#{controlSeccion.miembro.nombre1}</p>
                             <h:form>
                                 <h:selectOneMenu class="form-control select2" id="country" value="#{controlSeccion.rolTemp}" title="ROL SELECIONADO" style="width:150px">
-                                    <p:ajax  listener="#{controlSeccion.modalRol('mdCambiarRol','sohw')}"  />
+                                    <p:ajax  listener="#{controlSeccion.modalRol('mdCambiarRol','show')}" />
+
                                     <f:selectItems value="#{controlSeccion.rolesSeccion}" />
                                 </h:selectOneMenu> 
                             </h:form>
@@ -353,6 +354,51 @@
             <div class="content-wrapper">
                 <h:form>
 
+                    <section class="content-header">
+
+
+
+                        <div class="nav-tabs-custom">
+                            <ul class="nav nav-tabs" >
+                                <li role="presentation" class="active"><a href="#inicio" data-toggle="tab">INICIO</a></li>
+                                <ui:repeat value="#{controlSeccion.modulosSeccion}" var="modu">
+                                    <li role="presentation"><a href="##{modu.idmodulo}" data-toggle="tab">#{modu.nombre}</a></li>
+                                </ui:repeat> 
+                            </ul>
+                             <div class="tab-content">
+                                 <div class="tab-pane active" id="inicio">
+                                        <b>Aki Inicia}</b>
+                                        dss
+                                    </div>
+                                <ui:repeat value="#{controlSeccion.modulosSeccion}" var="modu2">
+                                    <div class="tab-pane" id="#{modu2.idmodulo}">
+                                        <b>#{modu2.nombre}</b>
+                                        #{modu2.src}
+                                    </div>
+                                </ui:repeat>
+
+                                <!-- /.tab-pane -->
+                            </div> 
+                        </div>
+
+                           
+                        <p:tabView value="#{controlSeccion.modulosSeccion}" styleClass="bg-blue" var="car">
+                            <p:tab title="Car - #{car.nombre}" titleStyleClass="bg-blue">
+                                <h:panelGrid columns="2" cellpadding="5">
+                                    <f:facet name="header" class="bg-blue">
+                                        <h:outputText value="#{car.src}" />
+                                    </f:facet>                    
+                                    <h:outputText value="Brand:" style="font-weight: bold"/>
+                                    <h:outputText value="#{car.idmodulo}" />
+                                    <h:outputText value="Color:" style="font-weight: bold"/>
+                                    <h:outputText value="#{car.nombre}" />
+                                </h:panelGrid>
+
+                            </p:tab>
+                        </p:tabView>
+                         
+                    </section>
+
                     <!-- Content Header (Page header) -->
                     <section class="content-header">
                         <h1>
@@ -377,7 +423,7 @@
                                     <div class="modal-footer bg-#{controlSeccion.skins}-gradient">
                                         <b:commandButton value="Cancelar" style="width: 20%" look="danger" actionListener="#{controlSeccion.modalRol('mdCambiarRol','hide')}"   size="sm" />
                                         <b:commandButton value="Ok" style="width: 20%" look="primary" actionListener="#{controlSeccion.selecionarrolseccion}"   size="sm" />
-                                        
+
                                     </div>
                                 </div>
                                 <!-- /.modal-content -->
@@ -499,20 +545,7 @@
                     </section>
                     <h3>DataModel</h3>
 
-                    <p:tabView value="#{controlSeccion.modulosSeccion}" var="car">
-                        <p:tab title="Car - #{car.nombre}">
-                            <h:panelGrid columns="2" cellpadding="5">
-                                <f:facet name="header">
-                                    <h:outputText value="#{car.src}" />
-                                </f:facet>                    
-                                <h:outputText value="Brand:" style="font-weight: bold"/>
-                                <h:outputText value="#{car.idmodulo}" />
-                                <h:outputText value="Color:" style="font-weight: bold"/>
-                                <h:outputText value="#{car.nombre}" />
-                            </h:panelGrid>
 
-                        </p:tab>
-                    </p:tabView>
 
 
                     <!-- /.content -->
