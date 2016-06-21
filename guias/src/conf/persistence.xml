@@ -24,12 +24,13 @@
     <class>com.Entidades.RolModuloPermiso_1</class>
     <class>com.Entidades.RolModuloPermiso_nuevo</class>
     <class>com.Entidades.RolModuloPermiso</class>
+    <class>com.Entidades.Grupo</class>
     <exclude-unlisted-classes>false</exclude-unlisted-classes>
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/guias?zeroDateTimeBehavior=convertToNull"/>
       <property name="javax.persistence.jdbc.user" value="root"/>
       <property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver"/>
-      <property name="javax.persistence.jdbc.password" value=""/>
+      <property name="javax.persistence.jdbc.password" value="root"/>
     </properties>
   </persistence-unit>
 </persistence>

@@ -5,12 +5,14 @@
  */
 package comprueba;
 
+import com.Dao.GrupoDaoimplement;
 import com.Dao.MiembroDaoimplement;
 import com.Dao.ModuloDaoimplement;
 import com.Dao.PermisosDaoimplement;
 import com.Dao.RolDaoimplement;
 import com.Dao.RolModuloPermisoDaoimplement;
 import com.Dao.UsuarioDaoimplement;
+import com.Entidades.Grupo;
 import com.Entidades.Miembro;
 import com.Entidades.Modulo;
 import com.Entidades.Permisos;
@@ -38,6 +40,7 @@ public class prueba implements Serializable {
         UsuarioDaoimplement UDao = new UsuarioDaoimplement();
         ModuloDaoimplement MoDao = new ModuloDaoimplement();
         RolModuloPermisoDaoimplement RMPDao = new RolModuloPermisoDaoimplement();
+        GrupoDaoimplement GRPDao = new GrupoDaoimplement();
 
         //OBJETOS
         Permisos permiso = new Permisos();
@@ -46,23 +49,25 @@ public class prueba implements Serializable {
         RolModuloPermiso rmp = new RolModuloPermiso();
         Rol rol = new Rol();
         Usuario usuario = new Usuario();
+        Grupo grupo = new Grupo();
 
         //Lita de OBJETOS
         List<Permisos> permisoLista = new ArrayList<Permisos>();
         List<Miembro> miembroLista = new ArrayList<Miembro>();
         List<Rol> rolesLista = new ArrayList<Rol>();
         List<Usuario> usuarioLista = new ArrayList<Usuario>();
+        List<Grupo> grupos = new ArrayList<Grupo>();
 
         List<RolModuloPermiso> rolmodulospermisos = new ArrayList<RolModuloPermiso>();
         Long id;
-        usuario=UDao.login("ADMIN","ADMIN");
-        System.out.println("USUARIO:"+usuario.getLogin());
-        miembro= MDao.BuscarMiembroUsuario(usuario);
-        System.out.println("Mienbro:"+miembro.getNombre1());
-        
-        List<Modulo>modulos=RMPDao.buscarModulos(usuario.getRoles().get(0).getIdrol());
+        usuario = UDao.login("ADMIN", "ADMIN");
+        System.out.println("USUARIO:" + usuario.getLogin());
+        miembro = MDao.BuscarMiembroUsuario(usuario);
+        System.out.println("Mienbro:" + miembro.getNombre1());
+
+        List<Modulo> modulos = RMPDao.buscarModulos(usuario.getRoles().get(0).getIdrol());
         for (Modulo modulo1 : modulos) {
-            System.out.println("Los modulos son:"+modulo1.getNombre()+" Con direcion: "+modulo1.getSrc());
+            System.out.println("Los modulos son:" + modulo1.getNombre() + " Con direcion: " + modulo1.getSrc());
         }
     }
 }

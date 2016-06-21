@@ -336,14 +336,43 @@
                             <li class="header">
                                 MENÚ PRINCIPAL
                             </li>
-                            <ui:repeat value="#{controlSeccion.modulosSeccion}" var="modulos">
-                                <li class="#{controlplantillas.getActive(modulos)}">
-                                    <p:commandLink  actionListener="#{controlplantillas.selecionarmenu(modulos)}"  update="@form"  >
+                            <ui:repeat id="nivel1" value="#{controlSeccion.menu}" var="modulos">
+                                <li class="treeview #{controlplantillas.getActive(modulos.src)}">
+                                    <p:commandLink    >
                                         <i class="fa #{modulos.icono}"></i> <span>#{modulos.nombre}</span>
-                                        <small class="label pull-right bg-red active">3</small>
+                                        <i class="fa fa-angle-left pull-right"></i>
                                     </p:commandLink>
+                                    <ul class="treeview-menu">
+                                        <ui:repeat id="nivel2" value="#{modulos.modulos}" var="sub">
+                                            <li><a href="#"><i class="fa #{sub.icono}"></i>#{sub.nombre}</a></li>
+                                        </ui:repeat>
+                                    </ul>
                                 </li>
                             </ui:repeat>
+                            <li class="treeview">
+                                <p:commandLink  >
+                                    <i class="fa fa-share"></i> <span>Multilevel</span>
+                                    <i class="fa fa-angle-left pull-right"></i>
+                                </p:commandLink>
+                                <ul class="treeview-menu">
+                                    <li><a href="#"><i class="fa fa-circle-o"></i> Level One</a></li>
+                                    <li>
+                                        <a href="#"><i class="fa fa-circle-o"></i> Level One <i class="fa fa-angle-left pull-right"></i></a>
+                                        <ul class="treeview-menu">
+                                            <li><a href="#"><i class="fa fa-circle-o"></i> Level Two</a></li>
+                                            <li>
+                                                <a href="#"><i class="fa fa-circle-o"></i> Level Two <i class="fa fa-angle-left pull-right"></i></a>
+                                                <ul class="treeview-menu">
+                                                    <li><a href="#"><i class="fa fa-circle-o"></i> Level Three</a></li>
+                                                    <li><a href="#"><i class="fa fa-circle-o"></i> Level Three</a></li>
+                                                </ul>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <li><a href="#"><i class="fa fa-circle-o"></i> Level One</a></li>
+                                </ul>
+                            </li>
+
                         </ul>
 
                     </section>
@@ -359,30 +388,28 @@
 
 
                         <div class="nav-tabs-custom">
-                            <ul id="tab-list" lass="nav nav-tabs" >
-                                <li role="presentation" ><a href="#inicio" data-toggle="tab">INICIO</a></li><!--
-                                <li role="presentation"><a href="#modulotab" data-toggle="tab">#{controlplantillas.hader}</a></li>-->
-                                <ui:repeat value="#{controlSeccion.modulosSeccion}" var="mo" >
-                                    <li role="presentation" class="#{controlplantillas.getActive(mo)}">
-<!--                                     <a href="##{mo.idmodulo}" data-toggle="tab">#{mo.nombre}
-                                         </a>-->
-                                        <p:commandLink   hreflang="##{mo.idmodulo}" actionListener="#{controlplantillas.cargarmodulo(mo)}" update="@form"  >
+                            <ul id="tab-list"  class="nav nav-tabs" >
+                                <li role="presentation" ><a href="#inicio" data-toggle="tab">INICIO</a></li>
+                                <ui:repeat value="#{controlplantillas.modulos}" var="mo" >
+                                    <li role="presentation" class="#{controlplantillas.getActive(mo.src)}">
+
+                                        <p:commandLink  actionListener="#{controlplantillas.cargarmodulo(mo)}" update="@form" >
                                             #{mo.nombre}
+                                            <p:commandButton  icon="fa fa-fw fa-remove" actionListener="#{controlplantillas.cerrarmodulo(mo)}" update="@form" title="Remove this page"/>
                                         </p:commandLink>
                                     </li>
                                 </ui:repeat>
 
                             </ul>
                             <div class="tab-content">
-                                <div class="tab-pane active" id="inicio">
-                                    <b>Aki Inicia}</b>
-                                    dss
+                                <div class="tab-pane #{controlplantillas.getActive('principal.xhtml')}" id="inicio">
+                                    <ui:include  src="paginas/principal.xhtml" />
                                 </div>
-                                <ui:repeat id="repeat" value="#{controlSeccion.modulosSeccion}" var="mo" >
-                                    <div class="tab-pane #{controlplantillas.getActive(mo)}" id="#{mo.idmodulo}">
+                                <ui:repeat id="repeat" value="#{controlplantillas.modulos}" var="mo" >
+                                    <div class="tab-pane #{controlplantillas.getActive(mo.src)}" id="#{mo.idmodulo}">
                                         <b>#{mo.nombre}</b>
                                         #{mo.src}
-                                        <ui:include id="contenido#{mo.nombre}" src="paginas/#{controlplantillas.modulo}" />
+                                        <ui:include  src="paginas/#{controlplantillas.modulo}" />
                                     </div>
                                 </ui:repeat>
                             </div> 

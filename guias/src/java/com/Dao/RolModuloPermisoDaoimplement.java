@@ -74,6 +74,16 @@ public class RolModuloPermisoDaoimplement extends ImplDao<RolModuloPermiso, Long
          }
         return modulos;
     }
+       public boolean buscarModulosValido(Long idrol,Long idmodulo) {
+         boolean valido=false;
+        Query query = em.createNativeQuery("SELECT DISTINCT r.idmodulo FROM rol_modulo_permiso r WHERE r.idrol='"+idrol+"' AND r.idmodulo='"+idmodulo+"'" );
+        List<Long> list = query.getResultList();
+        if (list == null || list.isEmpty()) {
+            return false;
+        }else{
+        return true;
+        }
+    }
      
      
 

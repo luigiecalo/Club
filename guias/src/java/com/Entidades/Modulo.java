@@ -11,12 +11,15 @@ import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
@@ -49,6 +52,14 @@ public class Modulo implements Serializable {
     private String icono;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "modulo")
     private List<RolModuloPermiso> rolModuloPermisoList;
+    @Column(name = "posicion")
+    private int posicion;
+    @OneToOne(cascade = CascadeType.ALL, optional = false, fetch = FetchType.EAGER, orphanRemoval = true)
+    @JoinColumn(name = "idgrupo")
+    private Grupo grupomodulo ;
+    @OneToOne(cascade = CascadeType.ALL, optional = false, fetch = FetchType.EAGER, orphanRemoval = true)
+    @JoinColumn(name = "idsubgrupos")
+    private Grupo subgrupos ;
 
     public Modulo() {
     }
@@ -117,6 +128,31 @@ public class Modulo implements Serializable {
         }
         return true;
     }
+
+    public Grupo getGrupomodulo() {
+        return grupomodulo;
+    }
+
+    public void setGrupomodulo(Grupo grupomodulo) {
+        this.grupomodulo = grupomodulo;
+    }
+
+    public Grupo getSubgrupos() {
+        return subgrupos;
+    }
+
+    public void setSubgrupos(Grupo subgrupos) {
+        this.subgrupos = subgrupos;
+    }
+
+    public int getPosicion() {
+        return posicion;
+    }
+
+    public void setPosicion(int posicion) {
+        this.posicion = posicion;
+    }
+    
 
     @Override
     public String toString() {

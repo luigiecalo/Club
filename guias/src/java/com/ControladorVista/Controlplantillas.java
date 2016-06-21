@@ -9,8 +9,11 @@ import static com.ControladorVista.ControlSeccion.toLong;
 import com.Entidades.Modulo;
 import com.Entidades.Rol;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import javax.faces.bean.ApplicationScoped;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.RequestScoped;
@@ -29,11 +32,13 @@ public class Controlplantillas implements Serializable {
 
     @ManagedProperty("#{controlSeccion}")
     private ControlSeccion cs = new ControlSeccion();
-    private String modulo = "usuarios.xhtml";
+    private String modulo = "principal.xhtml";
     private String active = "";
     RequestContext context = RequestContext.getCurrentInstance();
     private String contenido = INICIO;
     private String hader = "INICIO";
+    private List<Modulo> Modulos = new ArrayList<Modulo>();
+    private Modulo moduloSelecionado = new Modulo();
 
     /**
      * Creates a new instance of controlplantillas
@@ -51,15 +56,37 @@ public class Controlplantillas implements Serializable {
         contenido = modu.getSrc();
         hader = modu.getNombre();
         modulo = modu.getSrc();
+        moduloSelecionado = modu;
+        if (Modulos.isEmpty()) {
+            Modulos.add(modu);
+        } else {
+            boolean encontro = false;
+            for (Modulo Modulo1 : Modulos) {
+                if (Modulo1.equals(modu)) {
+                    encontro = true;
+                }
+            }
+            if (!encontro) {
+                Modulos.add(modu);
+            }
+        }
 
     }
 
+    public void cerrarmodulo(Modulo modu) {
+      Modulos.remove(modu);
+    }
+    
     public String cargarmodulo(Modulo modu) {
         RequestContext context = RequestContext.getCurrentInstance();
         modulo = modu.getSrc();
-        context.getCurrentInstance().execute(""
-                + "$('#tab-list').append($('<li><a href=#tab' "+ modu.getIdmodulo() +" '\" role=\"tab\" data-toggle=\"tab\">Tab ' "+ modu.getIdmodulo() +" '<button class=\"close\" type=\"button\" title=\"Remove this page\">×</button></a></li>'));"
-                + "");
+//        context.getCurrentInstance().execute(""
+//                + "$('#tab-list').append($('<li><a href=\"#tab"+ modu.getIdmodulo() + "\" role=\"tab\" data-toggle=\"tab\">Tab " + modu.getIdmodulo() + "<button class=\"close\" type=\"button\" title=\"Remove this page\">×</button></a></li>"
+//                +" "
+//                + "'));");
+//        System.out.println("---AKI ESTA"
+//                + "$('#tab-list').append($('<li><a href=\"#tab"+ modu.getIdmodulo() + "\" role=\"tab\" data-toggle=\"tab\">Tab " + modu.getIdmodulo() + "<button class=\"close\" type=\"button\" title=\"Remove this page\">×</button></a></li>"
+//                + "");
         return modulo;
     }
 
@@ -67,14 +94,10 @@ public class Controlplantillas implements Serializable {
         return modulo;
     }
 
-    public String getActive(Modulo mod) {
+    public String getActive(String mod) {
         String active1 = null;
-        if (mod.getSrc().equals(modulo)) {
+        if (mod.equals(modulo)) {
             active1 = "active";
-        } else {
-            if (mod == null) {
-                active1 = "active";
-            }
         }
         return active1;
     }
@@ -105,6 +128,22 @@ public class Controlplantillas implements Serializable {
 
     public void setCs(ControlSeccion cs) {
         this.cs = cs;
+    }
+
+    public List<Modulo> getModulos() {
+        return Modulos;
+    }
+
+    public void setModulos(List<Modulo> Modulos) {
+        this.Modulos = Modulos;
+    }
+
+    public Modulo getModuloSelecionado() {
+        return moduloSelecionado;
+    }
+
+    public void setModuloSelecionado(Modulo moduloSelecionado) {
+        this.moduloSelecionado = moduloSelecionado;
     }
 
 }

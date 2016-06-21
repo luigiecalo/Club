@@ -20,6 +20,11 @@
     <class>com.Entidades.Rol</class>
     <class>com.Entidades.Usuario</class>
     <class>com.Entidades.Miembro</class>
+    <class>com.Entidades.Modulo</class>
+    <class>com.Entidades.RolModuloPermiso_1</class>
+    <class>com.Entidades.RolModuloPermiso_nuevo</class>
+    <class>com.Entidades.RolModuloPermiso</class>
+    <class>com.Entidades.Grupo</class>
     <exclude-unlisted-classes>false</exclude-unlisted-classes>
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/guias?zeroDateTimeBehavior=convertToNull"/>

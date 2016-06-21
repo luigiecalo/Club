@@ -5,10 +5,12 @@
  */
 package com.ControladorVista;
 
+import com.Dao.GrupoDaoimplement;
 import com.Dao.MiembroDaoimplement;
 import com.Dao.RolDaoimplement;
 import com.Dao.RolModuloPermisoDaoimplement;
 import com.Dao.UsuarioDaoimplement;
+import com.Entidades.Grupo;
 import com.Entidades.Miembro;
 import com.Entidades.Modulo;
 import com.Entidades.Permisos;
@@ -20,6 +22,7 @@ import java.util.ArrayList;
 import com.Entidades.Usuario;
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -42,8 +45,10 @@ public class ControlSeccion implements Serializable {
     private Miembro miembro = null;
     private Rol rolSeccion = new Rol();
     private List<Modulo> ModulosSeccion = new ArrayList<Modulo>();
+    private List<Grupo> GruposModulosSeccion = new ArrayList<Grupo>();
 
     private Map<String, Long> rolesSeccion;
+    private List<Map> menu = new LinkedList<Map>();
     private Long rolTemp;
 
     private String usu;
@@ -54,6 +59,7 @@ public class ControlSeccion implements Serializable {
     private MiembroDaoimplement miembroDao = new MiembroDaoimplement();
     private RolModuloPermisoDaoimplement rolMPDao = new RolModuloPermisoDaoimplement();
     private RolDaoimplement rolDao = new RolDaoimplement();
+    private GrupoDaoimplement grupo = new GrupoDaoimplement();
 
     private boolean seccion = false;
 
@@ -141,12 +147,12 @@ public class ControlSeccion implements Serializable {
 //      context.getCurrentInstance().execute("$('#myModal').modal('show');");
     }
 
-    public void modalRol(String id,String estado) {
+    public void modalRol(String id, String estado) {
         RequestContext context = RequestContext.getCurrentInstance();
 //      context.getCurrentInstance().update(id);
-        context.getCurrentInstance().execute("$('#"+id+"').modal('"+estado+"');");
+        context.getCurrentInstance().execute("$('#" + id + "').modal('" + estado + "');");
     }
- 
+
     public void salir() {
         try {
             FacesContext context = FacesContext.getCurrentInstance();
@@ -268,4 +274,34 @@ public class ControlSeccion implements Serializable {
     public void setRolTemp(Long rolTemp) {
         this.rolTemp = rolTemp;
     }
+
+    public List<Map> getMenu() {
+    List<Map> menu = new LinkedList<Map>();
+        for (Modulo Modulo : ModulosSeccion) {
+            Map item = new HashMap<String, String>();
+            if(Modulo.getGrupomodulo()==null){
+            item.put("icono", Modulo.getIcono());
+            item.put("src",Modulo.getSrc());
+            item.put("nombre",Modulo.getNombre());
+            item.put("update", null);
+            }else{
+            item.put("icono", Modulo.getIcono());
+            item.put("src",Modulo.getSrc());
+            item.put("nombre",Modulo.getGrupomodulo().getNombre());
+            List<Modulo> modulosvalidos= new ArrayList<Modulo>();
+            for(Modulo modgrup: Modulo.getGrupomodulo().getModulos()){
+               if(rolMPDao.buscarModulosValido(rolSeccion.getIdrol(), modgrup.getIdmodulo())){
+               modulosvalidos.add(modgrup);
+               } 
+            }
+            Modulo.getGrupomodulo().setModulos(modulosvalidos);
+            item.put("modulos", Modulo.getGrupomodulo().getModulos());
+            item.put("update", "@form");
+            }
+            
+            menu.add(item);
+        }
+        return menu;
+    }
+
 }

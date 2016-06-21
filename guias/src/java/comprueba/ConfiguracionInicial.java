@@ -5,12 +5,14 @@
  */
 package comprueba;
 
+import com.Dao.GrupoDaoimplement;
 import com.Dao.MiembroDaoimplement;
 import com.Dao.ModuloDaoimplement;
 import com.Dao.PermisosDaoimplement;
 import com.Dao.RolDaoimplement;
 import com.Dao.RolModuloPermisoDaoimplement;
 import com.Dao.UsuarioDaoimplement;
+import com.Entidades.Grupo;
 import com.Entidades.Miembro;
 import com.Entidades.Modulo;
 import com.Entidades.Permisos;
@@ -39,6 +41,7 @@ public class ConfiguracionInicial implements Serializable {
         UsuarioDaoimplement UDao = new UsuarioDaoimplement();
         ModuloDaoimplement MoDao = new ModuloDaoimplement();
         RolModuloPermisoDaoimplement RMPDao = new RolModuloPermisoDaoimplement();
+        GrupoDaoimplement GRPDao = new GrupoDaoimplement();
 
         //OBJETOS
         Permisos permiso = new Permisos();
@@ -47,16 +50,18 @@ public class ConfiguracionInicial implements Serializable {
         RolModuloPermiso rmp = new RolModuloPermiso();
         Rol rol = new Rol();
         Usuario usuario = new Usuario();
+        Grupo grupo= new Grupo();
 
         //Lita de OBJETOS
         List<Permisos> permisoLista = new ArrayList<Permisos>();
         List<Miembro> miembroLista = new ArrayList<Miembro>();
          List<Rol> rolesLista = new ArrayList<Rol>();
         List<Usuario> usuarioLista = new ArrayList<Usuario>();
-
+        List<Grupo> grupos = new ArrayList<Grupo>();
+        List<Modulo> modulos = new ArrayList<Modulo>();
         List<RolModuloPermiso> rolmodulospermisos = new ArrayList<RolModuloPermiso>();
         Long id;
-        try{
+    
         
 
 //                ///CREAR PERMISOS
@@ -104,7 +109,10 @@ public class ConfiguracionInicial implements Serializable {
         RDao.crear(rol);//CREAR
         rolesLista.add(rol);
         System.out.println("ROL REGISTRADO CON EXITO ");
-//        
+////        
+        //CREAR GRUPOS
+         grupo.setIcono("fa-newspaper-o");
+        grupo.setNombre("Configuracion");
         ///CREAR MODULOS
         System.out.println("---CREANDO MODULO USUARIO POR DEFECTO----");
         id = Long.parseLong("1");
@@ -121,6 +129,8 @@ public class ConfiguracionInicial implements Serializable {
         modulo.setNombre("Configuracion");
         modulo.setSrc("configuracion.xhtm");
         modulo.setIcono("fa-newspaper-o");
+        modulo.setGrupomodulo(grupo);
+        modulo.setSubgrupos(grupo);
         MoDao.crear(modulo);
         System.out.println("MODULO CREADO CON EXITO ");
 
@@ -136,7 +146,7 @@ public class ConfiguracionInicial implements Serializable {
         RMPDao.registrarRolModuloPermisos(rol, modulo, permisoLista);
         System.out.println("RELACION ROL MODULO PERMISOS EXITOSA");
 
-        
+//        
         //CRAER MIEMBRO CON USUARIO
         System.out.println("---CREANDO MIEMBRO CON USUARIO POR DEFECTO----");
         id = Long.parseLong("1");
@@ -155,7 +165,7 @@ public class ConfiguracionInicial implements Serializable {
         System.out.println("MIEMBRO CON USUARIO CREADOS EXITOSAMENTE");
         
 //        
-//        
+////        
 //        LISTAR USUARIOS
         miembroLista = MDao.consultarTodo(Miembro.class);
         for (Miembro miebro : miembroLista) {
@@ -164,9 +174,13 @@ public class ConfiguracionInicial implements Serializable {
             System.out.println("CON "+miebro.getUsuario().getRoles().size()+" ROLES");
             System.out.println("Y PERMISOS EN EL MODULO "+miebro.getUsuario().getRoles().get(0).getRolModuloPermisoList().get(0).getModulo().getNombre()+" ");
         }
-        }catch(Exception ex){
-        System.err.println("REGISTROS YA REALIZADOS");
-        }
+        
+//         id = Long.parseLong("2");
+//        modulo=MoDao.consultar(Modulo.class, id);
+//        grupo=modulo.getGrupomodulo();
+//        for (Modulo modu : modulo.getGrupomodulo().getModulos()) {
+//            System.out.println("grupo modulos de este grupo "+modu.getNombre());
+//        }
 
     }
 }
