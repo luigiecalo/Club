@@ -5,20 +5,15 @@
  */
 package com.Dao;
 
-import static com.Dao.ImplDao.getEmf;
-import com.DaonInterface.GrupoDao;
-import com.DaonInterface.RolDao;
-import com.Entidades.Grupo;
-import com.Entidades.Rol;
+import com.DaonInterface.SubGrupoDao;
+import com.Entidades.SubGrupo;
 import java.io.Serializable;
-import java.util.List;
-import javax.persistence.EntityManager;
 
 /**
  *
  * @author LuisGuillermo
  */
-public class SubGrupoDaoimplement extends ImplDao<Grupo, Long> implements GrupoDao, Serializable {
+public class SubGrupoDaoimplement extends ImplDao<SubGrupo, Long> implements SubGrupoDao, Serializable {
 
     
 

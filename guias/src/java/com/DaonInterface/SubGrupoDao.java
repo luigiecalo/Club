@@ -7,14 +7,13 @@ package com.DaonInterface;
 
 
 import com.Dao.IDao;
-import com.Entidades.Grupo;
-import com.Entidades.Rol;
+import com.Entidades.SubGrupo;
 
 /**
  *
  * @author LuisGuillermo
  */
-public interface SubGrupoDao extends IDao<Grupo, Long>{
+public interface SubGrupoDao extends IDao<SubGrupo, Long>{
 
 
 

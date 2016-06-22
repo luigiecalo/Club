@@ -25,7 +25,10 @@ import com.Entidades.Usuario;
 import java.io.Serializable;
 import java.util.List;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.Map;
 
 /**
  *
@@ -36,34 +39,32 @@ public class ConfiguracionInicial implements Serializable {
     public static void main(String[] args) {
         System.out.println("Hola");
         // ----<Controladore JPADAO Controller>-----
-        PermisosDaoimplement PDao = new PermisosDaoimplement();
-        MiembroDaoimplement MDao = new MiembroDaoimplement();
-        RolDaoimplement RDao = new RolDaoimplement();
-        UsuarioDaoimplement UDao = new UsuarioDaoimplement();
+//        PermisosDaoimplement PDao = new PermisosDaoimplement();
+//        MiembroDaoimplement MDao = new MiembroDaoimplement();
+//        RolDaoimplement RDao = new RolDaoimplement();
+//        UsuarioDaoimplement UDao = new UsuarioDaoimplement();
         ModuloDaoimplement MoDao = new ModuloDaoimplement();
         RolModuloPermisoDaoimplement RMPDao = new RolModuloPermisoDaoimplement();
-        GrupoDaoimplement GRPDao = new GrupoDaoimplement();
+//        GrupoDaoimplement GRPDao = new GrupoDaoimplement();
 
         //OBJETOS
-        Permisos permiso = new Permisos();
-        Miembro miembro = new Miembro();
-        Modulo modulo = new Modulo();
-        RolModuloPermiso rmp = new RolModuloPermiso();
-        Rol rol = new Rol();
-        Usuario usuario = new Usuario();
-        Grupo grupo= new Grupo();
-
+//        Permisos permiso = new Permisos();
+//        Miembro miembro = new Miembro();
+//        Modulo modulo = new Modulo();
+//        RolModuloPermiso rmp = new RolModuloPermiso();
+//        Rol rol = new Rol();
+//        Usuario usuario = new Usuario();
+//        Grupo grupo = new Grupo();
         //Lita de OBJETOS
-        List<Permisos> permisoLista = new ArrayList<Permisos>();
-        List<Miembro> miembroLista = new ArrayList<Miembro>();
-         List<Rol> rolesLista = new ArrayList<Rol>();
-        List<Usuario> usuarioLista = new ArrayList<Usuario>();
-        List<Grupo> grupos = new ArrayList<Grupo>();
+//        List<Permisos> permisoLista = new ArrayList<Permisos>();
+//        List<Miembro> miembroLista = new ArrayList<Miembro>();
+//        List<Rol> rolesLista = new ArrayList<Rol>();
+//        List<Usuario> usuarioLista = new ArrayList<Usuario>();
+//        List<Grupo> grupos = new ArrayList<Grupo>();
         List<Modulo> modulos = new ArrayList<Modulo>();
-        List<RolModuloPermiso> rolmodulospermisos = new ArrayList<RolModuloPermiso>();
+//        List<RolModuloPermiso> rolmodulospermisos = new ArrayList<RolModuloPermiso>();
         Long id;
-    
-        
+
 //
 ////                ///CREAR PERMISOS
 //        System.out.println("---CREANDO PERMISOS----");
@@ -114,6 +115,7 @@ public class ConfiguracionInicial implements Serializable {
 //        //CREAR GRUPOS
 //         grupo.setIcono("fa-newspaper-o");
 //        grupo.setNombre("Configuracion");
+//        
 //        ///CREAR MODULOS
 //        System.out.println("---CREANDO MODULO USUARIO POR DEFECTO----");
 //        id = Long.parseLong("1");
@@ -131,7 +133,6 @@ public class ConfiguracionInicial implements Serializable {
 //        modulo.setSrc("configuracion.xhtm");
 //        modulo.setIcono("fa-newspaper-o");
 //        modulo.setGrupomodulo(grupo);
-//        modulo.setSubgrupos(grupo);
 //        MoDao.crear(modulo);
 //        System.out.println("MODULO CREADO CON EXITO ");
 //
@@ -164,7 +165,6 @@ public class ConfiguracionInicial implements Serializable {
 //        miembro.setUsuario(usuario);
 //        MDao.crear(miembro);
 //        System.out.println("MIEMBRO CON USUARIO CREADOS EXITOSAMENTE");
-//        
 ////        
 //////        
 ////        LISTAR USUARIOS
@@ -175,14 +175,128 @@ public class ConfiguracionInicial implements Serializable {
 //            System.out.println("CON "+miebro.getUsuario().getRoles().size()+" ROLES");
 //            System.out.println("Y PERMISOS EN EL MODULO "+miebro.getUsuario().getRoles().get(0).getRolModuloPermisoList().get(0).getModulo().getNombre()+" ");
 //        }
-//        
-         id = Long.parseLong("4");
-        modulo=MoDao.consultar(Modulo.class, id);
-        for (Modulo modu : modulo.getGrupomodulo().getModulos()) {
-            System.out.println("grupo modulos de este grupo "+modu.getNombre());
+        id = Long.parseLong("1");
+        int i = 1;
+        modulos = MoDao.consultarTodo(Modulo.class);
+        List<Map> menu = new LinkedList<Map>();
+        for (Modulo modulo : modulos) {
+            Map item = new HashMap<String, String>();
+            item.put("src", modulo.getSrc());
+            if (modulo.getGrupomodulo() == null) {
+                System.out.println("*" + modulo.getNombre() + "*");
+                item.put("id", i);
+                item.put("icono", modulo.getIcono());
+                item.put("nombre", modulo.getNombre());
+                item.put("grupo", null);
+                item.put("modulos", null);
+                item.put("submodulos", null);
+                item.put("update", "@form");
+                item.put("subupdate", null);
+                item.put("subupdate2", null);
+                menu.add(item);
+                i++;
+            } else {
+                System.out.println("*" + modulo.getGrupomodulo().getNombre() + "*");
+                item.put("id", i);
+                item.put("nombre", modulo.getGrupomodulo().getNombre());
+                item.put("icono", modulo.getGrupomodulo().getIcono());
+                if (modulo.getSubgrupos() == null) {
+                    List<Modulo> modulosvalidos = new ArrayList<Modulo>();
+                    for (Modulo moduN1 : modulo.getGrupomodulo().getModulos()) {
+                        if (moduN1.getSubgrupos() == null) {
+                            if (RMPDao.buscarModulosValido(id, moduN1.getIdmodulo())) {
+                                System.out.println(" -" + moduN1.getNombre() + "-");
+                                modulosvalidos.add(moduN1);
+                            }
+                        }
+                    }
+                    item.put("modulos", modulosvalidos);
+                    item.put("grupo", modulo.getGrupomodulo().getNombre());
+                    item.put("submodulos", null);
+                    item.put("update", null);
+                    item.put("subupdate", "@form");
+                    item.put("subupdate2", null);
+                    menu.add(item);
+                    i++;
+                } else {
+                    List<Modulo> submodulosvalidos = new ArrayList<Modulo>();
+                    List<Modulo> modulosvalidos = new ArrayList<Modulo>();
+                    for (Modulo moduN1 : modulo.getGrupomodulo().getModulos()) {
+                        if (moduN1.getSubgrupos() == null) {
+                            if (RMPDao.buscarModulosValido(id, moduN1.getIdmodulo())) {
+                                System.out.println(" -" + moduN1.getNombre() + "-");
+                                modulosvalidos.add(moduN1);
+                            }
+                        } else {
+                            if (RMPDao.buscarModulosValido(id, moduN1.getIdmodulo())) {
+                                System.out.println(" -" + moduN1.getNombre() + "-");
+                                modulosvalidos.add(moduN1);
+                            }
+                            for (Modulo moduN2 : moduN1.getSubgrupos().getModulos()) {
+                                if (RMPDao.buscarModulosValido(id, moduN2.getIdmodulo())) {
+                                    System.out.println(" -" + moduN2.getNombre() + "-");
+                                    submodulosvalidos.add(moduN2);
+                                }
+                            }
+                        }
+                    }
+                    item.put("modulos", modulosvalidos);
+                    item.put("grupo", modulo.getSubgrupos().getNombre());
+                    item.put("submodulos", submodulosvalidos);
+                    item.put("update", null);
+                    item.put("subupdate", null);
+                    item.put("subupdate2", "@form");
+                    menu.add(item);
+                    i++;
+
+                }
+
+//                
+//                    }
+//              
+//
+            }
+//            menu.add(item);
         }
-        for (Modulo modu : modulo.getSubgrupos().getModulos()) {
-            System.out.println("grupo submodulos de este grupo "+modu.getNombre());
+
+        List<Map> menunew = new LinkedList<Map>();
+        for (Map item2 : menu) {
+            if (menunew.isEmpty()) {
+                menunew.add(item2);
+            } else {
+                boolean encontro = false;
+                for (Map itemMenu : menunew) {
+                    if (itemMenu.get("nombre").equals(item2.get("nombre"))) {
+                        encontro = true;
+                        break;
+                    }
+                }
+                if (!encontro) {
+                    menunew.add(item2);
+                }
+
+            }
+
+        }
+
+        System.out.println("---MENU PRINCIPAL--");
+        for (Map menu1 : menunew) {
+            System.out.println("*" + menu1.get("nombre")+"*");
+            if (menu1.get("modulos") != null) {
+                System.out.println("-" + menu1.get("grupo")+"-");
+                for (Modulo modulo : (List<Modulo>) menu1.get("modulos")) {
+                    System.out.println("--" + modulo.getNombre()+"--");
+////
+//                    if (menu1.get("submodulos") != null) {
+//                        System.out.println("-" + menu1.get("grupo"));
+//                        System.out.println("-" + modulo.getNombre());
+//                        for (Modulo submodulo : (List<Modulo>) menu1.get("submodulos")) {
+//                            System.out.println("  --" + submodulo.getNombre());
+//                        }
+//                    }
+                }
+            }
+
         }
 
     }
