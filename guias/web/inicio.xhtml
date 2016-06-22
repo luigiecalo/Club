@@ -14,7 +14,7 @@
         <!-- Bootstrap 3.3.6 -->
         <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css"/>
         <link rel="stylesheet" type="text/css" href="font-awesome/css/font-awesome.min.css"/>
-        <link rel="stylesheet/less" type="text/css" href="styles.less" />
+        <!--        <link rel="stylesheet/less" type="text/css" href="styles.less" />-->
         <!-- Theme style -->
         <link rel="stylesheet" href="AdminLTE-master/dist/css/AdminLTE.css"/>
         <!-- AdminLTE Skins. Choose a skin from the css/skins
@@ -332,25 +332,43 @@
                         <!-- /.search form -->
                         <!-- sidebar menu: : style can be found in sidebar.less -->
 
+
                         <ul class="sidebar-menu">
                             <li class="header">
-                                MENÚ PRINCIPAL
+                                MENÚ PRINCIPAL 
                             </li>
-                            <ui:repeat id="nivel1" value="#{controlSeccion.menu}" var="modulos">
+                            <ui:repeat id="nivel1" value="#{controlSeccion.newmenu}" var="modulos">
                                 <li class="treeview #{controlplantillas.getActive(modulos.src)}">
-                                    <p:commandLink    >
+                                    <p:commandLink  actionListener="#{controlplantillas.selecionarmenu(modulos)}"  >
                                         <i class="fa #{modulos.icono}"></i> <span>#{modulos.nombre}</span>
-                                        <i class="fa fa-angle-left pull-right"></i>
+                                        <small class="label pull-right bg-red active">3</small>
                                     </p:commandLink>
                                     <ul class="treeview-menu">
-                                        <ui:repeat id="nivel2" value="#{modulos.modulos}" var="sub">
-                                            <li><a href="#"><i class="fa #{sub.icono}"></i>#{sub.nombre}</a></li>
+                                        <ui:repeat id="nivel2"  value="#{modulos.modulos}" var="sub">
+                                            <li>
+                                                <p:commandLink actionListener="#{controlplantillas.selecionarmenu(sub)}" >
+                                                    <i class="fa #{sub.icono}"></i>
+                                                    <span> #{sub.nombre}</span>
+                                                </p:commandLink>
+                                                <ul class="treeview-menu">
+                                                    <ui:repeat id="nivel3"  value="#{modulos.submodulos}" var="submo">
+                                                        <li>
+                                                            <p:commandLink actionListener="#{controlplantillas.selecionarmenu(submo)}"  >
+                                                                <i class="fa #{submo.icono}"></i>
+                                                                <span> #{submo.nombre}</span>
+                                                            </p:commandLink>
+                                                        </li>
+                                                    </ui:repeat>
+
+                                                </ul>
+                                            </li>
                                         </ui:repeat>
+
                                     </ul>
                                 </li>
                             </ui:repeat>
                             <li class="treeview">
-                                <p:commandLink  >
+                                <p:commandLink  style="" >
                                     <i class="fa fa-share"></i> <span>Multilevel</span>
                                     <i class="fa fa-angle-left pull-right"></i>
                                 </p:commandLink>
@@ -372,8 +390,8 @@
                                     <li><a href="#"><i class="fa fa-circle-o"></i> Level One</a></li>
                                 </ul>
                             </li>
-
                         </ul>
+
 
                     </section>
                     <!-- /.sidebar -->
@@ -409,7 +427,7 @@
                                     <div class="tab-pane #{controlplantillas.getActive(mo.src)}" id="#{mo.idmodulo}">
                                         <b>#{mo.nombre}</b>
                                         #{mo.src}
-                                        <ui:include  src="paginas/#{controlplantillas.modulo}" />
+                                        <ui:include  src="paginas/usuarios.xhtml" />
                                     </div>
                                 </ui:repeat>
                             </div> 

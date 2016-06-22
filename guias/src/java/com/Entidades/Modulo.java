@@ -59,7 +59,7 @@ public class Modulo implements Serializable {
     private Grupo grupomodulo ;
     @OneToOne(cascade = CascadeType.ALL, optional = false, fetch = FetchType.EAGER, orphanRemoval = true)
     @JoinColumn(name = "idsubgrupos")
-    private Grupo subgrupos ;
+    private SubGrupo subgrupos ;
 
     public Modulo() {
     }
@@ -137,11 +137,11 @@ public class Modulo implements Serializable {
         this.grupomodulo = grupomodulo;
     }
 
-    public Grupo getSubgrupos() {
+    public SubGrupo getSubgrupos() {
         return subgrupos;
     }
 
-    public void setSubgrupos(Grupo subgrupos) {
+    public void setSubgrupos(SubGrupo subgrupos) {
         this.subgrupos = subgrupos;
     }
 

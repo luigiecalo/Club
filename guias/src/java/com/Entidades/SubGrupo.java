@@ -26,27 +26,27 @@ import javax.xml.bind.annotation.XmlTransient;
  * @author usuario
  */
 @Entity
-@Table(name = "grupo")
-public class Grupo implements Serializable {
+@Table(name = "subgrupo")
+public class SubGrupo implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @Column(name = "idgrupo")
+    @Column(name = "idsubgrupo")
     private Long idgrupo;
     @Column(name = "nombre")
     private String nombre;
     @Column(name = "icono")
     private String icono;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "grupomodulo")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "subgrupos")
     private List<Modulo> modulos;
 
   
 
-    public Grupo() {
+    public SubGrupo() {
     }
 
-    public Grupo(Long idgrupo) {
+    public SubGrupo(Long idgrupo) {
         this.idgrupo = idgrupo;
     }
 
@@ -84,7 +84,6 @@ public class Grupo implements Serializable {
     }
 
 
-
     @Override
     public int hashCode() {
         int hash = 0;
@@ -95,10 +94,10 @@ public class Grupo implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Grupo)) {
+        if (!(object instanceof SubGrupo)) {
             return false;
         }
-        Grupo other = (Grupo) object;
+        SubGrupo other = (SubGrupo) object;
         if ((this.idgrupo == null && other.idgrupo != null) || (this.idgrupo != null && !this.idgrupo.equals(other.idgrupo))) {
             return false;
         }

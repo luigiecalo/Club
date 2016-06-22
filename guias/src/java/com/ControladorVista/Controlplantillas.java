@@ -70,13 +70,12 @@ public class Controlplantillas implements Serializable {
                 Modulos.add(modu);
             }
         }
-
     }
 
     public void cerrarmodulo(Modulo modu) {
-      Modulos.remove(modu);
+        Modulos.remove(modu);
     }
-    
+
     public String cargarmodulo(Modulo modu) {
         RequestContext context = RequestContext.getCurrentInstance();
         modulo = modu.getSrc();
