@@ -38,6 +38,7 @@ public class ConfiguracionInicial implements Serializable {
 
     public static void main(String[] args) {
         System.out.println("Hola");
+        ConfiguracionInicial con = new ConfiguracionInicial();
         // ----<Controladore JPADAO Controller>-----
 //        PermisosDaoimplement PDao = new PermisosDaoimplement();
 //        MiembroDaoimplement MDao = new MiembroDaoimplement();
@@ -176,87 +177,32 @@ public class ConfiguracionInicial implements Serializable {
 //            System.out.println("Y PERMISOS EN EL MODULO "+miebro.getUsuario().getRoles().get(0).getRolModuloPermisoList().get(0).getModulo().getNombre()+" ");
 //        }
         id = Long.parseLong("1");
-        int i = 1;
         modulos = MoDao.consultarTodo(Modulo.class);
         List<Map> menu = new LinkedList<Map>();
         for (Modulo modulo : modulos) {
             Map item = new HashMap<String, String>();
             item.put("src", modulo.getSrc());
             if (modulo.getGrupomodulo() == null) {
-                System.out.println("*" + modulo.getNombre() + "*");
-                item.put("id", i);
-                item.put("icono", modulo.getIcono());
-                item.put("nombre", modulo.getNombre());
-                item.put("grupo", null);
-                item.put("modulos", null);
-                item.put("submodulos", null);
-                item.put("update", "@form");
-                item.put("subupdate", null);
-                item.put("subupdate2", null);
-                menu.add(item);
-                i++;
+                con.addItemGruponull(item, modulo, menu);
             } else {
-                System.out.println("*" + modulo.getGrupomodulo().getNombre() + "*");
-                item.put("id", i);
+
                 item.put("nombre", modulo.getGrupomodulo().getNombre());
                 item.put("icono", modulo.getGrupomodulo().getIcono());
-                if (modulo.getSubgrupos() == null) {
-                    List<Modulo> modulosvalidos = new ArrayList<Modulo>();
-                    for (Modulo moduN1 : modulo.getGrupomodulo().getModulos()) {
-                        if (moduN1.getSubgrupos() == null) {
-                            if (RMPDao.buscarModulosValido(id, moduN1.getIdmodulo())) {
-                                System.out.println(" -" + moduN1.getNombre() + "-");
-                                modulosvalidos.add(moduN1);
-                            }
-                        }
-                    }
-                    item.put("modulos", modulosvalidos);
-                    item.put("grupo", modulo.getGrupomodulo().getNombre());
-                    item.put("submodulos", null);
-                    item.put("update", null);
-                    item.put("subupdate", "@form");
-                    item.put("subupdate2", null);
-                    menu.add(item);
-                    i++;
+                if (menu.isEmpty()) {
+                    con.addItemGrupo(item, modulo, menu);
                 } else {
-                    List<Modulo> submodulosvalidos = new ArrayList<Modulo>();
-                    List<Modulo> modulosvalidos = new ArrayList<Modulo>();
-                    for (Modulo moduN1 : modulo.getGrupomodulo().getModulos()) {
-                        if (moduN1.getSubgrupos() == null) {
-                            if (RMPDao.buscarModulosValido(id, moduN1.getIdmodulo())) {
-                                System.out.println(" -" + moduN1.getNombre() + "-");
-                                modulosvalidos.add(moduN1);
-                            }
-                        } else {
-                            if (RMPDao.buscarModulosValido(id, moduN1.getIdmodulo())) {
-                                System.out.println(" -" + moduN1.getNombre() + "-");
-                                modulosvalidos.add(moduN1);
-                            }
-                            for (Modulo moduN2 : moduN1.getSubgrupos().getModulos()) {
-                                if (RMPDao.buscarModulosValido(id, moduN2.getIdmodulo())) {
-                                    System.out.println(" -" + moduN2.getNombre() + "-");
-                                    submodulosvalidos.add(moduN2);
-                                }
-                            }
+                    boolean encontro = false;
+                    for (Map itemMenu : menu) {
+                        if (itemMenu.get("nombre").equals(item.get("nombre"))) {
+                            encontro = true;
+                            break;
                         }
                     }
-                    item.put("modulos", modulosvalidos);
-                    item.put("grupo", modulo.getSubgrupos().getNombre());
-                    item.put("submodulos", submodulosvalidos);
-                    item.put("update", null);
-                    item.put("subupdate", null);
-                    item.put("subupdate2", "@form");
-                    menu.add(item);
-                    i++;
-
+                    if (!encontro) {
+                        con.addItemGrupo(item, modulo, menu);
+                    }
                 }
-
-//                
-//                    }
-//              
-//
             }
-//            menu.add(item);
         }
 
         List<Map> menunew = new LinkedList<Map>();
@@ -280,24 +226,117 @@ public class ConfiguracionInicial implements Serializable {
         }
 
         System.out.println("---MENU PRINCIPAL--");
-        for (Map menu1 : menunew) {
-            System.out.println("*" + menu1.get("nombre")+"*");
+        for (Map menu1 : menu) {
+            System.out.println("*" + menu1.get("nombre") + "*");
             if (menu1.get("modulos") != null) {
-                System.out.println("-" + menu1.get("grupo")+"-");
                 for (Modulo modulo : (List<Modulo>) menu1.get("modulos")) {
-                    System.out.println("--" + modulo.getNombre()+"--");
-////
-//                    if (menu1.get("submodulos") != null) {
-//                        System.out.println("-" + menu1.get("grupo"));
-//                        System.out.println("-" + modulo.getNombre());
-//                        for (Modulo submodulo : (List<Modulo>) menu1.get("submodulos")) {
-//                            System.out.println("  --" + submodulo.getNombre());
-//                        }
-//                    }
+                    System.out.println("-" + modulo.getNombre() + "-");
+                    if (menu1.get("submodulos") != null) {
+                        System.out.println("-" + menu1.get("grupo"));
+                        for (Modulo submodulo : (List<Modulo>) menu1.get("submodulos")) {
+                            System.out.println(" " + submodulo.getNombre());
+                        }
+                    }
                 }
             }
 
         }
 
     }
+
+    public void addItemGrupo(Map item, Modulo modulo, List<Map> menu) {
+        if (modulo.getSubgrupos() == null) {
+            System.out.println("*" + modulo.getGrupomodulo().getNombre() + "*");
+            item.put("grupo", modulo.getGrupomodulo().getNombre());
+            item.put("id", modulo.getIdmodulo());
+            List<Modulo> modulosvalidos = new ArrayList<Modulo>();
+
+            for (Modulo moduN1 : modulo.getGrupomodulo().getModulos()) {
+                if (moduN1.getSubgrupos() == null) {
+                    System.out.println(" -" + moduN1.getNombre() + "-");
+                    modulosvalidos.add(moduN1);
+                } else {
+                    addItemSubGrupointerno(item, moduN1, menu);
+                }
+            }
+            item.put("modulos", modulosvalidos);
+            item.put("update", null);
+            item.put("subupdate", "@form");
+            item.put("subupdate2", null);
+            menu.add(item);
+
+        } else {
+            addItemSubGrupoExterno(item, modulo, menu);
+        }
+    }
+
+    public void addItemSubGrupointerno(Map item, Modulo modulo, List<Map> menu) {
+        RolModuloPermisoDaoimplement RMPDao = new RolModuloPermisoDaoimplement();
+        Long id = Long.parseLong("1");
+        item.put("grupo", modulo.getSubgrupos().getNombre());
+        item.put("id", modulo.getIdmodulo());
+        System.out.println(" -" + modulo.getSubgrupos().getNombre() + "¬");
+        List<Modulo> submodulosvalidos = new ArrayList<Modulo>();
+        for (Modulo moduN1 : modulo.getSubgrupos().getModulos()) {
+            if (RMPDao.buscarModulosValido(id, moduN1.getIdmodulo())) {
+                if (moduN1.getGrupomodulo().equals(modulo.getGrupomodulo())) {
+                    System.out.println("  " + moduN1.getNombre() + "®");
+                    submodulosvalidos.add(moduN1);
+                } else {
+//                    System.err.println("  " + moduN1.getNombre() + "®");
+                }
+            }
+        }
+//        item.put("modulos", modulosvalidos);
+        item.put("submodulos", submodulosvalidos);
+        item.put("update", null);
+        item.put("subupdate", null);
+        item.put("subupdate2", "@form");
+//        menu.add(item);
+    }
+
+    public void addItemGruponull(Map item, Modulo modulo, List<Map> menu) {
+        if (modulo.getSubgrupos() == null) {
+            System.out.println("*" + modulo.getNombre() + "*");
+            item.put("id", modulo.getIdmodulo());
+            item.put("icono", modulo.getIcono());
+            item.put("nombre", modulo.getNombre());
+            item.put("grupo", null);
+            item.put("modulos", null);
+            item.put("submodulos", null);
+            item.put("update", "@form");
+            item.put("subupdate", null);
+            item.put("subupdate2", null);
+            menu.add(item);
+        }
+    }
+
+    public void addItemSubGrupoExterno(Map item, Modulo modulo, List<Map> menu) {
+        RolModuloPermisoDaoimplement RMPDao = new RolModuloPermisoDaoimplement();
+        Long id = Long.parseLong("1");
+        if (modulo.getSubgrupos() != null) {
+            item.put("grupo", modulo.getSubgrupos().getNombre());
+            item.put("id", modulo.getIdmodulo());
+//            System.err.println("(" + modulo.getSubgrupos().getNombre() + ")");
+            List<Modulo> submodulosvalidos = new ArrayList<Modulo>();
+            System.out.println(" -" + modulo.getGrupomodulo().getNombre() + "®");
+
+            List<Modulo> modulosvalidos = new ArrayList<Modulo>();
+            for (Modulo moduN1 : modulo.getGrupomodulo().getModulos()) {
+                if (moduN1.getSubgrupos() == null) {
+                    System.out.println(" -" + moduN1.getNombre() + "-");
+                    modulosvalidos.add(moduN1);
+                } else {
+                    addItemSubGrupointerno(item, moduN1, menu);
+                }
+            }
+            item.put("modulos", modulosvalidos);
+            item.put("update", null);
+            item.put("subupdate", null);
+            item.put("subupdate2", "@form");
+            menu.add(item);
+
+        }
+    }
+
 }
