@@ -337,68 +337,7 @@
                             <li class="header">
                                 MENÚ PRINCIPAL 
                             </li>
-                            <ui:repeat id="nivel1" value="#{controlSeccion.menu}" var="modulos">
-                                <li class="treeview #{controlplantillas.getActive(modulos.src)}">
-                                    <p:commandLink  actionListener="#{controlplantillas.selecionarmenuId(modulos)}" update=""  >
-                                        <i class="fa #{modulos.icono}"></i> <span>#{modulos.nombre}</span>
-                                        <small class="label pull-right bg-red active">3</small>
-                                        <i class="fa fa-angle-left pull-right"></i>
-                                    </p:commandLink>
-                                    <ul class="treeview-menu">
-                                        <ui:repeat id="nivel2" rendered="#{sub.subgrupos==null}"  value="#{modulos.modulos}" var="sub">
-                                            <li>
-                                                <p:commandLink rendered="#{sub.subgrupos==null}" actionListener="#{controlplantillas.selecionarmenu(sub,modulos)}"  >
-                                                    <i class="fa #{sub.icono}"></i>
-                                                    <span> #{sub.nombre}</span>
-                                                </p:commandLink>
-                                            </li>
-                                            <li>
-                                                <p:commandLink rendered="#{sub.subgrupos!=null}" actionListener="#{controlplantillas.selecionarmenu(sub,modulos)}"  >
-                                                    <i class="fa #{sub.subgrupos.icono}"></i>
-                                                    <span> #{sub.subgrupos.nombre}</span>
-                                                    <i class="fa fa-angle-left pull-right"></i>
-                                                </p:commandLink>
-                                                <ul class="treeview-menu">
-                                                    <ui:repeat rendered="#{sub.subgrupos!=null}"   value="#{sub.subgrupos.modulos}" var="sub1">
-                                                        <li>
-                                                            <p:commandLink  actionListener="#{controlplantillas.selecionarmenu(sub1,modulos)}"   >
-                                                                <i class="fa #{sub1.icono}"></i>
-                                                                <span> #{sub1.nombre}</span>
-                                                            </p:commandLink>
-                                                        </li>
-                                                    </ui:repeat>
-                                                </ul>
-
-                                            </li>
-
-
-                                        </ui:repeat>
-                                    </ul>
-                                </li>
-                            </ui:repeat>
-                            <li class="treeview">
-                                <p:commandLink  style="" >
-                                    <i class="fa fa-share"></i> <span>Multilevel</span>
-                                    <i class="fa fa-angle-left pull-right"></i>
-                                </p:commandLink>
-                                <ul class="treeview-menu">
-                                    <li><a href="#"><i class="fa fa-circle-o"></i> Level One</a></li>
-                                    <li>
-                                        <a href="#"><i class="fa fa-circle-o"></i> Level One <i class="fa fa-angle-left pull-right"></i></a>
-                                        <ul class="treeview-menu">
-                                            <li><a href="#"><i class="fa fa-circle-o"></i> Level Two</a></li>
-                                            <li>
-                                                <a href="#"><i class="fa fa-circle-o"></i> Level Two <i class="fa fa-angle-left pull-right"></i></a>
-                                                <ul class="treeview-menu">
-                                                    <li><a href="#"><i class="fa fa-circle-o"></i> Level Three</a></li>
-                                                    <li><a href="#"><i class="fa fa-circle-o"></i> Level Three</a></li>
-                                                </ul>
-                                            </li>
-                                        </ul>
-                                    </li>
-                                    <li><a href="#"><i class="fa fa-circle-o"></i> Level One</a></li>
-                                </ul>
-                            </li>
+                          <ui:include id="temas" src="menu.xhtml" />
                         </ul>
 
 
