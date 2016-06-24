@@ -106,7 +106,7 @@ public class SubGrupo implements Serializable {
 
     @Override
     public String toString() {
-        return "com.Entidades.Modulo[ idgrupo=" + idgrupo + " ]";
+        return "Subgrupo[(" + idgrupo + ") modulos="+modulos.size()+" ]";
     }
     
 }

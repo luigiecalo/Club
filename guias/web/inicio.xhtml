@@ -337,33 +337,42 @@
                             <li class="header">
                                 MENÚ PRINCIPAL 
                             </li>
-                            <ui:repeat id="nivel1" value="#{controlSeccion.newmenu}" var="modulos">
+                            <ui:repeat id="nivel1" value="#{controlSeccion.menu}" var="modulos">
                                 <li class="treeview #{controlplantillas.getActive(modulos.src)}">
-                                    <p:commandLink  actionListener="#{controlplantillas.selecionarmenu(modulos)}"  >
+                                    <p:commandLink  actionListener="#{controlplantillas.selecionarmenuId(modulos)}" update=""  >
                                         <i class="fa #{modulos.icono}"></i> <span>#{modulos.nombre}</span>
                                         <small class="label pull-right bg-red active">3</small>
+                                        <i class="fa fa-angle-left pull-right"></i>
                                     </p:commandLink>
                                     <ul class="treeview-menu">
-                                        <ui:repeat id="nivel2"  value="#{modulos.modulos}" var="sub">
+                                        <ui:repeat id="nivel2" rendered="#{sub.subgrupos==null}"  value="#{modulos.modulos}" var="sub">
                                             <li>
-                                                <p:commandLink actionListener="#{controlplantillas.selecionarmenu(sub)}" >
+                                                <p:commandLink rendered="#{sub.subgrupos==null}" actionListener="#{controlplantillas.selecionarmenu(sub,modulos)}"  >
                                                     <i class="fa #{sub.icono}"></i>
                                                     <span> #{sub.nombre}</span>
                                                 </p:commandLink>
+                                            </li>
+                                            <li>
+                                                <p:commandLink rendered="#{sub.subgrupos!=null}" actionListener="#{controlplantillas.selecionarmenu(sub,modulos)}"  >
+                                                    <i class="fa #{sub.subgrupos.icono}"></i>
+                                                    <span> #{sub.subgrupos.nombre}</span>
+                                                    <i class="fa fa-angle-left pull-right"></i>
+                                                </p:commandLink>
                                                 <ul class="treeview-menu">
-                                                    <ui:repeat id="nivel3"  value="#{modulos.submodulos}" var="submo">
+                                                    <ui:repeat rendered="#{sub.subgrupos!=null}"   value="#{sub.subgrupos.modulos}" var="sub1">
                                                         <li>
-                                                            <p:commandLink actionListener="#{controlplantillas.selecionarmenu(submo)}"  >
-                                                                <i class="fa #{submo.icono}"></i>
-                                                                <span> #{submo.nombre}</span>
+                                                            <p:commandLink  actionListener="#{controlplantillas.selecionarmenu(sub1,modulos)}"   >
+                                                                <i class="fa #{sub1.icono}"></i>
+                                                                <span> #{sub1.nombre}</span>
                                                             </p:commandLink>
                                                         </li>
                                                     </ui:repeat>
-
                                                 </ul>
-                                            </li>
-                                        </ui:repeat>
 
+                                            </li>
+
+
+                                        </ui:repeat>
                                     </ul>
                                 </li>
                             </ui:repeat>

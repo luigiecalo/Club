@@ -63,6 +63,18 @@ public class Modulo implements Serializable {
 
     public Modulo() {
     }
+    
+
+    public Modulo(Modulo mo) {
+        this.idmodulo = mo.idmodulo;
+        this.nombre = mo.nombre;
+        this.src = mo.src;
+        this.icono = mo.icono;
+        this.rolModuloPermisoList = mo.rolModuloPermisoList;
+        this.posicion = mo.posicion;
+        this.grupomodulo = mo.grupomodulo;
+        this.subgrupos = mo.subgrupos;
+    }
 
     public Modulo(Long idmodulo) {
         this.idmodulo = idmodulo;
@@ -156,7 +168,7 @@ public class Modulo implements Serializable {
 
     @Override
     public String toString() {
-        return "com.Entidades.Modulo[ idmodulo=" + idmodulo + " ]";
+        return "Modulo[(" + idmodulo + ") subgrupos=("+subgrupos+")]";
     }
     
 }

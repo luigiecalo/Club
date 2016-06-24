@@ -6,6 +6,7 @@
 package com.ControladorVista;
 
 import static com.ControladorVista.ControlSeccion.toLong;
+import com.Dao.ModuloDaoimplement;
 import com.Entidades.Modulo;
 import com.Entidades.Rol;
 import java.io.Serializable;
@@ -39,6 +40,7 @@ public class Controlplantillas implements Serializable {
     private String hader = "INICIO";
     private List<Modulo> Modulos = new ArrayList<Modulo>();
     private Modulo moduloSelecionado = new Modulo();
+    private ModuloDaoimplement ModuloDao = new ModuloDaoimplement();
 
     /**
      * Creates a new instance of controlplantillas
@@ -52,7 +54,8 @@ public class Controlplantillas implements Serializable {
     }
 //metodos
 
-    public void selecionarmenu(Modulo modu) {
+    public void selecionarmenu(Modulo modu, Map ver) {
+        System.out.println(ver);
         contenido = modu.getSrc();
         hader = modu.getNombre();
         modulo = modu.getSrc();
@@ -70,6 +73,11 @@ public class Controlplantillas implements Serializable {
                 Modulos.add(modu);
             }
         }
+    }
+
+    public void selecionarmenuId(Map ver) {
+        Modulo mod = ModuloDao.consultar(Modulo.class, ver.get("id"));
+        selecionarmenu(mod, ver);
     }
 
     public void cerrarmodulo(Modulo modu) {
