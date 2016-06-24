@@ -222,7 +222,7 @@ public class ConfiguracionInicial implements Serializable {
                                 for (Modulo moduloitem : modulositem) {
                                     System.out.println(moduloitem.getSubgrupos());
                                     if (moduloitem.getSubgrupos() != null) {
-                                      if(moduloitem.getGrupomodulo().equals(moduloencontrado.getGrupomodulo())){
+                                      if(moduloitem.getSubgrupos().equals(moduloencontrado.getSubgrupos())){
                                       Modulo moduloRelacion=moduloencontrado;
                                       System.err.println("Ese encontro a:"+moduloRelacion);
                                       moduloRelacion.getSubgrupos().getModulos().add(modulo);

@@ -34,6 +34,9 @@ public class Controlplantillas implements Serializable {
     @ManagedProperty("#{controlSeccion}")
     private ControlSeccion cs = new ControlSeccion();
     private String modulo = "principal.xhtml";
+    private Long moduloid = Long.parseLong("0");
+    private String grupo = "principal.xhtml";
+    private String subGrupo = "principal.xhtml";
     private String active = "";
     RequestContext context = RequestContext.getCurrentInstance();
     private String contenido = INICIO;
@@ -56,10 +59,25 @@ public class Controlplantillas implements Serializable {
 
     public void selecionarmenu(Modulo modu, Map ver) {
         System.out.println(ver);
-        contenido = modu.getSrc();
-        hader = modu.getNombre();
         modulo = modu.getSrc();
         moduloSelecionado = modu;
+        moduloid= modu.getIdmodulo();
+        if (modu.getGrupomodulo() != null) {
+            grupo = modu.getGrupomodulo().getNombre();
+        } else {
+            if (ver.get("tipo").equals("modulo")) {
+                grupo = modu.getNombre();
+            } else {
+                grupo="";
+            }
+
+        }
+        if (modu.getSubgrupos() != null) {
+            subGrupo = modu.getSubgrupos().getNombre();
+        } else {
+            subGrupo = "";
+        }
+
         if (Modulos.isEmpty()) {
             Modulos.add(modu);
         } else {
@@ -73,11 +91,19 @@ public class Controlplantillas implements Serializable {
                 Modulos.add(modu);
             }
         }
+
     }
 
-    public void selecionarmenuId(Map ver) {
+    public void selecionarmenuGrupo(Map ver) {
+        grupo = (String) ver.get("nombre");
         Modulo mod = ModuloDao.consultar(Modulo.class, ver.get("id"));
-        selecionarmenu(mod, ver);
+        if (ver.get("tipo").equals("modulo")) {
+            selecionarmenu(mod, ver);
+        }
+    }
+
+    public void selecionarmenuSubGrupo(Modulo modu, Map ver) {
+        subGrupo = modu.getSubgrupos().getNombre();
     }
 
     public void cerrarmodulo(Modulo modu) {
@@ -87,13 +113,17 @@ public class Controlplantillas implements Serializable {
     public String cargarmodulo(Modulo modu) {
         RequestContext context = RequestContext.getCurrentInstance();
         modulo = modu.getSrc();
-//        context.getCurrentInstance().execute(""
-//                + "$('#tab-list').append($('<li><a href=\"#tab"+ modu.getIdmodulo() + "\" role=\"tab\" data-toggle=\"tab\">Tab " + modu.getIdmodulo() + "<button class=\"close\" type=\"button\" title=\"Remove this page\">×</button></a></li>"
-//                +" "
-//                + "'));");
-//        System.out.println("---AKI ESTA"
-//                + "$('#tab-list').append($('<li><a href=\"#tab"+ modu.getIdmodulo() + "\" role=\"tab\" data-toggle=\"tab\">Tab " + modu.getIdmodulo() + "<button class=\"close\" type=\"button\" title=\"Remove this page\">×</button></a></li>"
-//                + "");
+        moduloid= modu.getIdmodulo();
+        if (modu.getGrupomodulo() != null) {
+            grupo = modu.getGrupomodulo().getNombre();
+        } else {
+                grupo=modu.getNombre();
+        }
+        if (modu.getSubgrupos() != null) {
+            subGrupo = modu.getSubgrupos().getNombre();
+        } else {
+            subGrupo = "";
+        }
         return modulo;
     }
 
@@ -101,9 +131,33 @@ public class Controlplantillas implements Serializable {
         return modulo;
     }
 
-    public String getActive(String mod) {
+    public String getActive(Long mod) {
         String active1 = null;
-        if (mod.equals(modulo)) {
+        if (mod.equals(moduloid)) {
+            active1 = "active";
+        }
+        return active1;
+    }
+
+    public String getActiveGrupo(Map ver) {
+        String active1 = null;
+        if (ver.get("nombre").equals(grupo)) {
+            active1 = "active";
+        }
+        return active1;
+    }
+
+    public String getActiveSubgrupo(String subgrup) {
+        String active1 = null;
+        if (subgrup.equals(subGrupo)) {
+            active1 = "active";
+        }
+        return active1;
+    }
+    
+    public String getActiveSubgrupomodulo(Long modid) {
+        String active1 = null;
+        if (modid.equals(moduloid)) {
             active1 = "active";
         }
         return active1;
@@ -152,5 +206,22 @@ public class Controlplantillas implements Serializable {
     public void setModuloSelecionado(Modulo moduloSelecionado) {
         this.moduloSelecionado = moduloSelecionado;
     }
+
+    public String getGrupo() {
+        return grupo;
+    }
+
+    public String getSubGrupo() {
+        return subGrupo;
+    }
+
+    public Long getModuloid() {
+        return moduloid;
+    }
+
+    public void setModuloid(Long moduloid) {
+        this.moduloid = moduloid;
+    }
+    
 
 }

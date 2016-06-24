@@ -155,7 +155,7 @@ public class ControlSeccion implements Serializable {
         for (Modulo m : ModulosSeccion) {
             Modulo modulo = m;
             Map item = new HashMap<String, String>();
-            item.put("src", modulo.getSrc());
+            
             if (modulo.getGrupomodulo() == null) {
                 addItem(item, modulo, menu);
 
@@ -194,7 +194,7 @@ public class ControlSeccion implements Serializable {
                                 for (Modulo moduloitem : modulositem) {
                                     System.out.println(moduloitem.getSubgrupos());
                                     if (moduloitem.getSubgrupos() != null) {
-                                        if (moduloitem.getGrupomodulo().equals(moduloencontrado.getGrupomodulo())) {
+                                        if (moduloitem.getSubgrupos().equals(moduloencontrado.getSubgrupos())) {
                                             Modulo moduloRelacion = moduloencontrado;
                                             System.err.println("Ese encontro a:" + moduloRelacion);
                                             moduloRelacion.getSubgrupos().getModulos().add(modulo);
@@ -223,35 +223,30 @@ public class ControlSeccion implements Serializable {
         if (modulo.getSubgrupos() == null) {
 
             System.out.println("*" + modulo.getNombre() + "*");
+            item.put("src", modulo.getSrc());
             item.put("id", modulo.getIdmodulo());
             item.put("icono", modulo.getIcono());
             item.put("nombre", modulo.getNombre());
-            item.put("grupo", null);
             item.put("modulos", null);
-            item.put("submodulos", null);
-            item.put("update", "@form");
-            item.put("subupdate", null);
-            item.put("subupdate2", null);
+            item.put("tipo","modulo");
+            item.put("clase",null);
         }
     }
 
     public void addItemGrup(Map item, Modulo modulo) {
         if (modulo.getSubgrupos() == null) {
             System.out.println("*" + modulo.getGrupomodulo().getNombre() + "*");
+            item.put("src", modulo.getGrupomodulo().getNombre());
             item.put("id", modulo.getIdmodulo());
             item.put("icono", modulo.getGrupomodulo().getIcono());
             item.put("nombre", modulo.getGrupomodulo().getNombre());
-            item.put("grupo", modulo.getGrupomodulo().getNombre());
             List<Modulo> modulosvalidos = new ArrayList<Modulo>();
 
             System.out.println("-" + modulo.getNombre() + "-");
             modulosvalidos.add(modulo);
-
             item.put("modulos", modulosvalidos);
-            item.put("submodulos", null);
-            item.put("update", null);
-            item.put("subupdate", "@form");
-            item.put("subupdate2", null);
+            item.put("tipo","grupo");
+            item.put("clase","fa-angle-left pull-right");
         } else {
             addItemSubGrup(item, modulo);
         }
@@ -259,19 +254,18 @@ public class ControlSeccion implements Serializable {
 
     public void addItemSubGrup(Map item, Modulo modulo) {
         System.out.println("-" + modulo.getSubgrupos().getNombre() + "-");
+        item.put("src", modulo.getSubgrupos().getNombre());
         item.put("id", modulo.getIdmodulo());
         item.put("icono", modulo.getGrupomodulo().getIcono());
         item.put("nombre", modulo.getGrupomodulo().getNombre());
-        item.put("grupo", modulo.getSubgrupos().getNombre());
         List<Modulo> modulosvalidos = new ArrayList<Modulo>();
         List<Modulo> submodulosvalidos = new ArrayList<Modulo>();
         submodulosvalidos.add(modulo);
         modulo.getSubgrupos().setModulos(submodulosvalidos);
         modulosvalidos.add(modulo);
         item.put("modulos", modulosvalidos);
-        item.put("update", null);
-        item.put("subupdate", null);
-        item.put("subupdate2", "@form");
+        item.put("tipo","subgrupo");
+        item.put("clase","fa-angle-left pull-right");
     }
 
     public void salir() {

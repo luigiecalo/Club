@@ -6,30 +6,29 @@
 
     <ui:composition>
         <ui:repeat id="nivel1" value="#{controlSeccion.menu}" var="modulos">
-            <li class="treeview #{controlplantillas.getActive(modulos.src)}">
-                <p:commandLink  actionListener="#{controlplantillas.selecionarmenuId(modulos)}"   >
+            <li class="treeview #{controlplantillas.getActiveGrupo(modulos)}" >
+                <h:commandLink  actionListener="#{controlplantillas.selecionarmenuGrupo(modulos)}"  >
                     <i class="fa #{modulos.icono}"></i> <span>#{modulos.nombre}</span>
-                    <i class="fa fa-angle-left pull-right"></i>
-                </p:commandLink>
-                <h:panelGrid rendered="false">
+                    <i class="fa #{modulos.clase}"></i>
+                </h:commandLink>
                     <ul class="treeview-menu" >
                         <ui:repeat id="nivel2"   value="#{modulos.modulos}" var="sub">
-                            <li>
-                                <p:commandLink rendered="#{sub.subgrupos==null}" actionListener="#{controlplantillas.selecionarmenu(sub,modulos)}"  >
+                            <li class="#{controlplantillas.getActiveSubgrupomodulo(sub.idmodulo)}" >
+                                <p:commandLink rendered="#{sub.subgrupos==null}" actionListener="#{controlplantillas.selecionarmenu(sub,modulos)}" update=":form:tab" >
                                     <i class="fa #{sub.icono}"></i>
                                     <span> #{sub.nombre}</span>
                                 </p:commandLink>
                             </li>
-                            <li>
-                                <p:commandLink rendered="#{sub.subgrupos!=null}" actionListener="#{controlplantillas.selecionarmenu(sub,modulos)}"  >
+                            <li class="#{controlplantillas.getActiveSubgrupo(sub.subgrupos.nombre)}">
+                                <p:commandLink rendered="#{sub.subgrupos!=null}" actionListener="#{controlplantillas.selecionarmenuSubGrupo(sub,modulos)}" update=":form:tab" >
                                     <i class="fa #{sub.subgrupos.icono}"></i>
                                     <span> #{sub.subgrupos.nombre}</span>
                                     <i class="fa fa-angle-left pull-right"></i>
                                 </p:commandLink>
                                 <ul class="treeview-menu">
                                     <ui:repeat rendered="#{sub.subgrupos!=null}"   value="#{sub.subgrupos.modulos}" var="sub1">
-                                        <li>
-                                            <p:commandLink  actionListener="#{controlplantillas.selecionarmenu(sub1,modulos)}"   >
+                                        <li class="#{controlplantillas.getActiveSubgrupomodulo(sub1.idmodulo)}">
+                                            <p:commandLink  actionListener="#{controlplantillas.selecionarmenu(sub1,modulos)}" update=":form:tab" >
                                                 <i class="fa #{sub1.icono}"></i>
                                                 <span> #{sub1.nombre}</span>
                                             </p:commandLink>
@@ -42,7 +41,6 @@
 
                         </ui:repeat>
                     </ul>
-                </h:panelGrid>
             </li>
         </ui:repeat>
     </ui:composition>
