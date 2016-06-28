@@ -6,32 +6,88 @@
       xmlns:p="http://primefaces.org/ui">
 
     <ui:composition>
+        <b:panel  collapsible="false" rendered="#{!controlUsuarios.registrar}">
+            <h2 class="widget-user-username">Usuarios</h2>
+            <h6 class="widget-user-desc">Consultar usuarios</h6>
 
-        <div class="ui-g" style="visibility: visible">
-            <div class="col-lg-offset-11"><b:commandButton value="registrar"  icon="fa fa-plus" rendered="#{controlUsuarios.bootonregistro(controlSeccion.rol.idrol,controlplantillas.moduloSelecionado)}" styleClass="bg-#{controlSeccion.skins}" actionListener="#{controlUsuarios.listarusuarios()}"  size="sm" /></div>
-            <div class="ui-g-12">
-        
+            <div class="row">
+                <div class="col-xs-12 col-md-12">
 
-                <b:dataTable value="#{controlUsuarios.usuarioLista}" var="car" id="bcarPool2" styleClass="table table-striped table-bordered"
-                             style="width:100%" fixedHeader="true" responsive="true" lang="it">
-                    <h:column>
-                        <f:facet name="header">
-                            <h:outputText value="Brand" />
-                        </f:facet>
-                        <h:outputText value="#{car.id}" />
-                    </h:column>
-                    <h:column>
-                        <f:facet name="header">
-                            <h:outputText value="Type" />
-                        </f:facet>
-                        <h:inputText value="#{car.password}"/>
-                    </h:column>
-              
-                   
-                    
-                </b:dataTable>
+                    <b:commandButton value="REGISTRAR"   rendered="#{controlUsuarios.bootonregistro(controlSeccion.rol.idrol,controlplantillas.moduloSelecionado)}" styleClass="bg-#{controlSeccion.skins}" actionListener="#{controlUsuarios.registroModulo()}" update="tab" size="sm" >
+                        <i class="fa fa-plus"></i>
+                    </b:commandButton>
+
+                </div>
+                <div class="col-xs-12 col-md-12">
+                    <b:navBar brand="Brand" brandHref="#">
+                        <b:navbarLinks>
+                            <b:navLink value="Home" href="#"></b:navLink>
+                            <b:navLink value="Link" href="#"></b:navLink>
+                            <b:navLink value="Link" href="#"></b:navLink>
+                            <b:dropMenu value="Dropdown">
+                                <b:navLink value="Action" actionListener="#{controlUsuarios.listarusuarios()}" update="bcarPool" ></b:navLink>
+                                <b:navLink value="Another action" href="#"></b:navLink>
+                                <b:navLink value="Something else here" href="#"></b:navLink>
+                                <b:navLink></b:navLink>
+                                <b:navLink header="Nav header"></b:navLink>
+                                <b:navLink value="Separated link" href="#"></b:navLink>
+                                <b:navLink value="One more separated link" href="#"></b:navLink>
+                            </b:dropMenu>
+                        </b:navbarLinks>
+                    </b:navBar>
+                </div>
+                <div class="col-xs-12 col-md-12">
+                    <a href="#" class="thumbnail">
+                        <b:dataTable value="#{controlUsuarios.usuarioLista}" var="car" id="bcarPool" styleClass="table table-striped table-bordered"
+                                     style="width:100%">
+                            <h:column>
+                                <f:facet name="header">
+                                    <h:outputText value="Brand" />
+                                </f:facet>
+                                <h:outputText value="#{car.login}" />
+                            </h:column>
+                            <h:column>
+                                <f:facet name="header">
+                                    <h:outputText value="Type" />
+                                </f:facet>
+                                <h:inputText value="#{car.pasword}" />
+                            </h:column>
+
+                        </b:dataTable>
+                    </a>
+                </div>
+                <div class="col-xs-6 col-md-3">
+                    <h:commandLink value="REGISTRAR"   actionListener="#{controlUsuarios.listarusuarios}"  >
+                        <i class="fa fa-plus"></i>
+                    </h:commandLink>
+                </div>
+                <div class="col-xs-6 col-md-3">
+                    <a href="#" class="thumbnail">
+                        s
+                    </a>
+                </div>
+                <div class="col-xs-6 col-md-3">
+                    <a href="#" class="thumbnail" >
+                        s
+                    </a>
+                </div>
+
+            </div> 
+
+
+
+        </b:panel>
+
+        <b:panel  collapsible="false" rendered="#{controlUsuarios.registrar}">
+            <h2 class="widget-user-username">Usuarios</h2>
+            <h6 class="widget-user-desc">Gestionar usuarios</h6>
+            <div class="col-lg-1 col-sm-1">
+                <b:commandButton value="CONSULTAR"   rendered="#{controlUsuarios.bootonregistro(controlSeccion.rol.idrol,controlplantillas.moduloSelecionado)}" styleClass="bg-#{controlSeccion.skins}" actionListener="#{controlUsuarios.consultaModulo()}" update="tab" size="sm" >
+                    <i class="fa fa-list-alt"></i>
+                </b:commandButton>
             </div>
-        </div>
+        </b:panel>
+
 
 
 

@@ -6,8 +6,9 @@
       xmlns:p="http://primefaces.org/ui">
 
     <ui:composition>
-        <ui:repeat id="nivel1" value="#{controlSeccion.menu}" var="modulos">
-            <li class=" #{controlplantillas.getActiveGrupo(modulos)}" >
+       
+        <ui:repeat id="nivel1" value="#{controlSeccion.menu}"  var="modulos">
+            <li class="#{controlplantillas.getActiveGrupo(modulos)}" data-toggle="#{controlplantillas.getDatatogleGrupo(modulos)}"  >
                 <p:commandLink  styleClass="hover"   actionListener="#{controlplantillas.selecionarmenuGrupo(modulos)}" update=":form:tab" >
                     <i class="fa #{modulos.icono}"></i> <span>#{modulos.nombre}</span>
                     <i class="fa #{modulos.clase}"></i>
@@ -15,7 +16,7 @@
                 
                 <ul class="treeview-menu" style="top:100%"  >
                     <ui:repeat id="nivel2"   value="#{modulos.modulos}" var="sub">
-                        <li class="#{controlplantillas.getActiveSubgrupomodulo(sub.idmodulo)}" >
+                        <li class="#{controlplantillas.getActiveSubgrupomodulo(sub.idmodulo)}" data-toggle="offcanvas" >
                             <p:commandLink rendered="#{sub.subgrupos==null}" actionListener="#{controlplantillas.selecionarmenu(sub,modulos)}" update=":form:tab" >
                                 <i class="fa #{sub.icono}"></i>
                                 <span> #{sub.nombre}</span>
@@ -28,8 +29,8 @@
                                 <i class="fa fa-angle-left pull-right"></i>
                             </p:commandLink>
                             <ul class="treeview-menu">
-                                <ui:repeat rendered="#{sub.subgrupos!=null}"   value="#{sub.subgrupos.modulos}" var="sub1">
-                                    <li class="#{controlplantillas.getActiveSubgrupomodulo(sub1.idmodulo)}">
+                                <ui:repeat  rendered="#{sub.subgrupos!=null}"   value="#{sub.subgrupos.modulos}"  var="sub1">
+                                    <li class="#{controlplantillas.getActiveSubgrupomodulo(sub1.idmodulo)}" data-toggle="offcanvas" >
                                         <p:commandLink  actionListener="#{controlplantillas.selecionarmenu(sub1,modulos)}" update=":form:tab" >
                                             <i class="fa #{sub1.icono}"></i>
                                             <span> #{sub1.nombre}</span>

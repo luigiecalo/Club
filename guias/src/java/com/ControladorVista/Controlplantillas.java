@@ -40,7 +40,6 @@ public class Controlplantillas implements Serializable {
     private String active = "";
     RequestContext context = RequestContext.getCurrentInstance();
     private String contenido = INICIO;
-    private String hader = "INICIO";
     private List<Modulo> Modulos = new ArrayList<Modulo>();
     private Modulo moduloSelecionado = new Modulo();
     private ModuloDaoimplement ModuloDao = new ModuloDaoimplement();
@@ -89,6 +88,9 @@ public class Controlplantillas implements Serializable {
             }
             if (!encontro) {
                 Modulos.add(modu);
+//                RequestContext context = RequestContext.getCurrentInstance();
+//        context.getCurrentInstance().execute("$(#).dropdown('toggle');");
+                
             }
         }
 
@@ -146,6 +148,15 @@ public class Controlplantillas implements Serializable {
         }
         return active1;
     }
+    
+    public String getDatatogleGrupo(Map ver) {
+        String active1 = null;
+       
+        if (ver.get("tipo").equals("modulo")) {
+             active1 = "offcanvas";
+        }
+        return active1;
+    }
 
     public String getActiveSubgrupo(String subgrup) {
         String active1 = null;
@@ -175,13 +186,7 @@ public class Controlplantillas implements Serializable {
         this.contenido = contenido;
     }
 
-    public String getHader() {
-        return hader;
-    }
-
-    public void setHader(String hader) {
-        this.hader = hader;
-    }
+   
 
     public ControlSeccion getCs() {
         return cs;

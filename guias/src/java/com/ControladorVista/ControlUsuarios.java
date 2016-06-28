@@ -32,12 +32,11 @@ import org.primefaces.context.RequestContext;
 @ViewScoped
 public class ControlUsuarios implements Serializable {
 
-   
     private Long idmod;
-    private Utilidades util= new Utilidades();
+    private Utilidades util = new Utilidades();
     private Usuario usuario = new Usuario();
     private List<Usuario> usuarioLista = new ArrayList<Usuario>();
-
+    private boolean Registrar = false;
     private UsuarioDaoimplement UsuDao = new UsuarioDaoimplement();
 
     /**
@@ -50,11 +49,35 @@ public class ControlUsuarios implements Serializable {
 //metodos
     public List<Usuario> listarusuarios() {
         usuarioLista = UsuDao.Listar();
-        return usuarioLista;
+        return this.usuarioLista;
     }
-    
-    public boolean bootonregistro(Long idrol,Modulo mod){
-    return util.registro(idrol, mod);
+
+    public boolean bootonregistro(Long idrol, Modulo mod) {
+        return util.registro(idrol, mod);
+    }
+
+    public void registroModulo() {
+        Registrar = true;
+    }
+
+    public void consultaModulo() {
+        Registrar = false;
+    }
+
+    public String moduloRegistro() {
+        if (Registrar) {
+            return "visible";
+        } else {
+            return "hidden";
+        }
+    }
+
+    public String moduloreConsulta() {
+        if (Registrar) {
+            return "hidden";
+        } else {
+            return "visible";
+        }
     }
 
     //GET AND SET
@@ -72,6 +95,14 @@ public class ControlUsuarios implements Serializable {
 
     public void setUsuarioLista(List<Usuario> usuarioLista) {
         this.usuarioLista = usuarioLista;
+    }
+
+    public boolean isRegistrar() {
+        return Registrar;
+    }
+
+    public void setRegistrar(boolean Registrar) {
+        this.Registrar = Registrar;
     }
 
 }

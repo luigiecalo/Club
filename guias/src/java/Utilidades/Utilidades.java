@@ -19,9 +19,12 @@ public class Utilidades implements Serializable{
     public boolean registro(Long idRol, Modulo modulo) {
         boolean result = false;
         for (RolModuloPermiso rolmodulospermiso : modulo.getRolModuloPermisoList()) {
+            if(rolmodulospermiso.getRol().getIdrol().equals(idRol)){
             if (rolmodulospermiso.getPermisos().getNombrePermiso().equals("E") || rolmodulospermiso.getPermisos().getNombrePermiso().equals("T")) {
                 result = true;
             }
+            }
+            
         }
         return result;
     }
