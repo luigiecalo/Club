@@ -218,7 +218,7 @@ public class ConfiguracionInicial implements Serializable {
                        boolean relacion=false;
                         for (Modulo moduloencontrado : modulosEncontraos) {
                             System.out.println("---"+moduloencontrado.getSubgrupos());
-                            if (moduloencontrado.getSubgrupos() != null) {
+                            if (moduloencontrado.getSubgrupos() != null) {  
                                 for (Modulo moduloitem : modulositem) {
                                     System.out.println(moduloitem.getSubgrupos());
                                     if (moduloitem.getSubgrupos() != null) {

@@ -14,15 +14,16 @@
         <!-- Bootstrap 3.3.6 -->
         <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css"/>
         <link rel="stylesheet" type="text/css" href="font-awesome/css/font-awesome.min.css"/>
-        <!--        <link rel="stylesheet/less" type="text/css" href="styles.less" />-->
+        <link rel="stylesheet" href="css/primefacesConfig.css"/>
         <!-- Theme style -->
         <link rel="stylesheet" href="AdminLTE-master/dist/css/AdminLTE.css"/>
+        
         <!-- AdminLTE Skins. Choose a skin from the css/skins
              folder instead of downloading all of them to reduce the load. -->
         <link rel="stylesheet" href="AdminLTE/css/skins/skin-#{controlSeccion.skins}.css"/>
 
     </h:head>
-    <h:body onload="#{controlSeccion.validaSeccion()}" class="hold-transition skin-#{controlSeccion.skins} sidebar-mini">
+    <h:body onload="#{controlSeccion.validaSeccion()}" class="hold-transition skin-#{controlSeccion.skins} fixed sidebar-mini">
         <div class="wrapper">
 
             <header class="main-header">
@@ -56,7 +57,7 @@
                                             <li><!-- start message -->
                                                 <a href="#">
                                                     <div class="pull-left">
-                                                        <img src="AdminLTE-master/dist/img/user2-160x160.jpg" class="img-circle" alt="User Image"/>
+                                                        <img src="imagenes/usuario/hombre.png" class="img-circle" alt="User Image"/>
                                                     </div>
                                                     <h4>
                                                         Support Team
@@ -239,14 +240,14 @@
                             <li class="dropdown user user-menu">
 
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                                    <img src="AdminLTE-master/dist/img/user2-160x160.jpg" class="user-image" alt="User Image"/>
+                                    <img src="imagenes/usuario/hombre.png" class="user-image" alt="User Image"/>
                                     <span class="hidden-xs">#{controlSeccion.miembro.usuario.login}</span>
                                 </a>
                                 <ul class="dropdown-menu">
 
                                     <!-- User image -->
                                     <li class="user-header">
-                                        <img src="AdminLTE-master/dist/img/user2-160x160.jpg" class="img-circle" alt="User Image"/>
+                                        <img src="imagenes/usuario/hombre.png" class="img-circle" alt="User Image"/>
 
 
                                         <p>
@@ -308,7 +309,7 @@
                         <!-- Sidebar user panel -->
                         <div class="user-panel">
                             <div class="pull-left image">
-                                <img src="AdminLTE-master/dist/img/user2-160x160.jpg" class="img-circle" alt="User Image"/>
+                                <img src="imagenes/usuario/hombre.png" class="img-circle" alt="User Image"/>
                             </div>
                             <div class="pull-left info">
                                 <p>#{controlSeccion.miembro.nombre1}</p>
