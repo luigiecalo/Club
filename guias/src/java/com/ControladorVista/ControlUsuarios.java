@@ -32,8 +32,7 @@ import org.primefaces.context.RequestContext;
 @ViewScoped
 public class ControlUsuarios implements Serializable {
 
-    @ManagedProperty("#{controlSeccion}")
-    private ControlSeccion cs = new ControlSeccion();
+   
     private Long idmod;
     private Utilidades util= new Utilidades();
     private Usuario usuario = new Usuario();

@@ -8,7 +8,7 @@
     <ui:composition>
 
         <div class="ui-g" style="visibility: visible">
-            <div class="col-lg-offset-11"><b:commandButton value="registrar"  icon="fa fa-plus" styleClass="bg-#{controlSeccion.skins}" actionListener="#{controlUsuarios.listarusuarios()}"  size="sm" /></div>
+            <div class="col-lg-offset-11"><b:commandButton value="registrar"  icon="fa fa-plus" rendered="#{controlUsuarios.bootonregistro(controlSeccion.rol.idrol,controlplantillas.moduloSelecionado)}" styleClass="bg-#{controlSeccion.skins}" actionListener="#{controlUsuarios.listarusuarios()}"  size="sm" /></div>
             <div class="ui-g-12">
         
 
