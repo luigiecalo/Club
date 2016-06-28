@@ -9,8 +9,9 @@ and open the template in the editor.
 */
 
 
-.ui-commandlink{
-   
+.ui-widget-content{
+    background-color: transparent;
+    border:none !important;
 } 
 
 
