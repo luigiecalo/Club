@@ -29,7 +29,7 @@ public class Utilidades implements Serializable{
         return result;
     }
     
-     public static long toLong(Number number) {
+     public  long toLong(Number number) {
         return number.longValue();
     }
 }
