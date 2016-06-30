@@ -21,4 +21,8 @@ and open the template in the editor.
     border:none !important;
 }
 
+.ir-arriba {
+	display:none;
+}
+
 
