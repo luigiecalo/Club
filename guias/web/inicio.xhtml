@@ -16,14 +16,14 @@
         <link rel="stylesheet" type="text/css" href="font-awesome/css/font-awesome.min.css"/>
         <link rel="stylesheet" href="css/primefacesConfig.css"/>
         <!-- Theme style -->
-        <link rel="stylesheet" href="AdminLTE-master/dist/css/AdminLTE.css"/>
+        <link rel="stylesheet" href="AdminLTE/css/AdminLTE.css"/>
 
         <!-- AdminLTE Skins. Choose a skin from the css/skins
              folder instead of downloading all of them to reduce the load. -->
         <link rel="stylesheet" href="AdminLTE/css/skins/skin-#{controlSeccion.skins}.css"/>
 
     </h:head>
-    <h:body onload="#{controlSeccion.validaSeccion()}" class="hold-transition skin-#{controlSeccion.skins} fixed sidebar-mini">
+    <h:body onload="#{controlSeccion.validaSeccion()}" class="hold-transition skin-#{controlSeccion.skins}  fixeds sidebar-mini">
         <div class="wrapper">
 
             <header class="main-header" id="navpricipal" >
@@ -371,10 +371,21 @@
                 <div class="content-wrapper">
 
 
-                    <section class="content-header">
+                      <section class="content-header">
                         <b:panel id="tab" styleClass="idpanel">
-                            <div class="tab-pane " >
-                                <ui:include  src="paginas/#{controlplantillas.modulo}" />
+                            <div class="nav-tabs-custom">
+                                <ul id="tab-list"  class="nav nav-tabs " >
+                                    <li role="presentation" class="active" ><a href="#inicio" data-toggle="tab">INICIO</a></li>
+                                </ul>
+                                <div class="tab-content ">
+                                    <div class="tab-pane active" id="mo1.idmodulo">
+                                        <ui:include  src="paginas/#{controlplantillas.modulo}" />
+                                    </div>
+
+                                </div>
+                            </div>
+<!--                            <div class="tab-pane " >
+                               
                                 <p:separator/>
                                 ID Modulo:#{controlplantillas.moduloid}
                                 <p:separator/>
@@ -383,7 +394,34 @@
                                 GRupo:#{controlplantillas.grupo}
                                 <p:separator/>
                                 Sub Grupo:#{controlplantillas.subGrupo}
-                            </div>
+                            </div>-->
+                            <!--                            <div class="nav-tabs-custom">
+                                                            <ul id="tab-list"  class="nav nav-tabs" >
+                                                                <li role="presentation" ><a href="#inicio" data-toggle="tab">INICIO</a></li>
+                                                                <ui:repeat value=controlplantillas.modulos" var="mo" >
+                                                                    <li role="presentation" class="controlplantillas.getActive(mo.idmodulo)">
+                                                                        <p:commandLink  actionListener="controlplantillas.cargarmodulo(mo)" update="@form" >
+                                                                            mo.nombre
+                                                                            <p:commandButton  icon="fa fa-fw fa-remove" actionListener="controlplantillas.cerrarmodulo(mo)" update="@form" title="Remove this page"/>
+                                                                        </p:commandLink>
+                                                                    </li>
+                                                                </ui:repeat>
+                            
+                                                                </ui:repeat>
+                            
+                                                            </ul>
+                                                            <div class="tab-content">
+                            
+                                                                <ui:repeat id="repeat" value="controlplantillas.modulos" var="mo1" >
+                                                                    <div class="tab-pane controlplantillas.getActive(mo1.idmodulo)" id="mo1.idmodulo">
+                                                                        <b>mo1.nombre</b>
+                                                                        
+                                                                        <ui:include  src="paginas/controlplantillas.modulo" />
+                                                                    </div>
+                                                                </ui:repeat>
+                            
+                                                            </div> 
+                                                        </div>-->
                         </b:panel>
                     </section>
                     <!--Modal Para cambiar de session--> 
@@ -449,7 +487,8 @@
         <!-- jQuery 2.2.0 -->
         <script src="AdminLTE/plugins/jQuery/jQuery-2.2.0.min.js"></script>
         <!-- AdminLTE App -->
-        <script src="AdminLTE/js/app.min.js"></script>
+        <script src="AdminLTE/js/app.js"></script>
+        <!--<script src="js/prueba.js"></script>-->
         <!--       Slimscroll -->
         <script src="AdminLTE/plugins/slimScroll/jquery.slimscroll.min.js"></script>
         <!--<script src="AdminLTE/js/pages/dashboard.js"></script>-->
@@ -457,6 +496,6 @@
         <!--<script src="AdminLTE/js/demo.js"></script>-->
         <script src="bootstrap/js/bootstrap.min.js"></script>
         <script src="js/scripts.js"></script>
-<!--        <script src="js/prueba.js"></script>-->
+
     </h:body>
 </html>

@@ -164,11 +164,13 @@ public class Modulo implements Serializable {
     public void setPosicion(int posicion) {
         this.posicion = posicion;
     }
-    
 
     @Override
     public String toString() {
-        return "Modulo[(" + idmodulo + ") subgrupos=("+subgrupos+")]";
+        return "Modulo{" + "idmodulo=" + idmodulo + ", nombre=" + nombre + ", src=" + src + ", icono=" + icono + ", posicion=" + posicion + ", grupomodulo=" + grupomodulo + ", subgrupos=" + subgrupos + '}';
     }
+    
+
+   
     
 }
